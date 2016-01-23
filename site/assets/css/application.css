@@ -1,0 +1,12 @@
+#searchBar input{
+    margin: 0 auto;
+    display: table;
+}
+
+#searchBar ul {
+    list-style: none;
+    width:544px;
+    margin: 0 auto;
+    display: table;
+    text-align: left;
+}
