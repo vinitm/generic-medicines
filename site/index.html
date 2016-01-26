@@ -3,18 +3,22 @@
 
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Generic Alternative</title>
-    <link href="./assets/css/bootstrap.css" rel="stylesheet">
-    <link href="./assets/css/application.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.0.1/css/responsive.bootstrap.min.css" rel="stylesheet">
+        <link href="./assets/css/application.css" rel="stylesheet">
 </head>
 
 <body>
     <div id="main-region" class="container">
-       
+
     </div>
 
 
-    <script type="text/template" id="search-template">
+    <script type="text/template" id="search-layout-template">
         <div id="search"></div>
         <div id="suggestion"></div>
     </script>
@@ -23,18 +27,90 @@
         <%= suggestion %>
     </script>
 
-    <script type="text/template" id="details-template">
 
-    </script>
 
-    <script type="text/template" id="alternative-template">
-        <%= brand %>
-    </script>
+    <script type="text/template" id="show-layout-template">
+        <section id="sidebar" class="col-sm-3">
+            <div id="recently-viewed-region" class="mcard-container">
+                <div id="recently-viewed" class="mcard">
+                    <div class="mcard-title mcard-title-center">Recently Viewed</div>
+                    <div class="mcard-content">
+                        <ul class="material-list">
+                            <li>option1</li>
+                            <li>option2</li>
+                            <li>option3</li>
+                            <li>option4</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="content" class="row col-sm-9">
+            <div class="col-xs-12">
+                <div id="title-region" class="mcard-container">
 
-    <script type="text/template" id="show-template">
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div id="details-region" class="mcard-container">
+
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div id="cheapest_substitute-region" class="mcard-container">
+
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div id="substitutes-region" class="mcard-container">
+                    
+                </div>
+            </div>
+        </section>
         <div id="details"></div>
         <div id="alternatives"></div>
     </script>
+
+    <script type="text/template" id="title-template">
+        <div class="mcard-content">
+            <h3><%= medicine.brand %> <span class="label label-warning"><%= medicine.category %></span></h3>
+        </div>
+    </script>
+
+    <script type="text/template" id="details-template">
+        <div class="mcard-title mcard-title-center">Details</div>
+        <div class="mcard-content row">
+            <span class="details-item col-sm-6">Brand:<%= medicine.brand %></span>
+            <span class="details-item col-sm-6">Manufacturer:<%= medicine.manufacturer %></span>
+            <span class="details-item col-sm-6">Price:<%= medicine.package_price %></span>
+            <span class="details-item col-sm-6">Package Quantity:<%= medicine.package_qty %></span>
+            <span class="details-item col-sm-12">Constituents(Strength):<%=constituents.map(function(item){return item.name.trim()+"("+item.strength.trim()+")"}).join(",") %></span>
+        </div>
+        </div>
+    </script>
+
+    <script type="text/template" id="cheapest_substitute-template">
+        <div class="mcard-title mcard-title-center">Cheapest Substitute</div>
+        <div class="mcard-content">
+            <div id="chart-region">
+                <canvas id="chartContainer">
+
+                </canvas>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/template" id="substitute-template">
+        <%= brand %>
+    </script>
+
+    <script type="text/template" id="substitutes-template">
+        <div class="mcard-title mcard-title-center">Substitutes</div>
+        <div id="table-region" class="mcard-content row">
+
+        </div>
+    </script>
+
 
     <script src="./assets/js/vendor/jquery.js"></script>
     <script src="./assets/js/vendor/underscore.js"></script>
@@ -42,6 +118,10 @@
     <script src="./assets/js/vendor/backbone.wreqr.js"></script>
     <script src="./assets/js/vendor/backbone.babysitter.js"></script>
     <script src="./assets/js/vendor/backbone.marionette.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+    <script src='https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js'></script>
+    <script src='https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js'></script>
+    <script src="https://cdn.datatables.net/responsive/2.0.1/css/responsive.bootstrap.min.css"></script>
     <!----------------------------------------------------------------------->
     <script src="./assets/js/app.js"></script>
     <script src="./assets/js/entities/suggestion.js"></script>

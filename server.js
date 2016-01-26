@@ -62,7 +62,6 @@ app.get('/medicine_suggestions', function (req, res) {
 });
 
 app.get('/medicine_alternatives', function (req, res) {
-    console.log(req.query.id);
     getAlternatives(req.query.id).then(function (data) {
         var model = JSON.parse(data).response.medicine_alternatives;
         res.end(JSON.stringify(model));

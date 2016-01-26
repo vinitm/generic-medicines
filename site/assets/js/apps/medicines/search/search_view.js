@@ -1,6 +1,6 @@
 MedicineManager.module("MedicineApp.Search", function (Search, MedicineManager, Backbone, Marionette, $, _) {
     Search.SearchLayout = Marionette.LayoutView.extend({
-        template: "#search-template",
+        template: "#search-layout-template",
         regions: {
             inputRegion: "#search",
             suggestionRegion: "#suggestion"
