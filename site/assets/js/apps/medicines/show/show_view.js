@@ -26,16 +26,51 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
         id: "details"
     });
 
+    Show.Chart = Marionette.ItemView.extend({
+        template: false,
+        tagName: "canvas",
+        id: "chartContainer",
+        onShow: function () {
+            Chart.defaults.global.responsive = true;
+            Chart.defaults.global.showTooltips = false;
+            var ctx = this.$el.getContext("2d");
+            var data = [{
+                    value: this.set - this.subset,
+                    color: "#bdc3c7",
+                    label: "Grey"
+                },
+                {
+                    value: this.set,
+                    color: "#81C784",
+                    label: "Green"
+                }];
+            new Chart(ctx).Pie(data);
+        }
+    });
+
     Show.CheapestSubstitute = Marionette.LayoutView.extend({
         template: "#cheapest_substitute-template",
         className: "mcard",
         tagName: "div",
         id: "cheapest_substitute",
         regions: {
-        "chartRegion":"#chart-region"
+            "chartRegion": "#chart-region"
+        },
+        getCheapest: function () {
+            //var benchmark = this.medicine.get("unit_price");
+            var attributeValue = null;
+            return 48;
         },
         onShow: function () {
-         //this.$el.
+            var cheapestAlternatives = this.getCheapest();
+            var cheapestPrice = 48; //cheapestAlternatives.get("unit_price");
+            var medicinePrice = 19; //this.medicine.get("unit_price");
+
+            var chartView = new Show.Chart({
+                set: medicinePrice,
+                subset: cheapestPrice
+            });
+            this.chartRegion.show(chartView);
         }
     });
 
@@ -79,6 +114,12 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
         id: "cheapest_substitute",
         regions: {
             "tableRegion": "#table-region"
+        },
+        onShow: function () {
+            var tableView = new Show.Table({
+                collection: this.collection
+            });
+            this.tableRegion.show(tableView);
         }
     });
 });

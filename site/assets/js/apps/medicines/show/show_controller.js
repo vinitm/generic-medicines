@@ -3,7 +3,11 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
         showMedicine: function (medicine) {
             var showLayout = new Show.LayoutView();
             MedicineManager.mainRegion.show(showLayout);
-            MedicineManager.request("details:entities", medicine).then(function (details) {
+
+            var details = MedicineManager.request("details:entities", medicine);
+            var alternatives = MedicineManager.request("alternative:entities", medicine);
+
+            $.when(details, alternatives).then(function (details, alternatives) {
                 var titleView = new Show.Title({
                     model: details
                 });
@@ -12,21 +16,21 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
                 });
                 showLayout.titleRegion.show(titleView);
                 showLayout.detailsRegion.show(detailsView);
-            });
 
-            MedicineManager.request("alternative:entities", medicine).then(function (alternatives) {
 
-                var substitutesView = new Show.Substitutes({});
-                var tableView = new Show.Table({
-                    collection: alternatives
+
+                var substitutesView = new Show.Substitutes({
+                collection:alternatives
                 });
                 showLayout.substitutesRegion.show(substitutesView);
-                substitutesView.tableRegion.show(tableView);
-
-
+                
+                
+                
                 var cheapestSubstituteView = new Show.CheapestSubstitute({
-                    collection: alternatives
+                    collection: alternatives,
+                    medicine: details
                 });
+
                 showLayout.cheapestSubstituteRegion.show(cheapestSubstituteView);
             });
         }
