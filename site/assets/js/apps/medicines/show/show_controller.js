@@ -8,6 +8,7 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
             var alternatives = MedicineManager.request("alternative:entities", medicine);
 
             $.when(details, alternatives).then(function (details, alternatives) {
+			//medicine name in title
                 var titleView = new Show.Title({
                     model: details
                 });
@@ -18,14 +19,14 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
                 showLayout.detailsRegion.show(detailsView);
 
 
-
+			//medicine substitutes
                 var substitutesView = new Show.Substitutes({
                 collection:alternatives
                 });
                 showLayout.substitutesRegion.show(substitutesView);
                 
                 
-                
+            //cheapest substitute    
                 var cheapestSubstituteView = new Show.CheapestSubstitute({
                     collection: alternatives,
                     medicine: details
