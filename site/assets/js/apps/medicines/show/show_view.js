@@ -50,6 +50,16 @@ MedicineManager.module("MedicineApp.Show", function(Show, MedicineManager, Backb
             new Chart(ctx).Pie(data);
         }
     });
+	
+	Show.CheapestSubstitutesItem=Marionette.ItemView.extend({
+		tagName:"li",
+		template:"#cheapest-substitutes-list-template"
+	});
+	
+	Show.CheapestSubstitutesList=Marionette.CollectionView.extend({
+		tagName:"ul",
+		childView:Show.CheapestSubstitutesItem
+	});
 
     Show.CheapestSubstitutes = Marionette.LayoutView.extend({
         template: "#cheapest_substitute-template",
@@ -57,7 +67,8 @@ MedicineManager.module("MedicineApp.Show", function(Show, MedicineManager, Backb
         tagName: "div",
         id: "cheapest_substitute",
         regions: {
-            "chartRegion": "#chart-region"
+            "chartRegion": "#chart-region",
+			"listRegion": "#substitutes-list-region"
         },
         initialize: function(options) {
             this.medicine = options.medicine;
@@ -90,6 +101,11 @@ MedicineManager.module("MedicineApp.Show", function(Show, MedicineManager, Backb
                 subset: cheapestSubstitutePrice
             });
             this.chartRegion.show(chartView);
+			
+			var listView=new Show.CheapestSubstitutesList({
+				collection:new Backbone.Collection(this.cheapestSubstitutes)
+			});
+			this.listRegion.show(listView);
         }
     });
 

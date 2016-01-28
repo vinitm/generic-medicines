@@ -86,13 +86,19 @@
             <span class="details-item col-sm-6">Package Quantity:<%= medicine.package_qty %></span>
             <span class="details-item col-sm-12">Constituents(Strength):<%=constituents.map(function(item){return item.name.trim()+"("+item.strength.trim()+")"}).join(",") %></span>
         </div>
-        </div>
     </script>
+	
+	<script type="text/template" id="cheapest-substitutes-list-template">
+		<%= brand %>  <%= unit_price %> 
+	</script>
 
     <script type="text/template" id="cheapest_substitute-template">
         <div class="mcard-title mcard-title-center">Cheapest Substitutes</div>
-        <div class="mcard-content">
-            <div id="chart-region">
+        <div class="mcard-content clearfix">
+			<div id="substitutes-list-region" class="col-sm-6"> 
+			
+			</div>
+            <div id="chart-region" class="col-sm-6">
                 
             </div>
         </div>
