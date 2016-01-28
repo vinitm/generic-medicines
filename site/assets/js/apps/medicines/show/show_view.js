@@ -58,6 +58,7 @@ MedicineManager.module("MedicineApp.Show", function(Show, MedicineManager, Backb
 	
 	Show.CheapestSubstitutesList=Marionette.CollectionView.extend({
 		tagName:"ul",
+		className:"material-list",
 		childView:Show.CheapestSubstitutesItem
 	});
 
@@ -119,6 +120,9 @@ MedicineManager.module("MedicineApp.Show", function(Show, MedicineManager, Backb
                 width: "100%"
             };
         },
+		initialize:function(options){
+			this.referencePrice=options.referencePrice;
+		},
         onShow: function() {
             this.$el.DataTable({
                 responsive: true,
@@ -132,11 +136,14 @@ MedicineManager.module("MedicineApp.Show", function(Show, MedicineManager, Backb
                     }, {
                         data: "package_price",
                         title: "Price"
-                    }
-                    /*, {
-                                        data:"",
-                                        title: "Cheaper/Costlier"
-                                    }*/
+                    }, {
+						render: function(data, type, row){
+						var difference=(row.unit_price*100/this.referencePrice).toFixed(1);
+						var template=_.template('<span class="<%if(difference<=100){%>text-success<%}else{%>text-danger<%}%>"><span><%=difference%>% </span><span class="glyphicon <%if(difference<=100){%>glyphicon-thumbs-up<%}else{%>glyphicon-thumbs-down<%}%>"></span></span>');
+						return template({difference:difference});
+						}.bind(this),
+						title:"Cheaper/Costlier"
+					}
                 ]
             });
         }
@@ -150,9 +157,13 @@ MedicineManager.module("MedicineApp.Show", function(Show, MedicineManager, Backb
         regions: {
             "tableRegion": "#table-region"
         },
+		initialize:function(options){
+			this.referencePrice=options.referencePrice;
+		},
         onShow: function() {
             var tableView = new Show.Table({
-                collection: this.collection
+                collection: this.collection,
+				referencePrice:this.referencePrice
             });
             this.tableRegion.show(tableView);
         }

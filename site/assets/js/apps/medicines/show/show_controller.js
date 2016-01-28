@@ -21,7 +21,8 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
 
 			//medicine substitutes
                 var substitutesView = new Show.Substitutes({
-                collection:alternatives
+                collection:alternatives,
+				referencePrice:details.get("medicine")["unit_price"]
                 });
                 showLayout.substitutesRegion.show(substitutesView);
                 
