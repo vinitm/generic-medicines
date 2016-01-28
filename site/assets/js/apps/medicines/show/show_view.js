@@ -1,4 +1,4 @@
-MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Backbone, Marionette, $, _) {
+MedicineManager.module("MedicineApp.Show", function(Show, MedicineManager, Backbone, Marionette, $, _) {
     Show.LayoutView = Marionette.LayoutView.extend({
         template: "#show-layout-template",
         tagName: "div",
@@ -7,7 +7,7 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
         regions: {
             "titleRegion": "#title-region",
             "detailsRegion": "#details-region",
-            "cheapestSubstituteRegion": "#cheapest_substitute-region",
+            "cheapestSubstitutesRegion": "#cheapest_substitutes-region",
             "substitutesRegion": "#substitutes-region"
         }
     });
@@ -30,25 +30,28 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
         template: false,
         tagName: "canvas",
         id: "chartContainer",
-        onShow: function () {
+        initialize: function(options) {
+            this.set = options.set;
+            this.subset = options.subset;
+        },
+        onShow: function() {
             Chart.defaults.global.responsive = true;
             Chart.defaults.global.showTooltips = false;
-            var ctx = this.$el.getContext("2d");
+            var ctx = this.$el.get(0).getContext("2d");
             var data = [{
-                    value: this.set - this.subset,
-                    color: "#bdc3c7",
-                    label: "Grey"
-                },
-                {
-                    value: this.set,
-                    color: "#81C784",
-                    label: "Green"
-                }];
+                value: this.set - this.subset,
+                color: "#bdc3c7",
+                label: "Grey"
+            }, {
+                value: this.subset,
+                color: "#81C784",
+                label: "Green"
+            }];
             new Chart(ctx).Pie(data);
         }
     });
 
-    Show.CheapestSubstitute = Marionette.LayoutView.extend({
+    Show.CheapestSubstitutes = Marionette.LayoutView.extend({
         template: "#cheapest_substitute-template",
         className: "mcard",
         tagName: "div",
@@ -56,19 +59,35 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
         regions: {
             "chartRegion": "#chart-region"
         },
-        getCheapest: function () {
-            //var benchmark = this.medicine.get("unit_price");
-            var attributeValue = null;
-            return 48;
+        initialize: function(options) {
+            this.medicine = options.medicine;
+            this.substitutes = options.substitutes;
+            this.cheapestSubstitutes = this.getCheapestSubstitutes();
         },
-        onShow: function () {
-            var cheapestAlternatives = this.getCheapest();
-            var cheapestPrice = 48; //cheapestAlternatives.get("unit_price");
-            var medicinePrice = 19; //this.medicine.get("unit_price");
+        getCheapestSubstitutes: function() {
+            var priceProperty = "unit_price";
+            var medicinePrice = this.medicine.get("medicine")[priceProperty];
+            var cheapestSubstitutePrice = medicinePrice;
+            var cheapestSubstitutes = [];
+            this.substitutes.forEach(function(e) {
+                var price = e.get(priceProperty);
+                if (price < cheapestSubstitutePrice) {
+                    cheapestSubstitutePrice = price;
+                    cheapestSubstitutes = [];
+                    cheapestSubstitutes.push(e);
+                } else if (price === cheapestSubstitutePrice) {
+                    cheapestSubstitutes.push(e);
+                }
+            });
+            return cheapestSubstitutes;
+        },
+        onShow: function() {
+            var cheapestSubstitutePrice = this.cheapestSubstitutes[0].get("unit_price");
+            var medicinePrice = this.medicine.get("medicine")["unit_price"];
 
             var chartView = new Show.Chart({
                 set: medicinePrice,
-                subset: cheapestPrice
+                subset: cheapestSubstitutePrice
             });
             this.chartRegion.show(chartView);
         }
@@ -79,30 +98,30 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
         className: "table table-striped table-bordered dt-responsive",
         tagName: "table",
         id: "substituteTable",
-        attributes: function () {
+        attributes: function() {
             return {
                 width: "100%"
             };
         },
-        onShow: function () {
+        onShow: function() {
             this.$el.DataTable({
                 responsive: true,
                 data: this.collection.toJSON(),
                 columns: [{
                         data: "brand",
                         title: "Brand"
-                }, {
+                    }, {
                         data: "package_qty",
                         title: "Pack"
-                }, {
+                    }, {
                         data: "package_price",
                         title: "Price"
-                }
+                    }
                     /*, {
                                         data:"",
                                         title: "Cheaper/Costlier"
                                     }*/
-                    ]
+                ]
             });
         }
     });
@@ -115,7 +134,7 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
         regions: {
             "tableRegion": "#table-region"
         },
-        onShow: function () {
+        onShow: function() {
             var tableView = new Show.Table({
                 collection: this.collection
             });

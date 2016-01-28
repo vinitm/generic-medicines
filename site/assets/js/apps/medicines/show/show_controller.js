@@ -26,13 +26,13 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
                 showLayout.substitutesRegion.show(substitutesView);
                 
                 
-            //cheapest substitute    
-                var cheapestSubstituteView = new Show.CheapestSubstitute({
-                    collection: alternatives,
+            //cheapest substitutes    
+                var cheapestSubstitutesView = new Show.CheapestSubstitutes({
+                    substitutes: alternatives,
                     medicine: details
                 });
 
-                showLayout.cheapestSubstituteRegion.show(cheapestSubstituteView);
+                showLayout.cheapestSubstitutesRegion.show(cheapestSubstitutesView);
             });
         }
     };
