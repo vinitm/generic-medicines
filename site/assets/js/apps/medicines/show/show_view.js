@@ -1,4 +1,4 @@
-MedicineManager.module("MedicineApp.Show", function(Show, MedicineManager, Backbone, Marionette, $, _) {
+MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Backbone, Marionette, $, _) {
     Show.LayoutView = Marionette.LayoutView.extend({
         template: "#show-layout-template",
         tagName: "div",
@@ -9,6 +9,12 @@ MedicineManager.module("MedicineApp.Show", function(Show, MedicineManager, Backb
             "detailsRegion": "#details-region",
             "cheapestSubstitutesRegion": "#cheapest_substitutes-region",
             "substitutesRegion": "#substitutes-region"
+        },
+        childEvents: {
+            "substitute:show": "onChildSubstituteShow"
+        },
+        onChildSubstituteShow: function (view, text) {
+            this.trigger("substitute:show", text);
         }
     });
 
@@ -30,11 +36,11 @@ MedicineManager.module("MedicineApp.Show", function(Show, MedicineManager, Backb
         template: false,
         tagName: "canvas",
         id: "chartContainer",
-        initialize: function(options) {
+        initialize: function (options) {
             this.set = options.set;
             this.subset = options.subset;
         },
-        onShow: function() {
+        onShow: function () {
             Chart.defaults.global.responsive = true;
             Chart.defaults.global.showTooltips = false;
             var ctx = this.$el.get(0).getContext("2d");
@@ -50,17 +56,17 @@ MedicineManager.module("MedicineApp.Show", function(Show, MedicineManager, Backb
             new Chart(ctx).Pie(data);
         }
     });
-	
-	Show.CheapestSubstitutesItem=Marionette.ItemView.extend({
-		tagName:"li",
-		template:"#cheapest-substitutes-list-template"
-	});
-	
-	Show.CheapestSubstitutesList=Marionette.CollectionView.extend({
-		tagName:"ul",
-		className:"material-list",
-		childView:Show.CheapestSubstitutesItem
-	});
+
+    Show.CheapestSubstitutesItem = Marionette.ItemView.extend({
+        tagName: "li",
+        template: "#cheapest-substitutes-list-template"
+    });
+
+    Show.CheapestSubstitutesList = Marionette.CollectionView.extend({
+        tagName: "ul",
+        className: "material-list",
+        childView: Show.CheapestSubstitutesItem
+    });
 
     Show.CheapestSubstitutes = Marionette.LayoutView.extend({
         template: "#cheapest_substitute-template",
@@ -69,19 +75,19 @@ MedicineManager.module("MedicineApp.Show", function(Show, MedicineManager, Backb
         id: "cheapest_substitute",
         regions: {
             "chartRegion": "#chart-region",
-			"listRegion": "#substitutes-list-region"
+            "listRegion": "#substitutes-list-region"
         },
-        initialize: function(options) {
+        initialize: function (options) {
             this.medicine = options.medicine;
             this.substitutes = options.substitutes;
             this.cheapestSubstitutes = this.getCheapestSubstitutes();
         },
-        getCheapestSubstitutes: function() {
+        getCheapestSubstitutes: function () {
             var priceProperty = "unit_price";
             var medicinePrice = this.medicine.get("medicine")[priceProperty];
             var cheapestSubstitutePrice = medicinePrice;
             var cheapestSubstitutes = [];
-            this.substitutes.forEach(function(e) {
+            this.substitutes.forEach(function (e) {
                 var price = e.get(priceProperty);
                 if (price < cheapestSubstitutePrice) {
                     cheapestSubstitutePrice = price;
@@ -93,7 +99,7 @@ MedicineManager.module("MedicineApp.Show", function(Show, MedicineManager, Backb
             });
             return cheapestSubstitutes;
         },
-        onShow: function() {
+        onShow: function () {
             var cheapestSubstitutePrice = this.cheapestSubstitutes[0].get("unit_price");
             var medicinePrice = this.medicine.get("medicine")["unit_price"];
 
@@ -102,11 +108,11 @@ MedicineManager.module("MedicineApp.Show", function(Show, MedicineManager, Backb
                 subset: cheapestSubstitutePrice
             });
             this.chartRegion.show(chartView);
-			
-			var listView=new Show.CheapestSubstitutesList({
-				collection:new Backbone.Collection(this.cheapestSubstitutes)
-			});
-			this.listRegion.show(listView);
+
+            var listView = new Show.CheapestSubstitutesList({
+                collection: new Backbone.Collection(this.cheapestSubstitutes)
+            });
+            this.listRegion.show(listView);
         }
     });
 
@@ -115,20 +121,32 @@ MedicineManager.module("MedicineApp.Show", function(Show, MedicineManager, Backb
         className: "table table-striped table-bordered dt-responsive",
         tagName: "table",
         id: "substituteTable",
-        attributes: function() {
+        events: {
+            "click .show": "linkClicked"
+        },
+        linkClicked: function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var text = $(e.currentTarget).text();
+            this.triggerMethod("link:click", text);
+        },
+        attributes: function () {
             return {
                 width: "100%"
             };
         },
-		initialize:function(options){
-			this.referencePrice=options.referencePrice;
-		},
-        onShow: function() {
+        initialize: function (options) {
+            this.referencePrice = options.referencePrice;
+        },
+        onShow: function () {
             this.$el.DataTable({
                 responsive: true,
                 data: this.collection.toJSON(),
                 columns: [{
                         data: "brand",
+                        render: function (data, type, row) {
+                            return "<a class='show' href='#'>" + data + "</a>";
+                        },
                         title: "Brand"
                     }, {
                         data: "package_qty",
@@ -137,12 +155,14 @@ MedicineManager.module("MedicineApp.Show", function(Show, MedicineManager, Backb
                         data: "package_price",
                         title: "Price"
                     }, {
-						render: function(data, type, row){
-						var difference=(row.unit_price*100/this.referencePrice).toFixed(1);
-						var template=_.template('<span class="<%if(difference<=100){%>text-success<%}else{%>text-danger<%}%>"><span><%=difference%>% </span><span class="glyphicon <%if(difference<=100){%>glyphicon-thumbs-up<%}else{%>glyphicon-thumbs-down<%}%>"></span></span>');
-						return template({difference:difference});
-						}.bind(this),
-						title:"Cheaper/Costlier"
+                        render: function (data, type, row) {
+                            var difference = (row.unit_price * 100 / this.referencePrice).toFixed(1);
+                            var template = _.template('<span class="<%if(difference<=100){%>text-success<%}else{%>text-danger<%}%>"><span><%=difference%>% </span><span class="glyphicon <%if(difference<=100){%>glyphicon-thumbs-up<%}else{%>glyphicon-thumbs-down<%}%>"></span></span>');
+                            return template({
+                                difference: difference
+                            });
+                        }.bind(this),
+                        title: "Cheaper/Costlier"
 					}
                 ]
             });
@@ -157,13 +177,19 @@ MedicineManager.module("MedicineApp.Show", function(Show, MedicineManager, Backb
         regions: {
             "tableRegion": "#table-region"
         },
-		initialize:function(options){
-			this.referencePrice=options.referencePrice;
-		},
-        onShow: function() {
+        childEvents: {
+            "link:click": "onChildLinkClick"
+        },
+        onChildLinkClick: function (view, text) {
+            this.triggerMethod("substitute:show", text);
+        },
+        initialize: function (options) {
+            this.referencePrice = options.referencePrice;
+        },
+        onShow: function () {
             var tableView = new Show.Table({
                 collection: this.collection,
-				referencePrice:this.referencePrice
+                referencePrice: this.referencePrice
             });
             this.tableRegion.show(tableView);
         }
