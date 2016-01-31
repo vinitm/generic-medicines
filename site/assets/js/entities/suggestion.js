@@ -6,7 +6,7 @@ MedicineManager.module("Entities", function (Entities, MedicineManager, Backbone
     });
 
     Entities.SuggestionCollection = Backbone.Collection.extend({
-        model: Entities.Suggestion,
+        model: Entities.Suggestion
         /*filterBy: function (filterText) {
             var filtered = this.filter(function (medicine) {
                 return medicine.get('suggestion').toLowerCase().match(new RegExp("^" + filterText.toLowerCase()));

@@ -80,24 +80,7 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
         initialize: function (options) {
             this.medicine = options.medicine;
             this.substitutes = options.substitutes;
-            this.cheapestSubstitutes = this.getCheapestSubstitutes();
-        },
-        getCheapestSubstitutes: function () {
-            var priceProperty = "unit_price";
-            var medicinePrice = this.medicine.get("medicine")[priceProperty];
-            var cheapestSubstitutePrice = medicinePrice;
-            var cheapestSubstitutes = [];
-            this.substitutes.forEach(function (e) {
-                var price = e.get(priceProperty);
-                if (price < cheapestSubstitutePrice) {
-                    cheapestSubstitutePrice = price;
-                    cheapestSubstitutes = [];
-                    cheapestSubstitutes.push(e);
-                } else if (price === cheapestSubstitutePrice) {
-                    cheapestSubstitutes.push(e);
-                }
-            });
-            return cheapestSubstitutes;
+            this.cheapestSubstitutes = this.substitutes.getCheapestSubstitutes();
         },
         onShow: function () {
             var cheapestSubstitutePrice = this.cheapestSubstitutes[0].get("unit_price");

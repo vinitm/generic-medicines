@@ -17,16 +17,34 @@ MedicineManager.module("Entities", function (Entities, MedicineManager, Backbone
     });
 
     Entities.AlternativeCollection = Backbone.Collection.extend({
-        model: Entities.Alternative
+        model: Entities.Alternative,
+        getCheapestSubstitutes: function () {
+            if (this.length == 0)
+                throw "cannot search empty collection";
+            var priceProperty = "unit_price";
+            var cheapestSubstitutePrice = this.models[0].get(priceProperty);
+            var cheapestSubstitutes = [];
+            this.substitutes.forEach(function (e) {
+                var price = e.get(priceProperty);
+                if (price < cheapestSubstitutePrice) {
+                    cheapestSubstitutePrice = price;
+                    cheapestSubstitutes = [];
+                    cheapestSubstitutes.push(e);
+                } else if (price === cheapestSubstitutePrice) {
+                    cheapestSubstitutes.push(e);
+                }
+            });
+            return cheapestSubstitutes;
+        }
     });
 
     var API = {
         getAlternatives: function (medicine) {
             var alternatives = new Entities.AlternativeCollection();
             alternatives.url = "/medicine_alternatives/?id=" + encodeURIComponent(medicine);
-            return alternatives.fetch().then(function() {
-            return alternatives;
-        });
+            return alternatives.fetch().then(function () {
+                return alternatives;
+            });
         }
     };
 
