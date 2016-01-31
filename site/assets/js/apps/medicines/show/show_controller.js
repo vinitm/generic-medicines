@@ -6,6 +6,8 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
 
             var details = MedicineManager.request("details:entities", medicine);
             var substitutes = MedicineManager.request("substitute:entities", medicine);
+            var recentlyViewed = MedicineManager.request("recentlyViewed:entities");
+            console.log(recentlyViewed);
 
             $.when(details, substitutes).then(function (details, substitutes) {
                 //medicine name in title
@@ -13,11 +15,11 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
                     model: details
                 });
                 showLayout.titleRegion.show(titleView);
-                
+
                 //view showing details of medicine
                 var detailsView = new Show.Details({
                     model: details
-                });    
+                });
                 showLayout.detailsRegion.show(detailsView);
 
 
@@ -36,6 +38,12 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
                     medicine: details
                 });
                 showLayout.cheapestSubstitutesRegion.show(cheapestSubstitutesView);
+
+                //recently viewed
+                var recentlyViewedView = new Show.RecentlyViewedLayout({
+                    collection: recentlyViewed
+                });
+                showLayout.recentlyViewedRegion.show(recentlyViewedView);
             }.bind(this));
         },
         showSubstitute: function (medicine) {

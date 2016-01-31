@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.0.1/css/responsive.bootstrap.min.css" rel="stylesheet">
-        <link href="./assets/css/application.css" rel="stylesheet">
+    <link href="./assets/css/application.css" rel="stylesheet">
 </head>
 
 <body>
@@ -32,17 +32,7 @@
     <script type="text/template" id="show-layout-template">
         <section id="sidebar" class="col-sm-3">
             <div id="recently-viewed-region" class="mcard-container">
-                <div id="recently-viewed" class="mcard">
-                    <div class="mcard-title mcard-title-center">Recently Viewed</div>
-                    <div class="mcard-content">
-                        <ul class="material-list">
-                            <li>option1</li>
-                            <li>option2</li>
-                            <li>option3</li>
-                            <li>option4</li>
-                        </ul>
-                    </div>
-                </div>
+
             </div>
         </section>
         <section id="content" class="row col-sm-9">
@@ -63,12 +53,10 @@
             </div>
             <div class="col-xs-12">
                 <div id="substitutes-region" class="mcard-container">
-                    
+
                 </div>
             </div>
         </section>
-        <div id="details"></div>
-        <div id="substitutes"></div>
     </script>
 
     <script type="text/template" id="title-template">
@@ -87,19 +75,20 @@
             <span class="details-item col-sm-12">Constituents(Strength):<%=constituents.map(function(item){return item.name.trim()+"("+item.strength.trim()+")"}).join(",") %></span>
         </div>
     </script>
-	
-	<script type="text/template" id="cheapest-substitutes-list-template">
-		<%= brand %>  <%= unit_price %> 
-	</script>
+
+    <script type="text/template" id="cheapest-substitutes-list-template">
+        <%= brand %>
+            <%= unit_price %>
+    </script>
 
     <script type="text/template" id="cheapest_substitute-template">
         <div class="mcard-title mcard-title-center">Cheapest Substitutes</div>
         <div class="mcard-content clearfix">
-			<div id="substitutes-list-region" class="col-sm-6"> 
-			
-			</div>
+            <div id="substitutes-list-region" class="col-sm-6">
+
+            </div>
             <div id="chart-region" class="col-sm-6">
-                
+
             </div>
         </div>
     </script>
@@ -114,23 +103,33 @@
 
         </div>
     </script>
+    <script type="text/template" id="recently-viewed-template">
+        <div class="mcard-title mcard-title-center">Recently Viewed</div>
+        <div id="list-region" class="mcard-content">
 
+        </div>
+    </script>
+    <script type="text/template" id="recently-viewed-listItem-template">
+        <%= medicine %>
+    </script>
 
     <script src="./assets/js/vendor/jquery.js"></script>
     <script src="./assets/js/vendor/underscore.js"></script>
     <script src="./assets/js/vendor/backbone.js"></script>
+    <script src="./assets/js/vendor/backbone.localStorage.js"></script>
     <script src="./assets/js/vendor/backbone.wreqr.js"></script>
     <script src="./assets/js/vendor/backbone.babysitter.js"></script>
     <script src="./assets/js/vendor/backbone.marionette.js"></script>
-	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src='https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js'></script>
     <script src='https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js'></script>
-	<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
     <!----------------------------------------------------------------------->
     <script src="./assets/js/app.js"></script>
     <script src="./assets/js/entities/suggestion.js"></script>
     <script src="./assets/js/entities/substitute.js"></script>
     <script src="./assets/js/entities/details.js"></script>
+    <script src="./assets/js/entities/recently-viewed.js"></script>
     <script src="./assets/js/apps/medicines/search/suggest/suggest_view.js"></script>
     <script src="./assets/js/apps/medicines/search/search_view.js"></script>
     <script src="./assets/js/apps/medicines/search/search_controller.js"></script>

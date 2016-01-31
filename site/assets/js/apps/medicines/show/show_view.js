@@ -8,7 +8,8 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
             "titleRegion": "#title-region",
             "detailsRegion": "#details-region",
             "cheapestSubstitutesRegion": "#cheapest_substitutes-region",
-            "substitutesRegion": "#substitutes-region"
+            "substitutesRegion": "#substitutes-region",
+            "recentlyViewedRegion": "#recently-viewed-region"
         },
         childEvents: {
             "substitute:show": "onChildSubstituteShow"
