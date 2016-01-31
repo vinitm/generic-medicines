@@ -5,9 +5,9 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
             MedicineManager.mainRegion.show(showLayout);
 
             var details = MedicineManager.request("details:entities", medicine);
-            var alternatives = MedicineManager.request("alternative:entities", medicine);
+            var substitutes = MedicineManager.request("substitute:entities", medicine);
 
-            $.when(details, alternatives).then(function (details, alternatives) {
+            $.when(details, substitutes).then(function (details, substitutes) {
                 //medicine name in title
                 var titleView = new Show.Title({
                     model: details
@@ -23,7 +23,7 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
 
                 //medicine substitutes
                 var substitutesView = new Show.Substitutes({
-                    collection: alternatives,
+                    collection: substitutes,
                     referencePrice: details.get("medicine")["unit_price"]
                 });
                 substitutesView.on("substitute:show", this.showSubstitute);
@@ -32,7 +32,7 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
 
                 //cheapest substitutes    
                 var cheapestSubstitutesView = new Show.CheapestSubstitutes({
-                    substitutes: alternatives,
+                    substitutes: substitutes,
                     medicine: details
                 });
                 showLayout.cheapestSubstitutesRegion.show(cheapestSubstitutesView);

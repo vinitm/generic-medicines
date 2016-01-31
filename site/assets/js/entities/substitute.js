@@ -1,5 +1,5 @@
 MedicineManager.module("Entities", function (Entities, MedicineManager, Backbone, Marionette, $, _) {
-    Entities.Alternative = Backbone.Model.extend({
+    Entities.Subtitute = Backbone.Model.extend({
         default: {
             brand: "",
             category: "",
@@ -16,15 +16,15 @@ MedicineManager.module("Entities", function (Entities, MedicineManager, Backbone
         }
     });
 
-    Entities.AlternativeCollection = Backbone.Collection.extend({
-        model: Entities.Alternative,
+    Entities.SubtituteCollection = Backbone.Collection.extend({
+        model: Entities.Subtitute,
         getCheapestSubstitutes: function () {
             if (this.length == 0)
                 throw "cannot search empty collection";
             var priceProperty = "unit_price";
             var cheapestSubstitutePrice = this.models[0].get(priceProperty);
             var cheapestSubstitutes = [];
-            this.substitutes.forEach(function (e) {
+            this.forEach(function (e) {
                 var price = e.get(priceProperty);
                 if (price < cheapestSubstitutePrice) {
                     cheapestSubstitutePrice = price;
@@ -39,17 +39,17 @@ MedicineManager.module("Entities", function (Entities, MedicineManager, Backbone
     });
 
     var API = {
-        getAlternatives: function (medicine) {
-            var alternatives = new Entities.AlternativeCollection();
-            alternatives.url = "/medicine_alternatives/?id=" + encodeURIComponent(medicine);
-            return alternatives.fetch().then(function () {
-                return alternatives;
+        getSubtitutes: function (medicine) {
+            var substitutes = new Entities.SubtituteCollection();
+            substitutes.url = "/medicine_substitutes/?id=" + encodeURIComponent(medicine);
+            return substitutes.fetch().then(function () {
+                return substitutes;
             });
         }
     };
 
-    MedicineManager.reqres.setHandler("alternative:entities", function (medicine) {
-        return API.getAlternatives(medicine);
+    MedicineManager.reqres.setHandler("substitute:entities", function (medicine) {
+        return API.getSubtitutes(medicine);
     });
 
 });
