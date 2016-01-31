@@ -12,10 +12,12 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
                 var titleView = new Show.Title({
                     model: details
                 });
+                showLayout.titleRegion.show(titleView);
+                
+                //view showing details of medicine
                 var detailsView = new Show.Details({
                     model: details
-                });
-                showLayout.titleRegion.show(titleView);
+                });    
                 showLayout.detailsRegion.show(detailsView);
 
 
