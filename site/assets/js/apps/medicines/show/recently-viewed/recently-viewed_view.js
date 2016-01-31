@@ -1,0 +1,1 @@
+MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Backbone, Marionette, $, _) {});
