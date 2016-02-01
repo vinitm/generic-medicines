@@ -7,7 +7,6 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
             var details = MedicineManager.request("details:entities", medicine);
             var substitutes = MedicineManager.request("substitute:entities", medicine);
             var recentlyViewed = MedicineManager.request("recentlyViewed:entities");
-            console.log(recentlyViewed);
 
             $.when(details, substitutes).then(function (details, substitutes) {
                 //medicine name in title

@@ -1,8 +1,5 @@
 MedicineManager.module("Entities", function (Entities, MedicineManager, Backbone, Marionette, $, _) {
 
-    var capacity = 4;
-    var data = [];
-
     var RecentlyViewedItem = Backbone.Model.extend({
         default: {
             medicine: null
@@ -10,22 +7,23 @@ MedicineManager.module("Entities", function (Entities, MedicineManager, Backbone
     });
 
     Entities.RecentlyViewed = Backbone.Collection.extend({
-        sizeLimit: 4,
         model: RecentlyViewedItem,
-        add: function (items, options) {
-            if(this.sizeLimit<)
-            Backbone.Collection.prototype.add.call(items, options);
-        },
         localStorage: new Backbone.LocalStorage("RecentlyViewed")
     });
+	
+	var capacity = 4;
+    var data = new Entities.RecentlyViewed();
 
     var API = {
         getRecentlyViewed: function () {
-            return new Entities.RecentlyViewed(data);
+            return data;
         },
         addItem: function (item) {
-            if (data.length == capacity)
-                data.po
+			var model=data.findWhere({medicine: item});
+			if(model)
+				data.remove(model);
+			else if (data.length == capacity)
+				data.pop();
             data.unshift(new RecentlyViewedItem({
                 medicine: item
             }));

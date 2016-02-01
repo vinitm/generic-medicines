@@ -11,6 +11,7 @@ MedicineManager.module("MedicineApp", function (MedicineApp, MedicineManager, Ba
             MedicineApp.Search.Controller.showSearchOption();
         },
         showMedicine: function (id) {
+			MedicineManager.trigger("medicine:show",id);
             MedicineApp.Show.Controller.showMedicine(id);
         }
     };
@@ -21,8 +22,10 @@ MedicineManager.module("MedicineApp", function (MedicineApp, MedicineManager, Ba
     });
 
     MedicineManager.on("medicine:show", function (medicine) {
-        MedicineManager.navigate("show/" + medicine);
-        API.showMedicine(medicine);
+	if(MedicineManager.getCurrentRoute()!=="show/" + medicine){//to prevent infinite loop when "medicine:show" triggered from API.showMedicine
+        MedicineManager.navigate("show/" + medicine);          //that is when link is directly put , it does not trigger "medicine:show" and recently-viewed is not updated
+        API.showMedicine(medicine);							   //so have to trigger it manually
+	}
     });
 
 
