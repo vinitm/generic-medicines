@@ -1,9 +1,20 @@
 MedicineManager.module("MedicineApp.Search", function (Search, MedicineManager, Backbone, Marionette, $, _) {
+
+    var SuggestionRegion = Marionette.Region.extend({
+        onBeforeSwapOut: function () {
+            this.currentView.abort();
+            console.log(this.currentView.collection.url + " aborted");
+        }
+    });
+
     Search.SearchLayout = Marionette.LayoutView.extend({
         template: "#search-layout-template",
         regions: {
             inputRegion: "#search",
-            suggestionRegion: "#suggestion"
+            suggestionRegion: {
+                selector: "#suggestion",
+                regionClass: SuggestionRegion
+            }
         },
         childEvents: {
             "search:change": "onChildSearchChange",

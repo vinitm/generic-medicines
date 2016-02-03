@@ -14,7 +14,11 @@ MedicineManager.module("MedicineApp.Search.Suggest", function (Suggest, Medicine
 
     Suggest.Suggestions = Marionette.CollectionView.extend({
         tagName: "ul",
-        childView: Suggest.Suggestion
+        childView: Suggest.Suggestion,
+        abort: function () {
+            var xhr = this.collection.xhr;
+            xhr.abort();
+        }
     });
 
 });

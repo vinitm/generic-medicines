@@ -6,14 +6,17 @@ MedicineManager.module("Entities", function (Entities, MedicineManager, Backbone
     });
 
     Entities.SuggestionCollection = Backbone.Collection.extend({
-        model: Entities.Suggestion
-        /*filterBy: function (filterText) {
-            var filtered = this.filter(function (medicine) {
-                return medicine.get('suggestion').toLowerCase().match(new RegExp("^" + filterText.toLowerCase()));
-            });
+        model: Entities.Suggestion,
+        fetch: function (options) {
+                return this.xhr = Backbone.Collection.prototype.fetch.call(this, options);
+            }
+            /*filterBy: function (filterText) {
+                var filtered = this.filter(function (medicine) {
+                    return medicine.get('suggestion').toLowerCase().match(new RegExp("^" + filterText.toLowerCase()));
+                });
 
-            return new Entities.SuggestionCollection(filtered);
-        }*/
+                return new Entities.SuggestionCollection(filtered);
+            }*/
     });
 
     var API = {
@@ -21,7 +24,7 @@ MedicineManager.module("Entities", function (Entities, MedicineManager, Backbone
             var suggestions = new Entities.SuggestionCollection();
             suggestions.url = "/medicine_suggestions/?id=" + encodeURIComponent(medicine);
             return suggestions.fetch().then(function () {
-                return suggestions/*.filterBy(medicine)*/;
+                return suggestions /*.filterBy(medicine)*/ ;
             });
         }
     };
