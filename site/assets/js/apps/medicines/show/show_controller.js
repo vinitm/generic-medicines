@@ -42,6 +42,7 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
                 var recentlyViewedView = new Show.RecentlyViewedLayout({
                     collection: recentlyViewed
                 });
+				recentlyViewedView.on("substitute:show", this.showSubstitute);
                 showLayout.recentlyViewedRegion.show(recentlyViewedView);
             }.bind(this));
         },
