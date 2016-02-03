@@ -11,22 +11,26 @@ MedicineManager.module("Entities", function (Entities, MedicineManager, Backbone
         localStorage: new Backbone.LocalStorage("RecentlyViewed")
     });
 	
-	var capacity = 4;
+	var capacity = 5;
     var data = new Entities.RecentlyViewed();
-
+	data.fetch();
+	
     var API = {
         getRecentlyViewed: function () {
             return data;
         },
         addItem: function (item) {
 			var model=data.findWhere({medicine: item});
-			if(model)
-				data.remove(model);
+			if(model){
+				model.destroy();
+			}
 			else if (data.length == capacity)
-				data.pop();
-            data.unshift(new RecentlyViewedItem({
+				data.pop().destroy();
+				model=new RecentlyViewedItem({
                 medicine: item
-            }));
+            });
+			data.unshift(model);
+			model.save();
         }
     };
 
