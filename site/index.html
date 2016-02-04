@@ -10,6 +10,7 @@
     <link href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.0.1/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="./assets/css/application.css" rel="stylesheet">
+	<link href="./assets/css/loader.css" rel="stylesheet">
 </head>
 
 <body>
@@ -31,59 +32,66 @@
 
     <script type="text/template" id="show-layout-template">
         <section id="sidebar" class="col-sm-3">
-            <div id="recently-viewed-region" class="mcard-container">
-
+            <div class="mcard-container">
+			<div class="mcard">
+				<div class="mcard-title mcard-title-center">Recently Viewed</div>
+				<div id="recently-viewed-region" class="mcard-content row"></div>
             </div>
+			</div>
         </section>
         <section id="content" class="row col-sm-9">
             <div class="col-xs-12">
-                <div id="title-region" class="mcard-container">
-
+                <div class="mcard-container">
+					<div class="mcard">
+						<div id="title-region" class="mcard-content row"></div>
+					</div>
                 </div>
             </div>
             <div class="col-xs-12">
-                <div id="details-region" class="mcard-container">
-
+                <div class="mcard-container">
+					<div class="mcard">
+						        <div class="mcard-title mcard-title-center">Details</div>
+								<div id="details-region" class="mcard-content row"></div>
+					</div>
                 </div>
             </div>
             <div class="col-xs-12">
-                <div id="cheapest_substitutes-region" class="mcard-container">
-
+				<div class="mcard-container">
+					<div class="mcard">
+						        <div class="mcard-title mcard-title-center">Cheapest Substitutes</div>
+								<div id="cheapest_substitutes-region" class="mcard-content clearfix"></div>
+					</div>
                 </div>
             </div>
             <div class="col-xs-12">
-                <div id="substitutes-region" class="mcard-container">
-
+				<div class="mcard-container">
+					<div class="mcard">
+						<div class="mcard-title mcard-title-center">Substitutes</div>
+						<div id="substitutes-region" class="mcard-content row"></div>
+					</div>
                 </div>
             </div>
         </section>
     </script>
 
-    <script type="text/template" id="title-template">
-        <div class="mcard-content">
+    <script type="text/template" id="title-template">        
             <h3><%= medicine.brand %> <span class="label label-warning"><%= medicine.category %></span></h3>
-        </div>
     </script>
 
     <script type="text/template" id="details-template">
-        <div class="mcard-title mcard-title-center">Details</div>
-        <div class="mcard-content row">
             <span class="details-item col-sm-6">Brand:<%= medicine.brand %></span>
             <span class="details-item col-sm-6">Manufacturer:<%= medicine.manufacturer %></span>
             <span class="details-item col-sm-6">Price:<%= medicine.package_price %></span>
             <span class="details-item col-sm-6">Package Quantity:<%= medicine.package_qty %></span>
             <span class="details-item col-sm-12">Constituents(Strength):<%=constituents.map(function(item){return item.name.trim()+"("+item.strength.trim()+")"}).join(",") %></span>
-        </div>
     </script>
 
     <script type="text/template" id="cheapest-substitutes-list-template">
         <%= brand %>
-            <%= unit_price %>
+        <%= unit_price %>
     </script>
 
     <script type="text/template" id="cheapest_substitute-template">
-        <div class="mcard-title mcard-title-center">Cheapest Substitutes</div>
-        <div class="mcard-content clearfix">
             <div id="substitutes-list-region" class="col-sm-6">
 
             </div>
@@ -98,20 +106,25 @@
     </script>
 
     <script type="text/template" id="substitutes-template">
-        <div class="mcard-title mcard-title-center">Substitutes</div>
-        <div id="table-region" class="mcard-content row">
+        <div id="table-region">
 
         </div>
     </script>
     <script type="text/template" id="recently-viewed-template">
-        <div class="mcard-title mcard-title-center">Recently Viewed</div>
-        <div id="list-region" class="mcard-content">
-
+        <div id="list-region">
+		
         </div>
     </script>
     <script type="text/template" id="recently-viewed-listItem-template">
         <a href="#" class="show"><%= medicine %></a>
     </script>
+	<script type="text/template" id="loading-template">
+		<div class="cssload-loader">
+			<div class="cssload-inner cssload-one"></div>
+			<div class="cssload-inner cssload-two"></div>
+			<div class="cssload-inner cssload-three"></div>
+		</div>
+	</script>
 
     <script src="./assets/js/vendor/jquery.js"></script>
     <script src="./assets/js/vendor/underscore.js"></script>
@@ -130,6 +143,7 @@
     <script src="./assets/js/entities/substitute.js"></script>
     <script src="./assets/js/entities/details.js"></script>
     <script src="./assets/js/entities/recently-viewed.js"></script>
+	<script src="./assets/js/common/views.js"></script>
     <script src="./assets/js/apps/medicines/search/suggest/suggest_view.js"></script>
     <script src="./assets/js/apps/medicines/search/search_view.js"></script>
     <script src="./assets/js/apps/medicines/search/search_controller.js"></script>

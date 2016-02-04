@@ -8,6 +8,12 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
             var substitutes = MedicineManager.request("substitute:entities", medicine);
             var recentlyViewed = MedicineManager.request("recentlyViewed:entities");
 
+			//show loading view while the information is loaded
+			showLayout.regionManager.each(function(region){
+			var loadingView=new MedicineManager.Common.Views.Loading();
+				region.show(loadingView);
+			});
+
             $.when(details, substitutes).then(function (details, substitutes) {
                 //medicine name in title
                 var titleView = new Show.Title({

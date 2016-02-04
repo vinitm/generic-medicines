@@ -24,7 +24,6 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
     });
 
     Show.RecentlyViewedLayout = Marionette.LayoutView.extend({
-        className: "mcard",
         template: "#recently-viewed-template",
         regions: {
             "listRegion": "#list-region"

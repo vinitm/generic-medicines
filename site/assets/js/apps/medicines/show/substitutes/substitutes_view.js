@@ -54,7 +54,6 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
 
     Show.Substitutes = Marionette.LayoutView.extend({
         template: "#substitutes-template",
-        className: "mcard",
         tagName: "div",
         id: "cheapest_substitute",
         regions: {
