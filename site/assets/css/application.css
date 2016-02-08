@@ -74,19 +74,6 @@ html {
     padding: 0px;
 }
 
-#searchBar input {
-    margin: 0 auto;
-    display: table;
-}
-
-#searchBar ul {
-    list-style: none;
-    width: 544px;
-    margin: 0 auto;
-    display: table;
-    text-align: left;
-}
-
 #main {
     margin: 8rem 2rem;
 }
