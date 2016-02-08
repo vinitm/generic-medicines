@@ -1,3 +1,2 @@
-1)add recently visited
-2)add Cheaper/Costlier(unit price) column in table(sort base on unit price)
-3)add links as Brand Names
+
+add Cheaper/Costlier(unit price) column in table(sort base on unit price)
