@@ -8,23 +8,18 @@ MedicineManager.module("Entities", function (Entities, MedicineManager, Backbone
     Entities.SuggestionCollection = Backbone.Collection.extend({
         model: Entities.Suggestion,
         fetch: function (options) {
-                return this.xhr = Backbone.Collection.prototype.fetch.call(this, options);
-            }
-            /*filterBy: function (filterText) {
-                var filtered = this.filter(function (medicine) {
-                    return medicine.get('suggestion').toLowerCase().match(new RegExp("^" + filterText.toLowerCase()));
-                });
-
-                return new Entities.SuggestionCollection(filtered);
-            }*/
+            return this.xhr = Backbone.Collection.prototype.fetch.call(this, options);
+        }
     });
 
     var API = {
         getSuggestions: function (medicine) {
             var suggestions = new Entities.SuggestionCollection();
+            if (!(medicine.trim()))// hack to get empty response when medicine is empty
+                medicine = "$%^&";
             suggestions.url = "/medicine_suggestions/?id=" + encodeURIComponent(medicine);
             return suggestions.fetch().then(function () {
-                return suggestions /*.filterBy(medicine)*/ ;
+                return suggestions;
             });
         }
     };
