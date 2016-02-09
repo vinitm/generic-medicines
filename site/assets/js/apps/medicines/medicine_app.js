@@ -23,7 +23,8 @@ MedicineManager.module("MedicineApp", function (MedicineApp, MedicineManager, Ba
 
     MedicineManager.on("medicine:show", function (medicine) {
 	if(MedicineManager.getCurrentRoute()!=="show/" + medicine){//to prevent infinite loop when "medicine:show" triggered from API.showMedicine
-        MedicineManager.navigate("show/" + medicine);          //that is when link is directly put , it does not trigger "medicine:show" and recently-viewed is not updated
+        MedicineManager.navigate("show/" + medicine);          //that is when link is directly put , it does not trigger "medicine:show" and recently                                                                       //viewed is not updated
+        console.log(medicine);
         API.showMedicine(medicine);							   //so have to trigger it manually
 	}
     });

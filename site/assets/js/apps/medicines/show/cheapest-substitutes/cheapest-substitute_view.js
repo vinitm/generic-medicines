@@ -31,7 +31,11 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
                 color: "#81C784",
                 label: "Green"
             }];
-            new Chart(ctx).Pie(data);
+            this.chart=new Chart(ctx).Pie(data);
+        },
+        onDestroy:function(){
+            console.log("close");
+            this.chart.destroy();
         }
     });
 

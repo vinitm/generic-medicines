@@ -1,7 +1,8 @@
 MedicineManager.module("MedicineApp.Search", function (Search, MedicineManager, Backbone, Marionette, $, _) {
 
     Search.SearchLayout = Marionette.LayoutView.extend({
-        template: "#search-layout-template",
+        template: '#search-layout-template',
+        id:"searchContainer",
         regions: {
             inputRegion: "#search"
         },
@@ -9,16 +10,11 @@ MedicineManager.module("MedicineApp.Search", function (Search, MedicineManager, 
             "suggestion:select": "onChildSuggestionSelect"
         },
         onChildSuggestionSelect: function (view, suggestion) {
-            var suggest = new Backbone.Model({
-                suggestion: suggestion
-            });
-            this.trigger("suggestion:select", suggest);
+            var model = new Backbone.Model(suggestion);
+            this.trigger("suggestion:select", model);
         },
         onShow: function () {
             var search = new Search.Input();
-            search.on('all', function (e) {
-                console.log(e);
-            });
             this.inputRegion.show(search);
         }
     });
@@ -27,8 +23,11 @@ MedicineManager.module("MedicineApp.Search", function (Search, MedicineManager, 
         template: false,
         tagName: "input",
         className: "searchInput",
-        triggers: {
-            "typeahead:select": "suggestion:select"
+        events: {
+            "typeahead:select": "onTypeheadSelect"
+        },
+        onTypeheadSelect: function (event, suggest) {
+            this.triggerMethod('suggestion:select', suggest);
         },
         onShow: function () {
             // constructs the suggestion engine
@@ -51,6 +50,7 @@ MedicineManager.module("MedicineApp.Search", function (Search, MedicineManager, 
                 highlight: true,
                 minLength: 1
             }, {
+                limit: "50",
                 displayKey: 'suggestion',
                 name: 'suggestions',
                 source: engine

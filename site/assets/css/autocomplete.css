@@ -1,3 +1,8 @@
+.tt-menu {
+    max-height: 150px;
+    overflow-y: auto;
+}
+
 .searchInput,
 .tt-query,
 .tt-hint {
@@ -29,7 +34,11 @@
 }
 
 .tt-hint {
-    color: #999
+    color: #999;
+}
+
+.tt-highlight {
+    color: #0097cf;
 }
 
 .tt-menu {
@@ -57,6 +66,10 @@
     cursor: pointer;
     color: #fff;
     background-color: #0097cf;
+}
+
+.tt-suggestion:hover .tt-highlight{
+    color:#fff;
 }
 
 .tt-suggestion.tt-cursor {

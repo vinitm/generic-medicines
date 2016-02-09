@@ -4,17 +4,21 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
             var showLayout = new Show.LayoutView();
             MedicineManager.mainRegion.show(showLayout);
 
-            var details = MedicineManager.request("details:entities", medicine);
-            var substitutes = MedicineManager.request("substitute:entities", medicine);
+            var detailsFetched= MedicineManager.request("details:entities", medicine);
+            var substitutesFetched = MedicineManager.request("substitute:entities", medicine);
             var recentlyViewed = MedicineManager.request("recentlyViewed:entities");
 
-			//show loading view while the information is loaded
-			showLayout.regionManager.each(function(region){
-			var loadingView=new MedicineManager.Common.Views.Loading();
-				region.show(loadingView);
-			});
+            //show loading view while the information is loaded
+            showLayout.regionManager.each(function (region) {
+                var loadingView = new MedicineManager.Common.Views.Loading();
+                region.show(loadingView);
+            });
 
-            $.when(details, substitutes).then(function (details, substitutes) {
+            $.when(detailsFetched, substitutesFetched).then(function (details, substitutes) {
+                if (!$.contains(document, showLayout.$el[0])) {
+                    //if layout is detached
+                    return;
+                }
                 //medicine name in title
                 var titleView = new Show.Title({
                     model: details
@@ -48,7 +52,7 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
                 var recentlyViewedView = new Show.RecentlyViewedLayout({
                     collection: recentlyViewed
                 });
-				recentlyViewedView.on("substitute:show", this.showSubstitute);
+                recentlyViewedView.on("substitute:show", this.showSubstitute);
                 showLayout.recentlyViewedRegion.show(recentlyViewedView);
             }.bind(this));
         },
