@@ -13,19 +13,19 @@ MedicineManager.module("Entities", function (Entities, MedicineManager, Backbone
 	
 	var capacity = 5;
     var data = new Entities.RecentlyViewed();
-	data.fetch();
 	
     var API = {
         getRecentlyViewed: function () {
             return data;
         },
         addItem: function (item) {
+		data.fetch();
 			var model=data.findWhere({medicine: item});
 			if(model){
 				model.destroy();
 			}
 			else if (data.length == capacity)
-				data.pop().destroy();
+				data.at(data.length-1).destroy();
 				model=new RecentlyViewedItem({
                 medicine: item
             });
@@ -38,7 +38,7 @@ MedicineManager.module("Entities", function (Entities, MedicineManager, Backbone
         return API.getRecentlyViewed();
     });
 
-    MedicineManager.on("medicine:show", function (medicine) {
+    MedicineManager.commands.setHandler("add:recentlyViewed", function (medicine) {
         API.addItem(medicine);
     });
 
