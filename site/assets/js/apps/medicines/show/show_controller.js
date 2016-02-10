@@ -19,6 +19,14 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
                     //if layout is detached
                     return;
                 }
+				
+				 //recently viewed
+                var recentlyViewedView = new Show.RecentlyViewedLayout({
+                    collection: recentlyViewed
+                });
+                recentlyViewedView.on("substitute:show", this.showSubstitute);
+                showLayout.recentlyViewedRegion.show(recentlyViewedView);
+				
                 //medicine name in title
                 var titleView = new Show.Title({
                     model: details
@@ -32,28 +40,28 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
                 showLayout.detailsRegion.show(detailsView);
 
 
-                //medicine substitutes
-                var substitutesView = new Show.Substitutes({
-                    collection: substitutes,
-                    referencePrice: details.get("medicine")["unit_price"]
-                });
-                substitutesView.on("substitute:show", this.showSubstitute);
-                showLayout.substitutesRegion.show(substitutesView);
+				if(substitutes.length===0){
+					showLayout.substitutesRegion.show(new MedicineManager.Common.Views.EmptyView({message:"No substitutes found"}));
+					showLayout.cheapestSubstitutesRegion.show(new MedicineManager.Common.Views.EmptyView({message:"No substitutes found"}));
+				}
+				else{
+					//medicine substitutes
+					var substitutesView = new Show.Substitutes({
+						collection: substitutes,
+						referencePrice: details.get("medicine")["unit_price"]
+					});
+					substitutesView.on("substitute:show", this.showSubstitute);
+					showLayout.substitutesRegion.show(substitutesView);
 
 
-                //cheapest substitutes    
-                var cheapestSubstitutesView = new Show.CheapestSubstitutes({
-                    substitutes: substitutes,
-                    medicine: details
-                });
-                showLayout.cheapestSubstitutesRegion.show(cheapestSubstitutesView);
-
-                //recently viewed
-                var recentlyViewedView = new Show.RecentlyViewedLayout({
-                    collection: recentlyViewed
-                });
-                recentlyViewedView.on("substitute:show", this.showSubstitute);
-                showLayout.recentlyViewedRegion.show(recentlyViewedView);
+					//cheapest substitutes    
+					var cheapestSubstitutesView = new Show.CheapestSubstitutes({
+						substitutes: substitutes,
+						medicine: details
+					});
+					showLayout.cheapestSubstitutesRegion.show(cheapestSubstitutesView);
+				}
+               
             }.bind(this));
         },
         showSubstitute: function (medicine) {

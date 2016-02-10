@@ -19,11 +19,11 @@ MedicineManager.module("Entities", function (Entities, MedicineManager, Backbone
     Entities.SubtituteCollection = Backbone.Collection.extend({
         model: Entities.Subtitute,
         getCheapestSubstitutes: function () {
+		var cheapestSubstitutes = [];
             if (this.length == 0)
-                throw "cannot search empty collection";
+                return cheapestSubstitutes;
             var priceProperty = "unit_price";
             var cheapestSubstitutePrice = this.models[0].get(priceProperty);
-            var cheapestSubstitutes = [];
             this.forEach(function (e) {
                 var price = e.get(priceProperty);
                 if (price < cheapestSubstitutePrice) {
