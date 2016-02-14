@@ -6,8 +6,8 @@ MedicineManager.module("MedicineApp.Search", function (Search, MedicineManager, 
             searchLayout.on("suggestion:select", this.showMedicine);
             MedicineManager.mainRegion.show(searchLayout);
         },
-        showMedicine: function (suggestion) {
-            MedicineManager.trigger("medicine:show", suggestion.get("suggestion"));
+        showMedicine: function (suggestModel) {
+            MedicineManager.trigger("medicine:show", suggestModel);
         }
     }
 });

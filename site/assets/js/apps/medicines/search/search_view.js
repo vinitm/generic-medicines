@@ -2,16 +2,15 @@ MedicineManager.module("MedicineApp.Search", function (Search, MedicineManager, 
 
     Search.SearchLayout = Marionette.LayoutView.extend({
         template: '#search-layout-template',
-        id:"searchContainer",
+        id: "searchContainer",
         regions: {
             inputRegion: "#search"
         },
         childEvents: {
             "suggestion:select": "onChildSuggestionSelect"
         },
-        onChildSuggestionSelect: function (view, suggestion) {
-            var model = new Backbone.Model(suggestion);
-            this.trigger("suggestion:select", model);
+        onChildSuggestionSelect: function (view, suggestModel) {
+            this.trigger("suggestion:select", suggestModel);
         },
         onShow: function () {
             var search = new Search.Input();
@@ -26,22 +25,23 @@ MedicineManager.module("MedicineApp.Search", function (Search, MedicineManager, 
         events: {
             "typeahead:select": "onTypeheadSelect"
         },
-        onTypeheadSelect: function (event, suggest) {
-            this.triggerMethod('suggestion:select', suggest);
+        onTypeheadSelect: function (event, suggestModel) {
+            this.triggerMethod('suggestion:select', suggestModel);
         },
         onShow: function () {
             // constructs the suggestion engine
             var engine = new Bloodhound({
-                datumTokenizer: function (item) {
-                    return Bloodhound.tokenizers.whitespace(item.suggestion);
+                datumTokenizer: function (suggestion) {
+                    return Bloodhound.tokenizers.whitespace(suggestion.getBrandName());
                 },
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
                 remote: {
                     url: '/medicine_suggestions/?id=%QUERY',
-                    wildcard: '%QUERY'
-                },
-                transform: function (response) {
-                    return response.suggestions;
+                    wildcard: '%QUERY',
+                    transform: function (suggestions) {
+                        var collection = new MedicineManager.Entities.Suggestions(suggestions);
+                        return collection.models;
+                    }
                 }
             });
 
@@ -51,7 +51,9 @@ MedicineManager.module("MedicineApp.Search", function (Search, MedicineManager, 
                 minLength: 1
             }, {
                 limit: "50",
-                displayKey: 'suggestion',
+                displayKey: function (suggestion) {
+                    return suggestion.getBrandName();
+                },
                 name: 'suggestions',
                 source: engine
             });

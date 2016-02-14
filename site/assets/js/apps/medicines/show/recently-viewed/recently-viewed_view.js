@@ -8,9 +8,7 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
         linkClicked: function (e) {
             e.preventDefault();
             e.stopPropagation();
-            var text = $(e.currentTarget).text().trim();
-			console.log("item="+text);
-            this.trigger("link:click", text);
+            this.trigger("link:click", this.model);
         }
     });
 
@@ -19,9 +17,8 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
         tagName: "ul",
         className: "material-list",
         id: "recently-viewed",
-		onChildviewLinkClick:function(view,text){
-		console.log("collection="+text);
-			this.triggerMethod("link:click", text);
+		onChildviewLinkClick:function(view,model){
+			this.triggerMethod("link:click", model);
 		}
     });
 
@@ -36,9 +33,8 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
 		childEvents: {
             "link:click": "onChildLinkClick"
         },
-        onChildLinkClick: function (view, text) {
-		console.log("layout="+text);
-            this.triggerMethod("substitute:show", text);
+        onChildLinkClick: function (view, model) {
+            this.triggerMethod("substitute:show", model);
         },
         onShow: function () {
             var list = new Show.RecentlyViewed({

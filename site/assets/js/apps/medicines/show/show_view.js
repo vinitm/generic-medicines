@@ -14,8 +14,8 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
         childEvents: {
             "substitute:show": "onChildSubstituteShow"
         },
-        onChildSubstituteShow: function (view, text) {
-            this.trigger("substitute:show", text);
+        onChildSubstituteShow: function (view, model) {
+            this.trigger("substitute:show", model);
         }
     });
 });

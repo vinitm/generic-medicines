@@ -10,9 +10,11 @@ MedicineManager.module("MedicineApp", function (MedicineApp, MedicineManager, Ba
         showSearchOption: function () {
             MedicineApp.Search.Controller.showSearchOption();
         },
-        showMedicine: function (id) {
-			MedicineManager.execute("add:recentlyViewed",id);
-            MedicineApp.Show.Controller.showMedicine(id);
+        showMedicine: function (medicineId) {
+            MedicineApp.Show.Controller.showMedicine(medicineId);
+        },
+        addRecentlyViewed: function (medicineModel) {
+            MedicineManager.execute("add:recentlyViewed", medicineModel);
         }
     };
 
@@ -21,12 +23,14 @@ MedicineManager.module("MedicineApp", function (MedicineApp, MedicineManager, Ba
         API.showSearchOption();
     });
 
-    MedicineManager.on("medicine:show", function (medicine) {
-        MedicineManager.navigate("show/" + medicine);
-        console.log(medicine);
-        API.showMedicine(medicine);
+    MedicineManager.on("medicine:show", function (medicineModel) {
+        MedicineManager.navigate("show/" + medicineModel.getId());
+        API.showMedicine(medicineModel.getId());
     });
 
+    MedicineManager.on("medicine:shown", function (medicineModel) {
+        API.addRecentlyViewed(medicineModel);
+    });
 
     MedicineManager.addInitializer(function () {
         new MedicineApp.Router({
