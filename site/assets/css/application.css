@@ -81,8 +81,15 @@ html {
 }
 
 #searchContainer {
+    margin: 0 auto;
     position: relative;
-    height: 50%;
+    display: table;
+    height: 100%;
+}
+
+#search {
+    display: table-cell;
+    vertical-align: middle;
 }
 
 #recently-viewed-region #list-region {
