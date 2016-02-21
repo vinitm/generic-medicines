@@ -7,7 +7,7 @@ var app = express();
 
 var root = __dirname + "/../";
 
-app.use(express.static(root + '/client'));
+app.use(express.static(root + '/public'));
 
 app.get('/medicine_suggestions', function (req, res) {
     suggestions(req.query.id).then(function (data) {

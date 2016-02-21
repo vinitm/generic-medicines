@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Generic Substitute</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.0.1/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="./assets/css/loader.css" rel="stylesheet">
+    <link href="./assets/css/autocomplete.css" rel="stylesheet">
+    <link href="./assets/css/application.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="main-region" class="container">
+
+    </div>
+    <script type="text/template" id="search-layout-template">
+        <div id='search'></div>
+    </script>
+    <script type="text/template" id="show-layout-template">
+        <section id="sidebar" class="col-sm-3">
+            <div class="mcard-container">
+                <div class="mcard">
+                    <div class="mcard-title mcard-title-center">Recently Viewed</div>
+                    <div id="recently-viewed-region" class="mcard-content row"></div>
+                </div>
+            </div>
+        </section>
+        <section id="content" class="row col-sm-9">
+            <div class="col-xs-12">
+                <div class="mcard-container">
+                    <div class="mcard">
+                        <div id="title-region" class="mcard-content row"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="mcard-container">
+                    <div class="mcard">
+                        <div class="mcard-title mcard-title-center">Details</div>
+                        <div id="details-region" class="mcard-content row"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="mcard-container">
+                    <div class="mcard">
+                        <div class="mcard-title mcard-title-center">Cheapest Substitutes</div>
+                        <div id="cheapest_substitutes-region" class="mcard-content clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="mcard-container">
+                    <div class="mcard">
+                        <div class="mcard-title mcard-title-center">Substitutes</div>
+                        <div id="substitutes-region" class="mcard-content row"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </script>
+
+    <script type="text/template" id="title-template">
+        <h3><%= medicine.brand %> <span class="label label-warning"><%= medicine.category %></span></h3>
+    </script>
+
+    <script type="text/template" id="details-template">
+        <span class="details-item col-sm-6">Brand:<%= medicine.brand %></span>
+        <span class="details-item col-sm-6">Manufacturer:<%= medicine.manufacturer %></span>
+        <span class="details-item col-sm-6">Price:<%= medicine.package_price %></span>
+        <span class="details-item col-sm-6">Package Quantity:<%= medicine.package_qty %></span>
+        <span class="details-item col-sm-12">Constituents(Strength):<%=constituents.map(function(item){return item.name.trim()+"("+item.strength.trim()+")"}).join(",") %></span>
+    </script>
+
+    <script type="text/template" id="cheapest-substitutes-list-template">
+        <%= brand %>
+            <%= unit_price %>
+    </script>
+
+    <script type="text/template" id="cheapest_substitute-template">
+        <div id="substitutes-list-region" class="col-sm-6">
+
+        </div>
+        <div id="chart-region" class="col-sm-6">
+
+        </div>
+        </div>
+    </script>
+
+    <script type="text/template" id="substitute-template">
+        <%= brand %>
+    </script>
+
+    <script type="text/template" id="substitutes-template">
+        <div id="table-region">
+
+        </div>
+    </script>
+    <script type="text/template" id="recently-viewed-template">
+        <div id="list-region">
+
+        </div>
+    </script>
+    <script type="text/template" id="recently-viewed-listItem-template">
+        <a href="#" class="show">
+            <%= medicine %>
+        </a>
+    </script>
+    <script type="text/template" id="loading-template">
+        <div class="cssload-loader">
+            <div class="cssload-inner cssload-one"></div>
+            <div class="cssload-inner cssload-two"></div>
+            <div class="cssload-inner cssload-three"></div>
+        </div>
+    </script>
+
+    <script src="./assets/js/vendor/jquery.js"></script>
+    <script src="./assets/js/vendor/underscore.js"></script>
+    <script src="./assets/js/vendor/backbone.js"></script>
+    <script src="./assets/js/vendor/backbone.localStorage.js"></script>
+    <script src="./assets/js/vendor/backbone.wreqr.js"></script>
+    <script src="./assets/js/vendor/backbone.babysitter.js"></script>
+    <script src="./assets/js/vendor/backbone.marionette.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src='https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js'></script>
+    <script src='https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+    <script src='./assets/js/vendor/typeahead.js'></script>
+    <!----------------------------------------------------------------------->
+    <script src="./assets/js/app.js"></script>
+    <script src="./assets/js/entities/substitute.js"></script>
+    <script src="./assets/js/entities/details.js"></script>
+    <script src="./assets/js/entities/recently-viewed.js"></script>
+    <script src="./assets/js/common/views.js"></script>
+    <script src="./assets/js/apps/medicines/search/search_view.js"></script>
+    <script src="./assets/js/apps/medicines/search/search_controller.js"></script>
+    <script src="./assets/js/apps/medicines/show/cheapest-substitutes/cheapest-substitute_view.js"></script>
+    <script src="./assets/js/apps/medicines/show/details/details_view.js"></script>
+    <script src="./assets/js/apps/medicines/show/recently-viewed/recently-viewed_view.js"></script>
+    <script src="./assets/js/apps/medicines/show/substitutes/substitutes_view.js"></script>
+    <script src="./assets/js/apps/medicines/show/title/title_view.js"></script>
+    <script src="./assets/js/apps/medicines/show/show_view.js"></script>
+    <script src="./assets/js/apps/medicines/show/show_controller.js"></script>
+    <script src="./assets/js/apps/medicines/medicine_app.js"></script>
+    <script type="text/javascript">
+        MedicineManager.start();
+    </script>
+</body>
+
+</html>
