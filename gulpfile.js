@@ -7,7 +7,7 @@ var SERVER_FILES = SERVER_FOLDER + '/';
 
 //client
 var CLIENT_FOLDER = './client';
-var CLIENT_SCSS = CLIENT_FOLDER + '/assets/css/**/*.scss';
+var CLIENT_CSS = CLIENT_FOLDER + '/assets/css/**/*.css';
 var CLIENT_JS = CLIENT_FOLDER + '/assets/js/**/*.js';
 var CLIENT_JS_VENDOR = CLIENT_FOLDER + '/assets/js/vendor/**/*.js';
 var CLIENT_HTML = CLIENT_FOLDER + '/*.html';
@@ -20,7 +20,7 @@ var BUILD_JS_FOLDER = BUILD_FOLDER + '/assets/js';
 var BUILD_HTML_FOLDER = BUILD_FOLDER;
 
 var gulp = require('gulp'),
-    sass = require('gulp-sass'),
+    minifyCss = require('gulp-cssnano'),
     cache = require('gulp-cached'),
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
@@ -62,11 +62,20 @@ gulp.task('nodemon', function (cb) {
 });
 
 
-gulp.task('sass', function () {
-    console.log('sass called');
-    return gulp.src(CLIENT_SCSS)
+gulp.task('css', function () {
+    console.log('css called');
+    var fileOrder = [
+    "dataTables.bootstrap.min.css",
+    "responsive.bootstrap.min.css",
+    "loader.css",
+    "autocomplete.css",
+    "application.css"];
+    return gulp.src(CLIENT_CSS)
+        .pipe(order(fileOrder))
         .pipe(cache()) //only pass changed files
-        .pipe(sass())
+        .pipe(print())
+        .pipe(minifyCss())
+        .pipe(concat('main.css'))
         .pipe(gulp.dest(BUILD_CSS_FOLDER))
         .pipe(browserSync.reload({
             stream: true
@@ -84,6 +93,7 @@ gulp.task('my_js', function () {
     var vendorFiles = "vendor/**/*.js";
     return gulp.src(CLIENT_JS)
         .pipe(order(fileOrder))
+        .pipe(cache())
         .pipe(ignore.exclude(vendorFiles))
         .pipe(concat('main.js'))
         .pipe(uglify())
@@ -105,6 +115,7 @@ gulp.task('vendor_js', function () {
      'typeahead.js'];
     return gulp.src(CLIENT_JS_VENDOR)
         .pipe(order(fileOrder))
+        .pipe(cache())
         .pipe(print())
         .pipe(concat('vendor.js'))
         .pipe(uglify())
@@ -129,10 +140,10 @@ gulp.task('html', function () {
 });
 
 
-gulp.task('build', ['sass', 'js', 'html']);
+gulp.task('build', ['css', 'js', 'html']);
 
 gulp.task('watch', function () {
-    gulp.watch([CLIENT_SCSS, CLIENT_JS, CLIENT_HTML], ['build']);
+    gulp.watch([CLIENT_CSS, CLIENT_JS, CLIENT_HTML], ['build']);
 });
 
 gulp.task('default', ['build', 'browserSync', 'watch']);
