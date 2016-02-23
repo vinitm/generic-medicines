@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "description": "Website to search for cheaper drug substitutes",
-  "main": "applications/server/server.js",
+  "main": "server/server.js",
   "directories": {
     "test": "tests"
   },
@@ -20,6 +20,7 @@
     "browser-sync": "^2.11.1",
     "browserify": "^13.0.0",
     "event-stream": "^3.3.2",
+    "glob": "^7.0.0",
     "gulp": "^3.9.1",
     "gulp-cached": "^1.1.0",
     "gulp-concat": "^2.6.0",

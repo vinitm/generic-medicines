@@ -17,6 +17,7 @@ var CLIENT_HTML = CLIENT_FOLDER + '/*.html';
 var BUILD_FOLDER = './public';
 var BUILD_CSS_FOLDER = BUILD_FOLDER + '/assets/css';
 var BUILD_JS_FOLDER = BUILD_FOLDER + '/assets/js';
+var BUILD_JS_FILES = BUILD_JS_FOLDER + '/**/*.js';
 var BUILD_HTML_FOLDER = BUILD_FOLDER;
 
 var gulp = require('gulp'),
@@ -33,6 +34,7 @@ var gulp = require('gulp'),
     nodemon = require('gulp-nodemon'),
     browserify = require('browserify'),
     watchify = require('watchify'),
+    glob = require('glob'),
     source = require('vinyl-source-stream');
 
 
