@@ -8,7 +8,8 @@ var SERVER_FILES = SERVER_FOLDER + '/';
 //client
 var CLIENT_FOLDER = './client';
 var CLIENT_CSS = CLIENT_FOLDER + '/assets/css/**/*.css';
-var CLIENT_JS = CLIENT_FOLDER + '/assets/js/**/*.js';
+var CLIENT_JS_FOLDER = CLIENT_FOLDER + '/assets/js';
+var CLIENT_JS = CLIENT_JS_FOLDER + '/**/*.js';
 var CLIENT_JS_VENDOR = CLIENT_FOLDER + '/assets/js/vendor/**/*.js';
 var CLIENT_HTML = CLIENT_FOLDER + '/*.html';
 
@@ -35,6 +36,7 @@ var gulp = require('gulp'),
     browserify = require('browserify'),
     watchify = require('watchify'),
     glob = require('glob'),
+    rename = require('gulp-rename'),
     source = require('vinyl-source-stream');
 
 
@@ -84,7 +86,7 @@ gulp.task('css', function () {
         }))
 });
 
-gulp.task('my_js', function () {
+gulp.task('my_js', /*['browserify'],*/ function () {
     var fileOrder = ["*.js",
                      "entities/*.js",
                      "common/*.js",
@@ -100,6 +102,29 @@ gulp.task('my_js', function () {
         .pipe(concat('main.js'))
         .pipe(uglify())
         .pipe(gulp.dest(BUILD_JS_FOLDER));
+});
+
+gulp.task('browserify', function (done) {
+    glob('{' + CLIENT_JS_FOLDER + '/*.js,' +
+        CLIENT_JS_FOLDER + '/apps/**/*.js,' +
+        CLIENT_JS_FOLDER + '/common/**/*.js,' +
+        CLIENT_JS_FOLDER + '/entities/**/*.js}',
+        function (err, files) {
+            if (err) done(err);
+
+            var tasks = files.map(function (entry) {
+                return browserify({
+                        entries: [entry]
+                    })
+                    .bundle()
+                    .pipe(source(entry))
+                    .pipe(rename({
+                        extname: '.bundle.js'
+                    }))
+                    .pipe(gulp.dest(BUILD_JS_FOLDER));
+            });
+            stream.merge(tasks).on('end', done);
+        })
 });
 
 gulp.task('vendor_js', function () {
