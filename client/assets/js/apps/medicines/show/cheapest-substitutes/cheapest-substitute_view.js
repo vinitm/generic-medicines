@@ -1,3 +1,4 @@
+var MedicineManager=require('MedicineManager');
 MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Backbone, Marionette, $, _) {
     Show.CheapestSubstitutesItem = Marionette.ItemView.extend({
         tagName: "li",

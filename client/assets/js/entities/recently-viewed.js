@@ -1,3 +1,4 @@
+var MedicineManager=require('MedicineManager');
 MedicineManager.module("Entities", function (Entities, MedicineManager, Backbone, Marionette, $, _) {
 
     var RecentlyViewedItem = Backbone.Model.extend({

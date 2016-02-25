@@ -25,6 +25,7 @@ var gulp = require('gulp'),
     minifyCss = require('gulp-cssnano'),
     cache = require('gulp-cached'),
     concat = require('gulp-concat'),
+    sourcemaps = require('gulp-sourcemaps'),
     uglify = require('gulp-uglify'),
     order = require('gulp-order'),
     ignore = require('gulp-ignore'),
@@ -86,7 +87,7 @@ gulp.task('css', function () {
         }))
 });
 
-gulp.task('my_js', /*['browserify'],*/ function () {
+gulp.task('my_js', ['browserify'], function () {
     var fileOrder = ["*.js",
                      "entities/*.js",
                      "common/*.js",
@@ -95,12 +96,14 @@ gulp.task('my_js', /*['browserify'],*/ function () {
                      "apps/medicines/*js",
                      ];
     var vendorFiles = "vendor/**/*.js";
-    return gulp.src(CLIENT_JS)
+    return gulp.src(BUILD_JS_FOLDER + '/client/**/*.js')
+        .pipe(sourcemaps.init())
         .pipe(order(fileOrder))
         .pipe(cache())
-        .pipe(ignore.exclude(vendorFiles))
+        //.pipe(ignore.exclude(vendorFiles))
         .pipe(concat('main.js'))
         .pipe(uglify())
+        .pipe(sourcemaps.write('maps'))
         .pipe(gulp.dest(BUILD_JS_FOLDER));
 });
 

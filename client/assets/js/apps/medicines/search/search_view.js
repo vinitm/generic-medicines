@@ -1,3 +1,4 @@
+var MedicineManager=require('MedicineManager');
 MedicineManager.module("MedicineApp.Search", function (Search, MedicineManager, Backbone, Marionette, $, _) {
 
     Search.SearchLayout = Marionette.LayoutView.extend({

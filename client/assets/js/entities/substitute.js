@@ -1,3 +1,4 @@
+var MedicineManager=require('MedicineManager');
 MedicineManager.module("Entities", function (Entities, MedicineManager, Backbone, Marionette, $, _) {
     Entities.Subtitute = Backbone.Model.extend({
         default: {
