@@ -1,5 +1,4 @@
 var MedicineManager=require('MedicineManager');
-console.log('substitutes');
 MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Backbone, Marionette, $, _) {
     Show.Table = Marionette.ItemView.extend({
         template: false,

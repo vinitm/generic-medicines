@@ -87,25 +87,7 @@ gulp.task('css', function () {
         }))
 });
 
-gulp.task('my_js', ['browserify'], function () {
-    var fileOrder = ["*.js",
-                     "entities/*.js",
-                     "common/*.js",
-                     "apps/medicines/search/*.js",
-                     "apps/medicines/show/**/*.js",
-                     "apps/medicines/*js",
-                     ];
-    var vendorFiles = "vendor/**/*.js";
-    return gulp.src(BUILD_JS_FOLDER + '/client/**/*.js')
-        .pipe(sourcemaps.init())
-        .pipe(order(fileOrder))
-        .pipe(cache())
-        //.pipe(ignore.exclude(vendorFiles))
-        .pipe(concat('main.js'))
-        .pipe(uglify())
-        .pipe(sourcemaps.write('maps'))
-        .pipe(gulp.dest(BUILD_JS_FOLDER));
-});
+
 
 gulp.task('browserify', function (done) {
     glob('{' + CLIENT_JS_FOLDER + '/*.js,' +
@@ -155,7 +137,7 @@ gulp.task('vendor_js', function () {
         }));
 });
 
-gulp.task('js', ['my_js', 'vendor_js'], function () {
+gulp.task('js', ['browserify', 'vendor_js'], function () {
     console.log('js called');
 });
 

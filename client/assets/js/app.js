@@ -14,12 +14,13 @@ MedicineManager.getCurrentRoute = function () {
 };
 
 MedicineManager.on("start", function () {
-    if (Backbone.history) {
+    if (Backbone.history&&!Backbone.History.started) {
         Backbone.history.start();
     }
 });
 
 $(function () {
+    if(!Backbone.History.started)
     MedicineManager.start();
 })
 

@@ -1,5 +1,4 @@
 var MedicineManager=require('MedicineManager');
-console.dir(MedicineManager);
 MedicineManager.module("MedicineApp", function (MedicineApp, MedicineManager, Backbone, Marionette, $, _) {
     MedicineApp.Router = Marionette.AppRouter.extend({
         appRoutes: {

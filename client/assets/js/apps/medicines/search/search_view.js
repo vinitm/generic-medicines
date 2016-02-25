@@ -31,6 +31,7 @@ MedicineManager.module("MedicineApp.Search", function (Search, MedicineManager, 
             this.triggerMethod('suggestion:select', suggest);
         },
         onShow: function () {
+            console.log('onshow');
             // constructs the suggestion engine
             var engine = new Bloodhound({
                 datumTokenizer: function (item) {
