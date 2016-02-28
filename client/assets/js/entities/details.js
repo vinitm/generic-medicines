@@ -1,5 +1,7 @@
 var MedicineManager=require('MedicineManager');
-MedicineManager.module("Entities", function (Entities, MedicineManager, Backbone, Marionette, $, _) {
+var Backbone = require('backbone');
+var Marionette = require('backbone.marionette');
+MedicineManager.module("Entities", function (Entities) {
     Entities.Detail = Backbone.Model.extend({
         default: {
             medicine: {},

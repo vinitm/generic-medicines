@@ -1,5 +1,7 @@
-var MedicineManager=require('MedicineManager');
-MedicineManager.module("MedicineApp.Search", function (Search, MedicineManager, Backbone, Marionette, $, _) {
+var MedicineManager = require('MedicineManager');
+var Backbone = require('backbone');
+var Marionette = require('backbone.marionette');
+MedicineManager.module("MedicineApp.Search", function (Search) {
     Search.Controller = {
         showSearchOption: function () {
             var searchLayout = new Search.SearchLayout();

@@ -1,5 +1,8 @@
 var MedicineManager=require('MedicineManager');
-MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Backbone, Marionette, $, _) {
+var Backbone = require('backbone');
+var Marionette = require('backbone.marionette');
+var _ = require('underscore');
+MedicineManager.module("MedicineApp.Show", function (Show) {
     Show.LayoutView = Marionette.LayoutView.extend({
         template: "#show-layout-template",
         tagName: "div",

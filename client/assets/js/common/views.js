@@ -1,5 +1,8 @@
 var MedicineManager=require('MedicineManager');
-MedicineManager.module("Common.Views",function(Views,MedicineManager, Backbone, Marionette, $, _){
+var Backbone = require('backbone');
+var Marionette = require('backbone.marionette');
+var _ = require('underscore');
+MedicineManager.module("Common.Views",function(Views){
 
 	Views.Loading=Marionette.ItemView.extend({
 		template:"#loading-template",

@@ -1,5 +1,8 @@
 var MedicineManager=require('MedicineManager');
-MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Backbone, Marionette, $, _) {
+var Backbone = require('backbone');
+var Marionette = require('backbone.marionette');
+var _ = require('underscore');
+MedicineManager.module("MedicineApp.Show", function (Show) {
     var RecentlyViewedItem = Marionette.ItemView.extend({
         template: "#recently-viewed-listItem-template",
         tagName: "li",
@@ -10,7 +13,6 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
             e.preventDefault();
             e.stopPropagation();
             var text = $(e.currentTarget).text().trim();
-			console.log("item="+text);
             this.trigger("link:click", text);
         }
     });
@@ -21,7 +23,6 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
         className: "material-list",
         id: "recently-viewed",
 		onChildviewLinkClick:function(view,text){
-		console.log("collection="+text);
 			this.triggerMethod("link:click", text);
 		}
     });
@@ -38,7 +39,6 @@ MedicineManager.module("MedicineApp.Show", function (Show, MedicineManager, Back
             "link:click": "onChildLinkClick"
         },
         onChildLinkClick: function (view, text) {
-		console.log("layout="+text);
             this.triggerMethod("substitute:show", text);
         },
         onShow: function () {

@@ -22,6 +22,7 @@ var BUILD_JS_FILES = BUILD_JS_FOLDER + '/**/*.js';
 var BUILD_HTML_FOLDER = BUILD_FOLDER;
 
 var gulp = require('gulp'),
+    flatten = require('gulp-flatten'),
     minifyCss = require('gulp-cssnano'),
     cache = require('gulp-cached'),
     concat = require('gulp-concat'),
@@ -35,6 +36,7 @@ var gulp = require('gulp'),
     reload = browserSync.reload,
     nodemon = require('gulp-nodemon'),
     browserify = require('browserify'),
+    resolutions = require('browserify-resolutions'),
     watchify = require('watchify'),
     glob = require('glob'),
     rename = require('gulp-rename'),
@@ -89,27 +91,18 @@ gulp.task('css', function () {
 
 
 
-gulp.task('browserify', function (done) {
-    glob('{' + CLIENT_JS_FOLDER + '/*.js,' +
-        CLIENT_JS_FOLDER + '/apps/**/*.js,' +
-        CLIENT_JS_FOLDER + '/common/**/*.js,' +
-        CLIENT_JS_FOLDER + '/entities/**/*.js}',
-        function (err, files) {
-            if (err) done(err);
+gulp.task('browserify', function () {
 
-            var tasks = files.map(function (entry) {
-                return browserify({
-                        entries: [entry]
-                    })
-                    .bundle()
-                    .pipe(source(entry))
-                    .pipe(rename({
-                        extname: '.bundle.js'
-                    }))
-                    .pipe(gulp.dest(BUILD_JS_FOLDER));
-            });
-            stream.merge(tasks).on('end', done);
+    return browserify({
+            entries: [CLIENT_JS_FOLDER + '/main.js']
         })
+        .plugin(resolutions, '*')
+        .bundle()
+        .pipe(source(CLIENT_JS_FOLDER + '/main.js'))
+        .pipe(flatten())
+        .pipe(gulp.dest(BUILD_JS_FOLDER));
+
+
 });
 
 gulp.task('vendor_js', function () {
@@ -123,14 +116,13 @@ gulp.task('vendor_js', function () {
      "bootstrap.min.js",
      'jquery.dataTables.min.js',
      'dataTables.bootstrap.min.js',
-     'Chart.min.js',
-     'typeahead.js'];
+     'Chart.min.js'];
     return gulp.src(CLIENT_JS_VENDOR)
         .pipe(order(fileOrder))
         .pipe(cache())
         .pipe(print())
         .pipe(concat('vendor.js'))
-        .pipe(uglify())
+        //.pipe(uglify())
         .pipe(gulp.dest(BUILD_JS_FOLDER))
         .pipe(browserSync.reload({
             stream: true

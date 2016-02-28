@@ -1,9 +1,15 @@
-var MedicineManager=require('MedicineManager');
-MedicineManager.module("MedicineApp.Search", function (Search, MedicineManager, Backbone, Marionette, $, _) {
+var MedicineManager = require('MedicineManager');
+var Backbone = require('backbone');
+var Marionette = require('backbone.marionette');
+var _ = require('underscore');
+var jQuery = require("jquery");
+var typeahead = require("typeahead.js-browserify");
+typeahead.loadjQueryPlugin();
 
+MedicineManager.module("MedicineApp.Search", function (Search) {
     Search.SearchLayout = Marionette.LayoutView.extend({
         template: '#search-layout-template',
-        id:"searchContainer",
+        id: "searchContainer",
         regions: {
             inputRegion: "#search"
         },
@@ -15,6 +21,7 @@ MedicineManager.module("MedicineApp.Search", function (Search, MedicineManager, 
             this.trigger("suggestion:select", model);
         },
         onShow: function () {
+            console.log('search onshow');
             var search = new Search.Input();
             this.inputRegion.show(search);
         }

@@ -1,27 +1,32 @@
-var MedicineManager = new Marionette.Application();
+    var Backbone = require('backbone');
+    var $ = require('jquery');
+    var Marionette = require('backbone.marionette');
 
-MedicineManager.addRegions({
-    mainRegion: "#main-region"
-});
 
-MedicineManager.navigate = function (route, options) {
-    options || (options = {});
-    Backbone.history.navigate(route, options);
-};
+    var MedicineManager = new Marionette.Application();
 
-MedicineManager.getCurrentRoute = function () {
-    return Backbone.history.fragment;
-};
+    MedicineManager.addRegions({
+        mainRegion: "#main-region"
+    });
 
-MedicineManager.on("start", function () {
-    if (Backbone.history&&!Backbone.History.started) {
-        Backbone.history.start();
-    }
-});
+    MedicineManager.navigate = function (route, options) {
+        options || (options = {});
+        Backbone.history.navigate(route, options);
+    };
 
-$(function () {
-    if(!Backbone.History.started)
-    MedicineManager.start();
-})
+    MedicineManager.getCurrentRoute = function () {
+        return Backbone.history.fragment;
+    };
 
-module.exports=MedicineManager;
+    MedicineManager.on("start", function () {
+        console.log('history started');
+        if (Backbone.history) {
+            Backbone.history.start();
+        }
+    });
+
+    $(function () {
+        MedicineManager.start();
+    });
+
+    module.exports = MedicineManager

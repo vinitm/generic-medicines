@@ -1,6 +1,12 @@
-var MedicineManager=require('MedicineManager');
-MedicineManager.module("MedicineApp", function (MedicineApp, MedicineManager, Backbone, Marionette, $, _) {
-    MedicineApp.Router = Marionette.AppRouter.extend({
+var MedicineManager = require('MedicineManager');
+var Backbone = require('backbone');
+var Marionette = require('backbone.marionette');
+MedicineManager.module("MedicineApp", function (MedicineApp) {
+    console.dir(Marionette.AppRouter.__super__);
+    console.dir(Backbone.test);
+    console.dir(Marionette.test);
+    console.dir(Marionette.AppRouter.__super__ === Backbone.Router);
+   MedicineApp.Router = Marionette.AppRouter.extend({
         appRoutes: {
             "": "showSearchOption",
             "show/*id": "showMedicine"
@@ -9,10 +15,12 @@ MedicineManager.module("MedicineApp", function (MedicineApp, MedicineManager, Ba
 
     var API = {
         showSearchOption: function () {
+            console.log('show search option');
             MedicineApp.Search.Controller.showSearchOption();
         },
         showMedicine: function (id) {
-			MedicineManager.execute("add:recentlyViewed",id);
+            console.log('show ' + id);
+            MedicineManager.execute("add:recentlyViewed", id);
             MedicineApp.Show.Controller.showMedicine(id);
         }
     };
@@ -30,6 +38,14 @@ MedicineManager.module("MedicineApp", function (MedicineApp, MedicineManager, Ba
 
 
     MedicineManager.addInitializer(function () {
+        console.log('MedicineApp.Router initialised');
+        /* new Backbone.Router({
+             routes:{
+             "/": API.showSearchOption,
+             "show/*id": API.showMedicine
+             }
+         });*/
+       //window.test=Backbone;
         new MedicineApp.Router({
             controller: API
         });
