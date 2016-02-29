@@ -36,7 +36,6 @@ var gulp = require('gulp'),
     reload = browserSync.reload,
     nodemon = require('gulp-nodemon'),
     browserify = require('browserify'),
-    resolutions = require('browserify-resolutions'),
     watchify = require('watchify'),
     glob = require('glob'),
     rename = require('gulp-rename'),
@@ -73,7 +72,6 @@ gulp.task('css', function () {
     console.log('css called');
     var fileOrder = [
     "dataTables.bootstrap.min.css",
-    "responsive.bootstrap.min.css",
     "loader.css",
     "autocomplete.css",
     "application.css"];
@@ -96,7 +94,6 @@ gulp.task('browserify', function () {
     return browserify({
             entries: [CLIENT_JS_FOLDER + '/main.js']
         })
-        .plugin(resolutions, '*')
         .bundle()
         .pipe(source(CLIENT_JS_FOLDER + '/main.js'))
         .pipe(flatten())
@@ -106,21 +103,7 @@ gulp.task('browserify', function () {
 });
 
 gulp.task('vendor_js', function () {
-    var fileOrder = ["jquery.js",
-    "underscore.js",
-     "backbone.js",
-     "backbone.localStorage.js",
-     "backbone.wreqr.js",
-     "backbone.babysitter.js",
-     "backbone.marionette.js",
-     "bootstrap.min.js",
-     'jquery.dataTables.min.js',
-     'dataTables.bootstrap.min.js',
-     'Chart.min.js'];
-    return gulp.src(CLIENT_JS_VENDOR)
-        .pipe(order(fileOrder))
-        .pipe(cache())
-        .pipe(print())
+    return gulp.src(CLIENT_FOLDER + '/assets/js/vendor/dataTables.bootstrap.min.js')
         .pipe(concat('vendor.js'))
         //.pipe(uglify())
         .pipe(gulp.dest(BUILD_JS_FOLDER))

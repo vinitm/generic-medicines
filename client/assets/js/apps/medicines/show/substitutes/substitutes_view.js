@@ -1,7 +1,10 @@
-var MedicineManager=require('MedicineManager');
+var MedicineManager = require('MedicineManager');
 var Backbone = require('backbone');
 var Marionette = require('backbone.marionette');
 var _ = require('underscore');
+var $ = require('jquery');
+//var bootstrap = require('bootstrap');
+require('datatables.net-responsive')();
 MedicineManager.module("MedicineApp.Show", function (Show) {
     Show.Table = Marionette.ItemView.extend({
         template: false,

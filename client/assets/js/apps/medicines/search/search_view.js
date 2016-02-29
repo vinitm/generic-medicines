@@ -4,6 +4,7 @@ var Marionette = require('backbone.marionette');
 var _ = require('underscore');
 var jQuery = require("jquery");
 var typeahead = require("typeahead.js-browserify");
+var Bloodhound=typeahead.Bloodhound;
 typeahead.loadjQueryPlugin();
 
 MedicineManager.module("MedicineApp.Search", function (Search) {

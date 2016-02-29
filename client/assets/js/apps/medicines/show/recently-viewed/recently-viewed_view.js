@@ -2,6 +2,7 @@ var MedicineManager=require('MedicineManager');
 var Backbone = require('backbone');
 var Marionette = require('backbone.marionette');
 var _ = require('underscore');
+var $ = require('jquery');
 MedicineManager.module("MedicineApp.Show", function (Show) {
     var RecentlyViewedItem = Marionette.ItemView.extend({
         template: "#recently-viewed-listItem-template",

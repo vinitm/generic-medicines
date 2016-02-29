@@ -2,6 +2,7 @@ var MedicineManager=require('MedicineManager');
 var Backbone = require('backbone');
 var Marionette = require('backbone.marionette');
 var _ = require('underscore');
+var Chart = require('chart.js');
 MedicineManager.module("MedicineApp.Show", function (Show) {
     Show.CheapestSubstitutesItem = Marionette.ItemView.extend({
         tagName: "li",

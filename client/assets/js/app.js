@@ -1,5 +1,5 @@
+    var $ = global.jQuery = require('jquery');
     var Backbone = require('backbone');
-    var $ = require('jquery');
     var Marionette = require('backbone.marionette');
 
 
