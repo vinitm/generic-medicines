@@ -1,4 +1,5 @@
 require("./app.js");
+require("./apps/header/header_app.js");
 require("./entities/substitute.js");
 require("./entities/details.js");
 require("./entities/recently-viewed.js");

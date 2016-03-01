@@ -2,7 +2,6 @@ var MedicineManager = require('MedicineManager');
 var Backbone = require('backbone');
 var Marionette = require('backbone.marionette');
 MedicineManager.module("MedicineApp", function (MedicineApp) {
-    console.dir(Marionette.AppRouter.__super__ === Backbone.Router);
    MedicineApp.Router = Marionette.AppRouter.extend({
         appRoutes: {
             "": "showSearchOption",
@@ -32,7 +31,6 @@ MedicineManager.module("MedicineApp", function (MedicineApp) {
 
 
     MedicineManager.addInitializer(function () {
-        console.log('MedicineApp.Router initialised');
         new MedicineApp.Router({
             controller: API
         });

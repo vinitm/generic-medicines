@@ -19,7 +19,6 @@
     };
 
     MedicineManager.on("start", function () {
-        console.log('history started');
         if (Backbone.history) {
             Backbone.history.start();
         }
