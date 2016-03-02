@@ -114,12 +114,27 @@
             <div class="cssload-inner cssload-three"></div>
         </div>
     </script>
+    <script type="text/template" id="header-template">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="">Medicine manager</a>
+                <div class="nav-collapse collapse">
+                    <ul class="nav"></ul>
+                </div>
+            </div>
+        </div>
+    </script>
 
+    <script type="text/template" id="header-link">
+        <a href="#<%= url %>">
+            <%= name %>
+        </a>
+    </script>
 
-   <!--<script src="./assets/js/vendor.js"></script>-->
+    <!--<script src="./assets/js/vendor.js"></script>-->
     <script src="./assets/js/main.js"></script>
     <script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
-   <!-- <script src="./assets/js/client/assets/js/app.bundle.js"></script>
+    <!-- <script src="./assets/js/client/assets/js/app.bundle.js"></script>
     <script src="./assets/js/client/assets/js/entities/substitute.bundle.js"></script>
     <script src="./assets/js/client/assets/js/entities/details.bundle.js"></script>
     <script src="./assets/js/client/assets/js/entities/recently-viewed.bundle.js"></script>

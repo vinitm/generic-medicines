@@ -23,7 +23,7 @@ MedicineManager.module("Entities", function (Entities) {
                 name: "About",
                 url: "about"
             }
- ]);
+        ]);
     };
 
     var API = {
@@ -35,7 +35,7 @@ MedicineManager.module("Entities", function (Entities) {
         }
     };
 
-    ContactManager.reqres.setHandler("header:entities", function () {
+    MedicineManager.reqres.setHandler("header:entities", function () {
         return API.getHeaders();
     });
 });
