@@ -11,6 +11,7 @@
     "backbone": "1.0.0 - 1.2.3",
     "backbone.localstorage": "^1.1.16",
     "backbone.marionette": "^2.4.4",
+    "backbone.select": "^1.5.3",
     "bootstrap": "^3.3.6",
     "chart.js": "^1.0.2",
     "datatables.net": "^1.10.11",
