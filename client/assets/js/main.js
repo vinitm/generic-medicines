@@ -4,6 +4,8 @@ require("./entities/details.js");
 require("./entities/recently-viewed.js");
 require("./entities/header.js");
 require("./common/views.js");
+require("./apps/header/list/list_view.js");
+require("./apps/header/list/list_controller.js");
 require("./apps/medicines/search/search_view.js");
 require("./apps/medicines/search/search_controller.js");
 require("./apps/medicines/show/cheapest-substitutes/cheapest-substitute_view.js");

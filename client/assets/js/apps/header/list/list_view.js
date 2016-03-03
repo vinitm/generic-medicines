@@ -1,15 +1,21 @@
-var Marionette=require('backbone.marionette');
-var MedicineManager=require('app');
-MedicineManager.module("HeaderApp.List", function(List){
- List.Header = Marionette.ItemView.extend({
- template: "#header-link",
- tagName: "li"
- });
+var Marionette = require('backbone.marionette');
+var MedicineManager = require('MedicineManager');
+MedicineManager.module("HeaderApp.List", function (List) {
+    List.Header = Marionette.ItemView.extend({
+        template: "#header-link",
+        tagName: "li"
+    });
 
- List.Headers = Marionette.CompositeView.extend({
- template: "#header-template",
- className: "navbar navbar-inverse navbar-fixed-top",
- itemView: List.Header,
- itemViewContainer: "ul"
- });
- });
+    List.Headers = Marionette.CompositeView.extend({
+        template: "#header-template",
+        className: "navbar navbar-default navbar-fixed-top",
+        childView: List.Header,
+        childViewContainer: "ul"
+    });
+    
+});
+
+
+
+
+

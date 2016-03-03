@@ -11,7 +11,7 @@
 </head>
 
 <body>
-<div id="header-region"></div>
+    <div id="header-region"></div>
     <div id="main-region" class="container">
 
     </div>
@@ -116,12 +116,14 @@
         </div>
     </script>
     <script type="text/template" id="header-template">
-        <div class="navbar-inner">
-            <div class="container">
-                <a class="brand" href="">Medicine manager</a>
-                <div class="nav-collapse collapse">
-                    <ul class="nav"></ul>
-                </div>
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="">MedicineManager</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <!--<li class="active"><a href="#">Link</a></li>-->
+                </ul>
             </div>
         </div>
     </script>
@@ -131,6 +133,10 @@
             <%= name %>
         </a>
     </script>
+
+
+
+
 
     <!--<script src="./assets/js/vendor.js"></script>-->
     <script src="./assets/js/main.js"></script>
