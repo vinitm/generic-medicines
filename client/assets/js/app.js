@@ -6,6 +6,7 @@
     var MedicineManager = new Marionette.Application();
 
     MedicineManager.addRegions({
+	headerRegion: "#header-region",
         mainRegion: "#main-region"
     });
 
