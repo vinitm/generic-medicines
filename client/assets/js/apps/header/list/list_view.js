@@ -10,12 +10,14 @@ MedicineManager.module("HeaderApp.List", function (List) {
         template: "#header-template",
         className: "navbar navbar-default navbar-fixed-top",
         childView: List.Header,
-        childViewContainer: "ul"
+        childViewContainer: "ul",
+        events: {
+            "click a.navbar-brand": "brandClicked"
+        },
+        brandClicked: function (e) {
+            e.preventDefault();
+            this.trigger("brand:clicked");
+        }
     });
-    
+
 });
-
-
-
-
-

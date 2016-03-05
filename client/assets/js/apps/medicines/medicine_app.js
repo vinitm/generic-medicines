@@ -21,6 +21,7 @@ MedicineManager.module("MedicineApp", function (MedicineApp) {
 
 
     MedicineManager.on("medicine:search", function () {
+        console.log('search');
         API.showSearchOption();
     });
 
