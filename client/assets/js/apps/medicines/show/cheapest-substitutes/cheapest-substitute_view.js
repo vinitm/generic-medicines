@@ -1,4 +1,4 @@
-var MedicineManager=require('MedicineManager');
+var MedicineManager = require('MedicineManager');
 var Backbone = require('backbone');
 var Marionette = require('backbone.marionette');
 var _ = require('underscore');
@@ -6,13 +6,23 @@ var Chart = require('chart.js');
 MedicineManager.module("MedicineApp.Show", function (Show) {
     Show.CheapestSubstitutesItem = Marionette.ItemView.extend({
         tagName: "li",
-        template: "#cheapest-substitutes-list-template"
+        template: "#cheapest-substitutes-list-template",
+        events: {
+            'click a': 'linkClicked'
+        },
+        linkClicked: function (e) {
+            e.preventDefault();
+            this.trigger("link:clicked");
+        }
     });
 
     Show.CheapestSubstitutesList = Marionette.CollectionView.extend({
         tagName: "ul",
         className: "material-list",
-        childView: Show.CheapestSubstitutesItem
+        childView: Show.CheapestSubstitutesItem,
+        onChildviewLinkClicked: function (childView) {
+            this.triggerMethod("brand:clicked", childView.model.get('brand'));
+        }
     });
 
     Show.Chart = Marionette.ItemView.extend({
@@ -36,10 +46,9 @@ MedicineManager.module("MedicineApp.Show", function (Show) {
                 color: "#81C784",
                 label: "Green"
             }];
-            this.chart=new Chart(ctx).Pie(data);
+            this.chart = new Chart(ctx).Pie(data);
         },
-        onDestroy:function(){
-            console.log("close");
+        onDestroy: function () {
             this.chart.destroy();
         }
     });
@@ -56,6 +65,12 @@ MedicineManager.module("MedicineApp.Show", function (Show) {
             this.medicine = options.medicine;
             this.substitutes = options.substitutes;
             this.cheapestSubstitutes = this.substitutes.getCheapestSubstitutes();
+        },
+        childEvents: {
+            'brand:clicked': 'onChildBrandClicked'
+        },
+        onChildBrandClicked: function (childView, brand) {
+            this.trigger("substitute:show", brand);
         },
         onShow: function () {
             var cheapestSubstitutePrice = this.cheapestSubstitutes[0].get("unit_price");

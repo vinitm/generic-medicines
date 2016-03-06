@@ -35,7 +35,7 @@ MedicineManager.module("MedicineApp.Show", function (Show) {
                 columns: [{
                         data: "brand",
                         render: function (data, type, row) {
-                            return "<a class='show' href='#'>" + data + "</a>";
+                            return "<a class='show' href='show/"+encodeURI(data)+"'>" + data + "</a>";
                         },
                         title: "Brand"
                     }, {

@@ -66,6 +66,7 @@ MedicineManager.module("MedicineApp.Show", function (Show) {
                         substitutes: substitutes,
                         medicine: details
                     });
+                    cheapestSubstitutesView.on("substitute:show", this.showSubstitute);
                     showLayout.cheapestSubstitutesRegion.show(cheapestSubstitutesView);
                 }
 

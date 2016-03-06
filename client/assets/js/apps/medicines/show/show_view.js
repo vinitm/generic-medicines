@@ -16,7 +16,7 @@ MedicineManager.module("MedicineApp.Show", function (Show) {
             "recentlyViewedRegion": "#recently-viewed-region"
         },
         childEvents: {
-            "substitute:show": "onChildSubstituteShow"
+            "substitute:show": "onChildSubstituteShow",
         },
         onChildSubstituteShow: function (view, text) {
             this.trigger("substitute:show", text);

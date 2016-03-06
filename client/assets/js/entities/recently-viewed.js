@@ -1,11 +1,17 @@
 var MedicineManager = require('MedicineManager');
 var Backbone = require('backbone');
+var Mutators = require('Backbone.Mutators');
 var Marionette = require('backbone.marionette');
 Backbone.LocalStorage = require("backbone.localstorage");
 MedicineManager.module("Entities", function (Entities) {
     var RecentlyViewedItem = Backbone.Model.extend({
+        mutators: {
+            url: function () {
+                return '#show/' + encodeURI(this.get('medicine'));
+            }
+        },
         default: {
-            medicine: null
+            medicine: null,
         }
     });
 
