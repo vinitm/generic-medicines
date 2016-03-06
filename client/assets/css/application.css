@@ -119,6 +119,18 @@ html {
     display: block;
 }
 
+.details-item .tag {
+    font-weight: bold;
+    float: left;
+}
+
+.details-item .list {
+    display: inline-block;
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
 .mcard-container {
     padding: 5px;
     background: transparent;

@@ -67,25 +67,39 @@
     </script>
 
     <script type="text/template" id="details-template">
-        <span class="details-item col-sm-6">Brand:<%= medicine.brand %></span>
-        <span class="details-item col-sm-6">Manufacturer:<%= medicine.manufacturer %></span>
-        <span class="details-item col-sm-6">Price:<%= medicine.package_price %></span>
-        <span class="details-item col-sm-6">Package Quantity:<%= medicine.package_qty %></span>
-        <span class="details-item col-sm-12">Constituents(Strength):<%=constituents.map(function(item){return item.name.trim()+"("+item.strength.trim()+")"}).join(",") %></span>
+        <span class="details-item col-sm-6"><span class='tag'>Brand:</span>
+        <%= medicine.brand %>
+            </span>
+            <span class="details-item col-sm-6"><span class='tag'>Manufacturer:</span>
+            <%= medicine.manufacturer %>
+                </span>
+                <span class="details-item col-sm-6"><span class='tag'>Price:</span>
+                <%= medicine.package_price %>
+                    </span>
+                    <span class="details-item col-sm-6"><span class='tag'>Package Quantity:</span>
+                    <%= medicine.package_qty %>
+                        </span>
+                        <div class="details-item col-sm-12">
+                            <span class='tag'>Constituents(Strength):</span>
+                            <ul class="list">
+                                <%=constituents.map(function(item){return "<li>"+item.name.trim()+"("+item.strength.trim()+")</li>";}).join("") %>
+                            </ul>
+                        </div>
     </script>
 
     <script type="text/template" id="cheapest-substitutes-list-template">
-        <%= brand %>
-            <%= unit_price %>
+        <a href='<%=url%>'>
+            <h3><%= brand %></h3>
+        </a>
+        <%= unit_price %>
     </script>
 
     <script type="text/template" id="cheapest_substitute-template">
-        <div id="substitutes-list-region" class="col-sm-6">
-
-        </div>
         <div id="chart-region" class="col-sm-6">
 
         </div>
+        <div id="substitutes-list-region" class="col-sm-6">
+
         </div>
     </script>
 

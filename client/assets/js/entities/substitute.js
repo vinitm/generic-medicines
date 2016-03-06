@@ -1,8 +1,14 @@
-var MedicineManager=require('MedicineManager');
+var MedicineManager = require('MedicineManager');
 var Backbone = require('backbone');
+var Mutators = require('Backbone.Mutators');
 var Marionette = require('backbone.marionette');
 MedicineManager.module("Entities", function (Entities) {
     Entities.Subtitute = Backbone.Model.extend({
+        mutators: {
+            url: function () {
+                return '#show/'+encodeURI(this.get('brand'));
+            }
+        },
         default: {
             brand: "",
             category: "",
@@ -22,7 +28,7 @@ MedicineManager.module("Entities", function (Entities) {
     Entities.SubtituteCollection = Backbone.Collection.extend({
         model: Entities.Subtitute,
         getCheapestSubstitutes: function () {
-		var cheapestSubstitutes = [];
+            var cheapestSubstitutes = [];
             if (this.length == 0)
                 return cheapestSubstitutes;
             var priceProperty = "unit_price";
