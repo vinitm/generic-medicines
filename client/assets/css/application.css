@@ -114,7 +114,6 @@ html {
 }
 
 .details-item {
-    height: 52px;
     padding: 16px;
     display: block;
 }
@@ -122,13 +121,32 @@ html {
 .details-item .tag {
     font-weight: bold;
     float: left;
+    display: inline-block;
 }
 
-.details-item .list {
+
+/*.details-item .list {
     display: inline-block;
     list-style: none;
     padding: 0px;
-    margin: 0px;
+    margin: 0 0 0 5px;
+}*/
+
+.constituents{
+    display: table;
+}
+
+.details-item .constituent {
+    display: inline-block;
+    background: #00A8C6;
+    padding: 5px 5px 5px 10px;
+    border-radius: 4px;
+    margin-right: 10px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    margin-bottom: 5px;
+    color: white;
+    font-weight: bold;
 }
 
 .mcard-container {

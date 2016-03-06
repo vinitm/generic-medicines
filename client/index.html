@@ -80,16 +80,14 @@
                     <%= medicine.package_qty %>
                         </span>
                         <div class="details-item col-sm-12">
-                            <span class='tag'>Constituents(Strength):</span>
-                            <ul class="list">
-                                <%=constituents.map(function(item){return "<li>"+item.name.trim()+"("+item.strength.trim()+")</li>";}).join("") %>
-                            </ul>
+                            <span class='tag'>Constituents(Strength): </span>
+                            <div class='constituents'><%=constituents.map(function(item){return "<span class='constituent'>"+item.name.trim()+"("+item.strength.trim()+")</span>";}).join("") %></div>
                         </div>
     </script>
 
     <script type="text/template" id="cheapest-substitutes-list-template">
         <a href='<%=url%>'>
-            <h3><%= brand %></h3>
+            <h4><%= brand %></h4>
         </a>
         <%= unit_price %>
     </script>
