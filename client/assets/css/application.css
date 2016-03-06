@@ -124,14 +124,6 @@ html {
     display: inline-block;
 }
 
-
-/*.details-item .list {
-    display: inline-block;
-    list-style: none;
-    padding: 0px;
-    margin: 0 0 0 5px;
-}*/
-
 .constituents{
     display: table;
 }
