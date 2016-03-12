@@ -53,6 +53,24 @@ MedicineManager.module("MedicineApp.Show", function (Show) {
         }
     });
 
+    Show.ChartLayout = Marionette.LayoutView.extend({
+        template: "#cheapest_substitute-chart-template",
+        regions: {
+            "chartRegion": "#chart-region"
+        },
+        initialize: function (options) {
+            this.medicinePrice = options.medicinePrice;
+            this.cheapestSubstitutePrice = options.cheapestSubstitutePrice;
+        },
+        onShow: function () {
+            var chartView = new Show.Chart({
+                set: this.medicinePrice,
+                subset: this.cheapestSubstitutePrice
+            });
+            this.chartRegion.show(chartView);
+        }
+    });
+
     Show.CheapestSubstitutes = Marionette.LayoutView.extend({
         template: "#cheapest_substitute-template",
         tagName: "div",
@@ -76,9 +94,9 @@ MedicineManager.module("MedicineApp.Show", function (Show) {
             var cheapestSubstitutePrice = this.cheapestSubstitutes[0].get("unit_price");
             var medicinePrice = this.medicine.get("medicine")["unit_price"];
 
-            var chartView = new Show.Chart({
-                set: medicinePrice,
-                subset: cheapestSubstitutePrice
+            var chartView = new Show.ChartLayout({
+                medicinePrice: medicinePrice,
+                cheapestSubstitutePrice: cheapestSubstitutePrice
             });
             this.chartRegion.show(chartView);
 
