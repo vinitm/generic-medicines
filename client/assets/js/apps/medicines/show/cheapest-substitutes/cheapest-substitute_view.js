@@ -61,6 +61,10 @@ MedicineManager.module("MedicineApp.Show", function (Show) {
         initialize: function (options) {
             this.medicinePrice = options.medicinePrice;
             this.cheapestSubstitutePrice = options.cheapestSubstitutePrice;
+            this.model = new Backbone.Model({
+                medicinePrice: this.medicinePrice,
+                cheapestSubstitutePrice: this.cheapestSubstitutePrice
+            });
         },
         onShow: function () {
             var chartView = new Show.Chart({
