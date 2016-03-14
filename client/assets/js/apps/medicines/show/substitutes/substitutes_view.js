@@ -35,7 +35,7 @@ MedicineManager.module("MedicineApp.Show", function (Show) {
                 columns: [{
                         data: "brand",
                         render: function (data, type, row) {
-                            return "<a class='show' href='show/"+encodeURI(data)+"'>" + data + "</a>";
+                            return "<a class='show' href='show/" + encodeURI(data) + "'>" + data + "</a>";
                         },
                         title: "Brand"
                     }, {
@@ -43,11 +43,17 @@ MedicineManager.module("MedicineApp.Show", function (Show) {
                         title: "Pack"
                     }, {
                         data: "package_price",
-                        title: "Price"
+                        title: "Price",
+                        render: function (data, type, row) {
+                             var template = _.template('<i class="fa fa-inr"></i><span><%=price%></span>');
+                            return template({
+                                price: data
+                            });
+                        }.bind(this)
                     }, {
                         render: function (data, type, row) {
                             var difference = (row.unit_price * 100 / this.referencePrice).toFixed(1);
-                            var template = _.template('<span class="<%if(difference<=100){%>text-success<%}else{%>text-danger<%}%>"><span><%=difference%>% </span><span class="glyphicon <%if(difference<=100){%>glyphicon-thumbs-up<%}else{%>glyphicon-thumbs-down<%}%>"></span></span>');
+                            var template = _.template('<span class="<%if(difference<=100){%>text-success<%}else{%>text-danger<%}%>"><span><%=difference%>% </span><i class="fa <%if(difference<=100){%>fa-thumbs-up<%}else{%>fa-thumbs-down<%}%>"></i></span>');
                             return template({
                                 difference: difference
                             });
