@@ -2,7 +2,7 @@ var MedicineManager = require('MedicineManager');
 var Backbone = require('backbone');
 var Marionette = require('backbone.marionette');
 var _ = require('underscore');
-var Chart = require('chart.js');
+
 MedicineManager.module("MedicineApp.Show", function (Show) {
     Show.CheapestSubstitutesItem = Marionette.ItemView.extend({
         tagName: "li",
@@ -25,34 +25,6 @@ MedicineManager.module("MedicineApp.Show", function (Show) {
         }
     });
 
-    Show.Chart = Marionette.ItemView.extend({
-        template: false,
-        tagName: "canvas",
-        id: "chartContainer",
-        initialize: function (options) {
-            this.set = options.set;
-            this.subset = options.subset;
-        },
-        onShow: function () {
-            Chart.defaults.global.responsive = true;
-            Chart.defaults.global.showTooltips = false;
-            var ctx = this.$el.get(0).getContext("2d");
-            var data = [{
-                value: this.set - this.subset,
-                color: "#bdc3c7",
-                label: "Grey"
-            }, {
-                value: this.subset,
-                color: "#81C784",
-                label: "Green"
-            }];
-            this.chart = new Chart(ctx).Pie(data);
-        },
-        onDestroy: function () {
-            this.chart.destroy();
-        }
-    });
-
     Show.ChartLayout = Marionette.LayoutView.extend({
         template: "#cheapest_substitute-chart-template",
         regions: {
@@ -67,7 +39,7 @@ MedicineManager.module("MedicineApp.Show", function (Show) {
             });
         },
         onShow: function () {
-            var chartView = new Show.Chart({
+            var chartView = new MedicineManager.Common.Views.Chart({
                 set: this.medicinePrice,
                 subset: this.cheapestSubstitutePrice
             });
