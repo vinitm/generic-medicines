@@ -1,4 +1,4 @@
-require("./app.js");
+require("MedicineManager");
 require("./entities/substitute.js");
 require("./entities/details.js");
 require("./entities/recently-viewed.js");

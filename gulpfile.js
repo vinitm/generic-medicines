@@ -42,7 +42,7 @@ var gulp = require('gulp'),
     source = require('vinyl-source-stream');
 
 
-gulp.task('browserSync', ['nodemon'], function () {
+gulp.task('browserSync', ['nodemon'], function() {
     console.log('browserSync called');
     browserSync.init({
         proxy: 'http://localhost:8000',
@@ -51,14 +51,14 @@ gulp.task('browserSync', ['nodemon'], function () {
     })
 });
 
-gulp.task('nodemon', function (cb) {
+gulp.task('nodemon', function(cb) {
     console.log('nodemon called');
     var started = false;
 
     return nodemon({
         script: SERVER_MAIN_FILE,
         watch: [SERVER_FILES]
-    }).on('start', function () {
+    }).on('start', function() {
         //to avoid nodemon being started multiple times
         if (!started) {
             cb();
@@ -68,13 +68,14 @@ gulp.task('nodemon', function (cb) {
 });
 
 
-gulp.task('css', function () {
+gulp.task('css', function() {
     console.log('css called');
     var fileOrder = [
-    "dataTables.bootstrap.min.css",
-    "loader.css",
-    "autocomplete.css",
-    "application.css"];
+        "dataTables.bootstrap.min.css",
+        "loader.css",
+        "autocomplete.css",
+        "application.css"
+    ];
     return gulp.src(CLIENT_CSS)
         .pipe(order(fileOrder))
         .pipe(cache()) //only pass changed files
@@ -89,7 +90,7 @@ gulp.task('css', function () {
 
 
 
-gulp.task('browserify', function () {
+gulp.task('browserify', function() {
 
     return browserify({
             entries: [CLIENT_JS_FOLDER + '/main.js']
@@ -102,7 +103,7 @@ gulp.task('browserify', function () {
 
 });
 
-gulp.task('vendor_js', function () {
+gulp.task('vendor_js', function() {
     return gulp.src(CLIENT_FOLDER + '/assets/js/vendor/dataTables.bootstrap.min.js')
         .pipe(concat('vendor.js'))
         //.pipe(uglify())
@@ -112,11 +113,11 @@ gulp.task('vendor_js', function () {
         }));
 });
 
-gulp.task('js', ['browserify', 'vendor_js'], function () {
+gulp.task('js', ['browserify', 'vendor_js'], function() {
     console.log('js called');
 });
 
-gulp.task('html', function () {
+gulp.task('html', function() {
     console.log('html called');
     return gulp.src(CLIENT_HTML)
         .pipe(cache()) //only pass changed files
@@ -129,7 +130,7 @@ gulp.task('html', function () {
 
 gulp.task('build', ['css', 'js', 'html']);
 
-gulp.task('watch', function () {
+gulp.task('watch', function() {
     gulp.watch([CLIENT_CSS, CLIENT_JS, CLIENT_HTML], ['build']);
 });
 
