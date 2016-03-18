@@ -140,17 +140,29 @@
     <script type="text/template" id="header-template">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="">MedicineManager</a>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Medicinemanager</a>
             </div>
-            <form class="navbar-form collapsed navbar-right">
-                <div class="form-group input-group">
-                    <input type="text" class="form-control input-sm" placeholder="Search" id="sitesearch" name="query">
-                </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navbar-collapse-1">
+                <form class="navbar-form navbar-right" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                </form>
+            </div>
         </div>
     </script>
 
     <!--<script src="./assets/js/vendor.js"></script>-->
     <script src="./assets/js/main.js"></script>
+     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
     <!-- <script src="./assets/js/client/assets/js/app.bundle.js"></script>
     <script src="./assets/js/client/assets/js/entities/substitute.bundle.js"></script>
