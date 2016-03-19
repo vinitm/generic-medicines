@@ -5,7 +5,6 @@ MedicineManager.module("MedicineApp.Search", function (Search) {
     Search.Controller = {
         showSearchOption: function () {
             var searchLayout = new Search.SearchLayout();
-            searchLayout.on("search:change", this.showSuggestion);
             searchLayout.on("suggestion:select", this.showMedicine);
             MedicineManager.mainRegion.show(searchLayout);
         },
