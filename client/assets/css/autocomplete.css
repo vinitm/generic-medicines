@@ -19,7 +19,8 @@
     box-sizing: content-box;
 }
 
-.searchInput {
+#header-region .searchInput {
+     height: 15px;
     background-color: #fff;
 }
 
@@ -68,8 +69,8 @@
     background-color: #0097cf;
 }
 
-.tt-suggestion:hover .tt-highlight{
-    color:#fff;
+.tt-suggestion:hover .tt-highlight {
+    color: #fff;
 }
 
 .tt-suggestion.tt-cursor {
