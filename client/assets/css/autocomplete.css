@@ -19,8 +19,11 @@
     box-sizing: content-box;
 }
 
-#header-region .searchInput {
-     height: 15px;
+#header-region .searchInput,
+#header-region .tt-query,
+#header-region .tt-hint {
+    height: 15px;
+    font-size: 18px;
     background-color: #fff;
 }
 
