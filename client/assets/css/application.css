@@ -124,6 +124,11 @@ html {
     display: inline-block;
 }
 
+.details-item:last-child .tag {
+    height: 30px;
+    line-height: 30px;
+}
+
 .constituents {
     display: table;
 }
