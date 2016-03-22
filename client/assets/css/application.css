@@ -76,6 +76,10 @@ html {
     padding: 0px;
 }
 
+.navbar-collapse.in{
+overflow-y: visible;
+}
+
 #main {
     margin: 8rem;
 }
