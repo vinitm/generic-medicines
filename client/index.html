@@ -84,7 +84,7 @@
                     <%= medicine.package_qty %>
                         </span>
                         <div class="details-item col-sm-12">
-                            <span class='tag'>Constituents(Strength): </span>
+                            <span class='tag'>Constituents(Strength):&nbsp;</span>
                             <div class='constituents'>
                                 <%=constituents.map(function(item){return "<span class='constituent'>"+item.name.trim()+"("+item.strength.trim()+")</span>";}).join("") %></div>
                         </div>
@@ -94,7 +94,7 @@
         <a href='<%=url%>'>
             <h4><%= brand %></h4>
         </a>
-        <%= unit_price %>
+        <i class="fa fa-inr"></i><%= unit_price %>/unit
     </script>
 
     <script type="text/template" id="cheapest_substitute-chart-template">
