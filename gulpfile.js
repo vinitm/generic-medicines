@@ -78,7 +78,7 @@ gulp.task('css', function() {
     ];
     return gulp.src(CLIENT_CSS)
         .pipe(order(fileOrder))
-        .pipe(cache()) //only pass changed files
+        //.pipe(cache()) //only pass changed files
         .pipe(print())
         .pipe(minifyCss())
         .pipe(concat('main.css'))
