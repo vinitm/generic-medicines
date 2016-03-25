@@ -10,7 +10,7 @@ typeahead.loadjQueryPlugin();
 MedicineManager.module("Common.Views", function (Views) {
 
     Views.Loading = Marionette.ItemView.extend({
-        template: "#loading-template",
+        template: require('./loading_template.tpl'),
         className: "col-xs-12"
     });
 

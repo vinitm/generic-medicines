@@ -16,9 +16,8 @@ var CLIENT_HTML = CLIENT_FOLDER + '/*.html';
 
 //build
 var BUILD_FOLDER = './public';
-var BUILD_CSS_FOLDER = BUILD_FOLDER + '/assets/css';
-var BUILD_JS_FOLDER = BUILD_FOLDER + '/assets/js';
-var BUILD_JS_FILES = BUILD_JS_FOLDER + '/**/*.js';
+var BUILD_CSS_FOLDER = BUILD_FOLDER;
+var BUILD_JS_FOLDER = BUILD_FOLDER;
 var BUILD_HTML_FOLDER = BUILD_FOLDER;
 
 var gulp = require('gulp'),
@@ -39,10 +38,15 @@ var gulp = require('gulp'),
     watchify = require('watchify'),
     glob = require('glob'),
     rename = require('gulp-rename'),
-    source = require('vinyl-source-stream');
+    source = require('vinyl-source-stream'),
+    vinylPaths = require('vinyl-paths'),
+    del = require('del'),
+    underscorify = require('node-underscorify').transform({
+        extensions: ['tpl']
+    });
 
 
-gulp.task('browserSync', ['nodemon'], function() {
+gulp.task('browserSync', ['nodemon'], function () {
     console.log('browserSync called');
     browserSync.init({
         proxy: 'http://localhost:8000',
@@ -51,14 +55,14 @@ gulp.task('browserSync', ['nodemon'], function() {
     })
 });
 
-gulp.task('nodemon', function(cb) {
+gulp.task('nodemon', function (cb) {
     console.log('nodemon called');
     var started = false;
 
     return nodemon({
         script: SERVER_MAIN_FILE,
         watch: [SERVER_FILES]
-    }).on('start', function() {
+    }).on('start', function () {
         //to avoid nodemon being started multiple times
         if (!started) {
             cb();
@@ -68,7 +72,7 @@ gulp.task('nodemon', function(cb) {
 });
 
 
-gulp.task('css', function() {
+gulp.task('css', function () {
     console.log('css called');
     var fileOrder = [
         "dataTables.bootstrap.min.css",
@@ -83,18 +87,16 @@ gulp.task('css', function() {
         .pipe(minifyCss())
         .pipe(concat('main.css'))
         .pipe(gulp.dest(BUILD_CSS_FOLDER))
-        .pipe(browserSync.reload({
-            stream: true
-        }))
 });
 
 
 
-gulp.task('browserify', function() {
+gulp.task('browserify', function () {
 
     return browserify({
             entries: [CLIENT_JS_FOLDER + '/main.js']
         })
+        .transform(underscorify)
         .bundle()
         .pipe(source(CLIENT_JS_FOLDER + '/main.js'))
         .pipe(flatten())
@@ -103,34 +105,37 @@ gulp.task('browserify', function() {
 
 });
 
-gulp.task('vendor_js', function() {
+gulp.task('vendor_js', function () {
     return gulp.src(CLIENT_FOLDER + '/assets/js/vendor/dataTables.bootstrap.min.js')
         .pipe(concat('vendor.js'))
         //.pipe(uglify())
         .pipe(gulp.dest(BUILD_JS_FOLDER))
-        .pipe(browserSync.reload({
-            stream: true
-        }));
 });
 
-gulp.task('js', ['browserify', 'vendor_js'], function() {
+gulp.task('js', ['browserify', 'vendor_js'], function () {
     console.log('js called');
 });
 
-gulp.task('html', function() {
+gulp.task('html', function () {
     console.log('html called');
     return gulp.src(CLIENT_HTML)
         .pipe(cache()) //only pass changed files
         .pipe(gulp.dest(BUILD_HTML_FOLDER))
-        .pipe(browserSync.reload({
-            stream: true
-        }))
 });
 
 
-gulp.task('build', ['css', 'js', 'html']);
+gulp.task('build', ['clean', 'css', 'js', 'html'], function () {
+    reload();
+});
 
-gulp.task('watch', function() {
+
+gulp.task('clean', function () {
+    if (!/^win/.test(process.platform))
+        return del(['public/**/*.*']); //doesn't work on windows
+});
+
+
+gulp.task('watch', function () {
     gulp.watch([CLIENT_CSS, CLIENT_JS, CLIENT_HTML], ['build']);
 });
 

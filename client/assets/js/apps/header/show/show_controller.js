@@ -1,9 +1,9 @@
 var MedicineManager = require('MedicineManager');
-MedicineManager.module("HeaderApp.List", function (List) {
-    List.Controller = {
-        listHeader: function () {
+MedicineManager.module("HeaderApp.Show", function (Show) {
+    Show.Controller = {
+        showHeader: function () {
             var links = MedicineManager.request("header:entities");
-            var headers = new List.Headers({
+            var headers = new Show.Header({
                 collection: links
             });
 

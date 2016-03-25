@@ -1,11 +1,11 @@
 var MedicineManager = require('MedicineManager');
+var _ = require('underscore');
 var Backbone = require('backbone');
 var Marionette = require('backbone.marionette');
 
-
 MedicineManager.module("MedicineApp.Search", function (Search) {
     Search.SearchLayout = Marionette.LayoutView.extend({
-        template: '#search-layout-template',
+        template: require('./search_template.tpl'), //'#search-layout-template',
         id: "searchContainer",
         regions: {
             inputRegion: "#search"
@@ -24,6 +24,6 @@ MedicineManager.module("MedicineApp.Search", function (Search) {
         }
     });
 
-    
+
 
 });

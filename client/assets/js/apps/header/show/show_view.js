@@ -1,10 +1,10 @@
 var Marionette = require('backbone.marionette');
 var Backbone = require('backbone');
 var MedicineManager = require('MedicineManager');
-MedicineManager.module("HeaderApp.List", function (List) {
+MedicineManager.module("HeaderApp.Show", function (Show) {
 
-    List.Headers = Marionette.LayoutView.extend({
-        template: "#header-template",
+    Show.Header = Marionette.LayoutView.extend({
+        template: require('./show_template.tpl'),
         className: "navbar navbar-default navbar-fixed-top",
         regions: {
             inputRegion: '#inputRegion'

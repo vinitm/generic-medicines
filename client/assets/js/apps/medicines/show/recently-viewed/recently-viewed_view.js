@@ -5,7 +5,7 @@ var _ = require('underscore');
 var $ = require('jquery');
 MedicineManager.module("MedicineApp.Show", function (Show) {
     var RecentlyViewedItem = Marionette.ItemView.extend({
-        template: "#recently-viewed-listItem-template",
+        template: require("./listItem_template.tpl"),
         tagName: "li",
 		events: {
             "click .show": "linkClicked"
@@ -29,7 +29,7 @@ MedicineManager.module("MedicineApp.Show", function (Show) {
     });
 
     Show.RecentlyViewedLayout = Marionette.LayoutView.extend({
-        template: "#recently-viewed-template",
+        template: require("./layout_template.tpl"),
         regions: {
             "listRegion": "#list-region"
         },

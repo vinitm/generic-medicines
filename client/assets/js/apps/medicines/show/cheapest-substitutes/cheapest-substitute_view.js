@@ -6,7 +6,7 @@ var _ = require('underscore');
 MedicineManager.module("MedicineApp.Show", function (Show) {
     Show.CheapestSubstitutesItem = Marionette.ItemView.extend({
         tagName: "li",
-        template: "#cheapest-substitutes-list-template",
+        template:  require('./listItem_template.tpl'),
         events: {
             'click a': 'linkClicked'
         },
@@ -26,7 +26,7 @@ MedicineManager.module("MedicineApp.Show", function (Show) {
     });
 
     Show.ChartLayout = Marionette.LayoutView.extend({
-        template: "#cheapest_substitute-chart-template",
+        template: require('./chart_template.tpl'),
         regions: {
             "chartRegion": "#chart-region"
         },
@@ -48,7 +48,7 @@ MedicineManager.module("MedicineApp.Show", function (Show) {
     });
 
     Show.CheapestSubstitutes = Marionette.LayoutView.extend({
-        template: "#cheapest_substitute-template",
+        template: require('./layout_template.tpl'),
         tagName: "div",
         id: "cheapest_substitute",
         regions: {

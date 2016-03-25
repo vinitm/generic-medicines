@@ -3,7 +3,7 @@ var Backbone = require('backbone');
 var Marionette = require('backbone.marionette');
 var _ = require('underscore');
 var $ = require('jquery');
-//var bootstrap = require('bootstrap');
+var bootstrap = require('bootstrap');
 require('datatables.net-responsive')();
 MedicineManager.module("MedicineApp.Show", function (Show) {
     Show.Table = Marionette.ItemView.extend({
@@ -45,7 +45,7 @@ MedicineManager.module("MedicineApp.Show", function (Show) {
                         data: "package_price",
                         title: "Price",
                         render: function (data, type, row) {
-                             var template = _.template('<i class="fa fa-inr"></i><span><%=price%></span>');
+                            var template = require('./price-column_template.tpl');
                             return template({
                                 price: data
                             });
@@ -53,7 +53,7 @@ MedicineManager.module("MedicineApp.Show", function (Show) {
                     }, {
                         render: function (data, type, row) {
                             var difference = (row.unit_price * 100 / this.referencePrice).toFixed(1);
-                            var template = _.template('<span class="<%if(difference<=100){%>text-success<%}else{%>text-danger<%}%>"><span><%=difference%>% </span><i class="fa <%if(difference<=100){%>fa-thumbs-up<%}else{%>fa-thumbs-down<%}%>"></i></span>');
+                            var template = require('./cheaper-costlier-column_template.tpl');
                             return template({
                                 difference: difference
                             });
@@ -66,7 +66,7 @@ MedicineManager.module("MedicineApp.Show", function (Show) {
     });
 
     Show.Substitutes = Marionette.LayoutView.extend({
-        template: "#substitutes-template",
+        template: require("./layout_template.tpl"),
         tagName: "div",
         id: "cheapest_substitute",
         regions: {
