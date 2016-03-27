@@ -26,7 +26,7 @@
 
         //set background image
         $.get('/bing_background', function (url) {
-            $('html').css('background', 'url(' + url + ') no-repeat center center fixed')
+            $('html').css('background', 'url(' + url + ') no-repeat center center fixed');
         });
     });
 
@@ -34,4 +34,4 @@
         MedicineManager.start();
     });
 
-    module.exports = MedicineManager
+    module.exports = MedicineManager;

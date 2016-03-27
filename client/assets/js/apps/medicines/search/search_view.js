@@ -5,7 +5,7 @@ var Marionette = require('backbone.marionette');
 
 MedicineManager.module("MedicineApp.Search", function (Search) {
     Search.SearchLayout = Marionette.LayoutView.extend({
-        template: require('./search_template.tpl'), //'#search-layout-template',
+        template: require('./search_template.tpl'),
         id: "searchContainer",
         regions: {
             inputRegion: "#search"
@@ -21,6 +21,10 @@ MedicineManager.module("MedicineApp.Search", function (Search) {
             console.log('search onshow');
             var search = new MedicineManager.Common.Views.Typeahead();
             this.inputRegion.show(search);
+            
+            //to page center
+            this.inputRegion.$el.addClass('row');
+            search.$el.parent().addClass('col-xs-12 col-md-offset-4 col-md-4');
         }
     });
 

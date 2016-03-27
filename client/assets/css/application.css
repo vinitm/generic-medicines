@@ -76,8 +76,20 @@ html {
     padding: 0px;
 }
 
-.navbar-collapse.in{
-overflow-y: visible;
+.navbar-collapse.in {
+    overflow-y: visible;
+}
+
+.navbar-form {
+    border: none;
+}
+
+#header-region .searchInput,
+#header-region .tt-query,
+#header-region .tt-hint {
+    height: 30px;
+    line-height: 30px;
+    font-size: 15px;
 }
 
 #main {
@@ -85,7 +97,7 @@ overflow-y: visible;
 }
 
 #searchContainer {
-    margin: 0 auto;
+    width: 100%;
     position: relative;
     display: table;
     height: 100%;
