@@ -5,7 +5,7 @@ var _ = require('underscore');
 var jQuery = require("jquery");
 var Chart = require('chart.js');
 var typeahead = require("typeahead.js-browserify");
-var Bloodhound=typeahead.Bloodhound;
+var Bloodhound = typeahead.Bloodhound;
 typeahead.loadjQueryPlugin();
 MedicineManager.module("Common.Views", function (Views) {
 
@@ -23,11 +23,12 @@ MedicineManager.module("Common.Views", function (Views) {
             });
         }
     });
-    
-    
+
+
     Views.Typeahead = Marionette.ItemView.extend({
         template: false,
         tagName: "input",
+        placeholder: "Search",
         className: "searchInput",
         events: {
             "typeahead:select": "onTypeheadSelect"
@@ -62,10 +63,12 @@ MedicineManager.module("Common.Views", function (Views) {
                 name: 'suggestions',
                 source: engine
             });
+
+            this.$el.attr('placeholder', this.placeholder);
         }
     });
-    
-    
+
+
 
     Views.Chart = Marionette.ItemView.extend({
         template: false,
