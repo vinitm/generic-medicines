@@ -2,7 +2,7 @@ var MedicineManager = require('MedicineManager');
 var Backbone = require('backbone');
 var Marionette = require('backbone.marionette');
 var _ = require('underscore');
-var jQuery = require("jquery");
+var $ = require("jquery");
 var Chart = require('chart.js');
 var typeahead = require("typeahead.js-browserify");
 var Bloodhound = typeahead.Bloodhound;
@@ -11,7 +11,7 @@ MedicineManager.module("Common.Views", function (Views) {
 
     Views.Loading = Marionette.ItemView.extend({
         template: require('./loading_template.tpl'),
-        className: "col-xs-12"
+        tagName: 'span'
     });
 
     Views.EmptyView = Marionette.ItemView.extend({
@@ -30,11 +30,21 @@ MedicineManager.module("Common.Views", function (Views) {
         tagName: "input",
         placeholder: "Search",
         className: "searchInput",
+        loaderClass: "Typeahead-spinner",
         events: {
             "typeahead:select": "onTypeheadSelect"
         },
         onTypeheadSelect: function (event, suggest) {
             this.triggerMethod('suggestion:select', suggest);
+        },
+        _addPlaceholder: function () {
+            this.$el.attr('placeholder', this.placeholder);
+        },
+        _addLoader: function () {
+            var loader = new Views.Loading().render().$el;
+            loader.addClass(this.loaderClass);
+            this.$el.parent().append(loader);
+            loader.hide();
         },
         onShow: function () {
             console.log('onshow');
@@ -53,18 +63,25 @@ MedicineManager.module("Common.Views", function (Views) {
                 }
             });
 
+            var self = this;
             this.$el.typeahead({
-                hint: true,
-                highlight: true,
-                minLength: 1
-            }, {
-                limit: "50",
-                displayKey: 'suggestion',
-                name: 'suggestions',
-                source: engine
-            });
+                    hint: true,
+                    highlight: true,
+                    minLength: 1
+                }, {
+                    limit: "50",
+                    displayKey: 'suggestion',
+                    name: 'suggestions',
+                    source: engine
+                }).on('typeahead:asyncrequest', function () {
+                    self.$el.parent().find('.Typeahead-spinner').show();
+                })
+                .on('typeahead:asynccancel typeahead:asyncreceive', function () {
+                    self.$el.parent().find('.Typeahead-spinner').hide();
+                });
 
-            this.$el.attr('placeholder', this.placeholder);
+            this._addLoader();
+            this._addPlaceholder();
         }
     });
 

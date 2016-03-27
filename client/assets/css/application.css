@@ -25,6 +25,15 @@ html {
     margin: 0px;
 }
 
+.Typeahead-spinner {
+    display: inline;
+    position: absolute;
+    right: 7px;
+    top: 7px;
+    width: 28px;
+    height: 28px;
+}
+
 .col-lg-1,
 .col-lg-10,
 .col-lg-11,
