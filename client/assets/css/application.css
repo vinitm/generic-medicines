@@ -117,8 +117,16 @@ html {
     vertical-align: middle;
 }
 
+#recently-viewed-region {
+    min-height: 53px;
+}
+
 #recently-viewed-region #list-region {
     min-height: 290px;
+}
+
+#title-region {
+    min-height: 53px;
 }
 
 #title {
@@ -136,6 +144,10 @@ html {
 #title h3 .label {
     font-size: 25%;
     vertical-align: middle;
+}
+
+#details-region {
+    min-height: 53px;
 }
 
 .details-item {
@@ -169,6 +181,14 @@ html {
     margin-bottom: 5px;
     color: white;
     font-weight: bold;
+}
+
+#cheapest_substitutes-region {
+    min-height: 53px;
+}
+
+#substitutes-region {
+    min-height: 53px;
 }
 
 .mcard-container {
