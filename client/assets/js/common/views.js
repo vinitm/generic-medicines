@@ -10,22 +10,15 @@ typeahead.loadjQueryPlugin();
 MedicineManager.module("Common.Views", function (Views) {
 
     Views.Loading = Marionette.ItemView.extend({
-        template: false ,
+        template: false,
         onRender: function () {
             var opts = {
-
-                length: 28 // The length of each line
-                    ,
-                width: 14 // The line thickness
-                    ,
-                radius: 42 // The radius of the inner circle
-                    ,
-                scale: 0.12 // Scales overall size of the spinner
-                    ,
-                className: 'spinner' // The CSS class to assign to the spinner
-                    ,
-                top: '50%' // Top position relative to parent
-                    ,
+                length: 28, // The length of each line
+                width: 14, // The line thickness
+                radius: 42, // The radius of the inner circle
+                scale: 0.12, // Scales overall size of the spinner
+                className: 'spinner', // The CSS class to assign to the spinner
+                top: '50%', // Top position relative to parent
                 left: '50%' // Left position relative to parent
             };
             var spinner = new Spinner(opts).spin(this.$el.get(0));

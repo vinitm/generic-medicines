@@ -8,6 +8,7 @@ require("./apps/header/show/show_view.js");
 require("./apps/header/show/show_controller.js");
 require("./apps/medicines/search/search_view.js");
 require("./apps/medicines/search/search_controller.js");
+require("./apps/medicines/show/loader/loader_view.js");
 require("./apps/medicines/show/cheapest-substitutes/cheapest-substitute_view.js");
 require("./apps/medicines/show/details/details_view.js");
 require("./apps/medicines/show/recently-viewed/recently-viewed_view.js");
