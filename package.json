@@ -1,67 +1,61 @@
 {
-  "name": "generic-medicines",
-  "private": true,
-  "version": "1.0.0",
-  "description": "Website to search for cheaper drug substitutes",
-  "main": "server/server.js",
-  "directories": {
-    "test": "tests"
-  },
-  "dependencies": {
-    "Backbone.Mutators": "^0.4.5",
-    "backbone": "1.0.0 - 1.2.3",
-    "backbone.localstorage": "^1.1.16",
-    "backbone.marionette": "^2.4.4",
-    "backbone.select": "^1.5.3",
-    "bootstrap": "^3.3.6",
-    "chart.js": "^1.0.2",
-    "datatables.net": "^1.10.11",
-    "datatables.net-responsive": "^2.0.2",
-    "del": "^2.2.0",
-    "express": "^4.13.3",
-    "jquery": "^2.2.1",
-    "node-underscorify": "0.0.14",
-    "request": "^2.67.0",
-    "typeahead.js-browserify": "^1.0.7",
-    "underscore": "^1.8.3",
-    "vinyl-paths": "^2.1.0"
-  },
-  "devDependencies": {
-    "browser-sync": "^2.11.1",
-    "browserify": "^13.0.0",
-    "event-stream": "^3.3.2",
-    "glob": "^7.0.0",
-    "gulp": "^3.9.1",
-    "gulp-cached": "^1.1.0",
-    "gulp-concat": "^2.6.0",
-    "gulp-cssnano": "^2.1.1",
-    "gulp-flatten": "^0.2.0",
-    "gulp-ignore": "^2.0.1",
-    "gulp-nodemon": "^2.0.6",
-    "gulp-order": "^1.1.1",
-    "gulp-print": "^2.0.1",
-    "gulp-rename": "^1.2.2",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-uglify": "^1.5.2",
-    "gulp-util": "^3.0.7",
-    "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.7.0"
-  },
-  "browser": {
-    "MedicineManager": "./client/assets/js/app.js"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "publish": "echo \"Don't publish me, bro!\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/vinitm/generic-medicines.git"
-  },
-  "author": "Vinit Mav",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/vinitm/generic-medicines/issues"
-  },
-  "homepage": "https://github.com/vinitm/generic-medicines#readme"
+    "name": "generic-medicines",
+    "private": true,
+    "version": "1.0.0",
+    "description": "Website to search for cheaper drug substitutes",
+    "main": "server/server.js",
+    "directories": {
+        "test": "tests"
+    },
+    "dependencies": {
+        "Backbone.Mutators": "^0.4.5",
+        "backbone": "1.0.0 - 1.2.3",
+        "backbone.localstorage": "^1.1.16",
+        "backbone.marionette": "^2.4.4",
+        "backbone.select": "^1.5.3",
+        "bootstrap": "^3.3.6",
+        "chart.js": "^1.0.2",
+        "datatables.net": "^1.10.11",
+        "datatables.net-responsive": "^2.0.2",
+        "express": "^4.13.3",
+        "jquery": "^2.2.1",
+        "request": "^2.67.0",
+        "typeahead.js-browserify": "^1.0.7",
+        "underscore": "^1.8.3"
+    },
+    "devDependencies": {
+        "browser-sync": "^2.11.1",
+        "browserify": "^13.0.0",
+        "del": "^2.2.0",
+        "gulp": "^3.9.1",
+        "gulp-cached": "^1.1.0",
+        "gulp-concat": "^2.6.0",
+        "gulp-cssnano": "^2.1.1",
+        "gulp-flatten": "^0.2.0",
+        "gulp-nodemon": "^2.0.6",
+        "gulp-order": "^1.1.1",
+        "gulp-print": "^2.0.1",
+        "gulp-rename": "^1.2.2",
+        "gulp-sourcemaps": "^1.6.0",
+        "node-underscorify": "0.0.14",
+        "vinyl-source-stream": "^1.1.0",
+        "watchify": "^3.7.0"
+    },
+    "browser": {
+        "MedicineManager": "./client/assets/js/app.js"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "publish": "echo \"Don't publish me, bro!\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/vinitm/generic-medicines.git"
+    },
+    "author": "Vinit Mav",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/vinitm/generic-medicines/issues"
+    },
+    "homepage": "https://github.com/vinitm/generic-medicines#readme"
 }

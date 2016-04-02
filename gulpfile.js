@@ -10,7 +10,6 @@ var CLIENT_FOLDER = './client';
 var CLIENT_CSS = CLIENT_FOLDER + '/assets/css/**/*.css';
 var CLIENT_JS_FOLDER = CLIENT_FOLDER + '/assets/js';
 var CLIENT_JS = CLIENT_JS_FOLDER + '/**/*.js';
-var CLIENT_JS_VENDOR = CLIENT_FOLDER + '/assets/js/vendor/**/*.js';
 var CLIENT_HTML = CLIENT_FOLDER + '/*.html';
 
 
@@ -26,25 +25,31 @@ var gulp = require('gulp'),
     cache = require('gulp-cached'),
     concat = require('gulp-concat'),
     sourcemaps = require('gulp-sourcemaps'),
-    uglify = require('gulp-uglify'),
     order = require('gulp-order'),
-    ignore = require('gulp-ignore'),
     print = require('gulp-print'),
-    stream = require('event-stream'),
     browserSync = require('browser-sync').create(),
     reload = browserSync.reload,
     nodemon = require('gulp-nodemon'),
     browserify = require('browserify'),
     watchify = require('watchify'),
-    glob = require('glob'),
     rename = require('gulp-rename'),
     source = require('vinyl-source-stream'),
-    vinylPaths = require('vinyl-paths'),
     del = require('del'),
     underscorify = require('node-underscorify').transform({
         extensions: ['tpl']
     });
 
+var vendors = ['jquery',
+               'underscore',
+               'backbone',
+               'backbone.localstorage',
+               'backbone.select',
+               'backbone.marionette',
+               'bootstrap',
+               'chart.js',
+               'datatables.net',
+               'datatables.net-responsive',
+               'typeahead.js-browserify'];
 
 gulp.task('browserSync', ['nodemon'], function () {
     console.log('browserSync called');
@@ -52,7 +57,7 @@ gulp.task('browserSync', ['nodemon'], function () {
         proxy: 'http://localhost:8000',
         browser: 'google chrome',
         port: 9000
-    })
+    });
 });
 
 gulp.task('nodemon', function (cb) {
@@ -86,33 +91,52 @@ gulp.task('css', function () {
         .pipe(print())
         .pipe(minifyCss())
         .pipe(concat('main.css'))
-        .pipe(gulp.dest(BUILD_CSS_FOLDER))
+        .pipe(gulp.dest(BUILD_CSS_FOLDER));
 });
 
 
 
-gulp.task('browserify', function () {
+gulp.task('vendor', function () {
+    var stream = browserify({
+        debug: false,
+        require: vendors
+    });
 
-    return browserify({
-            entries: [CLIENT_JS_FOLDER + '/main.js']
-        })
-        .transform(underscorify)
-        .bundle()
-        .pipe(source(CLIENT_JS_FOLDER + '/main.js'))
-        .pipe(flatten())
+    stream.bundle()
+        .pipe(source('vendor.js'))
         .pipe(gulp.dest(BUILD_JS_FOLDER));
 
-
+    return stream;
 });
 
-gulp.task('vendor_js', function () {
-    return gulp.src(CLIENT_FOLDER + '/assets/js/vendor/dataTables.bootstrap.min.js')
-        .pipe(concat('vendor.js'))
-        //.pipe(uglify())
-        .pipe(gulp.dest(BUILD_JS_FOLDER))
+gulp.task('app', function () {
+
+    var stream = browserify({
+        entries: [CLIENT_JS_FOLDER + '/main.js'],
+        cache: {},
+        packageCache: {},
+        plugin: [watchify]
+    });
+    stream.on('update', bundle);
+    bundle();
+
+    function bundle() {
+        vendors.forEach(function (vendor) {
+            stream.external(vendor);
+        });
+        stream
+            .transform(underscorify)
+            .bundle()
+            .pipe(source(CLIENT_JS_FOLDER + '/main.js'))
+            .pipe(flatten())
+            .pipe(gulp.dest(BUILD_JS_FOLDER));
+    }
 });
 
-gulp.task('js', ['browserify', 'vendor_js'], function () {
+gulp.task('browserify', ['vendor', 'app']);
+
+
+gulp.task('js', ['browserify'], function () {
     console.log('js called');
 });
 
@@ -120,7 +144,7 @@ gulp.task('html', function () {
     console.log('html called');
     return gulp.src(CLIENT_HTML)
         .pipe(cache()) //only pass changed files
-        .pipe(gulp.dest(BUILD_HTML_FOLDER))
+        .pipe(gulp.dest(BUILD_HTML_FOLDER));
 });
 
 
@@ -130,8 +154,9 @@ gulp.task('build', ['clean', 'css', 'js', 'html'], function () {
 
 
 gulp.task('clean', function () {
-    if (!/^win/.test(process.platform))
+    if (!/^win/.test(process.platform)) {
         return del(['public/**/*.*']); //doesn't work on windows
+    }
 });
 
 
