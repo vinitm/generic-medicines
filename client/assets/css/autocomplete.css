@@ -59,3 +59,13 @@
 .tt-suggestion p {
     margin: 0;
 }
+
+
+.Typeahead-spinner {
+    display: inline;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 38px;
+    height: 100%;
+}

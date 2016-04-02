@@ -2,17 +2,20 @@ var MedicineManager = require('MedicineManager');
 var Backbone = require('backbone');
 var Marionette = require('backbone.marionette');
 var _ = require('underscore');
-var $ = require("jquery");
 var Chart = require('chart.js');
 var typeahead = require("typeahead.js-browserify");
 var Bloodhound = typeahead.Bloodhound;
 typeahead.loadjQueryPlugin();
+
 MedicineManager.module("Common.Views", function (Views) {
 
     Views.Loading = Marionette.ItemView.extend({
         template: false,
+        initialize: function (options) {
+            this.options = options;
+        },
         onRender: function () {
-            var opts = {
+            var opts = _.extend({
                 length: 28, // The length of each line
                 width: 14, // The line thickness
                 radius: 42, // The radius of the inner circle
@@ -20,7 +23,7 @@ MedicineManager.module("Common.Views", function (Views) {
                 className: 'spinner', // The CSS class to assign to the spinner
                 top: '50%', // Top position relative to parent
                 left: '50%' // Left position relative to parent
-            };
+            }, this.options);
             var spinner = new Spinner(opts).spin(this.$el.get(0));
         }
     });
@@ -42,6 +45,9 @@ MedicineManager.module("Common.Views", function (Views) {
         placeholder: "Search",
         className: "searchInput",
         loaderClass: "Typeahead-spinner",
+        initialize: function (options) {
+            this.loaderOptions = options;
+        },
         events: {
             "typeahead:select": "onTypeheadSelect"
         },
@@ -52,13 +58,12 @@ MedicineManager.module("Common.Views", function (Views) {
             this.$el.attr('placeholder', this.placeholder);
         },
         _addLoader: function () {
-            var loader = new Views.Loading().render().$el;
+            var loader = new Views.Loading(this.loaderOptions).render().$el;
             loader.addClass(this.loaderClass);
             this.$el.parent().append(loader);
-            //loader.hide();
+            loader.hide();
         },
         onShow: function () {
-            console.log('onshow');
             // constructs the suggestion engine
             var engine = new Bloodhound({
                 datumTokenizer: function (item) {
@@ -84,7 +89,8 @@ MedicineManager.module("Common.Views", function (Views) {
                     displayKey: 'suggestion',
                     name: 'suggestions',
                     source: engine
-                }).on('typeahead:asyncrequest', function () {
+                })
+                .on('typeahead:asyncrequest', function () {
                     self.$el.parent().find('.Typeahead-spinner').show();
                 })
                 .on('typeahead:asynccancel typeahead:asyncreceive', function () {

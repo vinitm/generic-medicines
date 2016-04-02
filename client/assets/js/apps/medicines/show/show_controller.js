@@ -14,7 +14,7 @@ MedicineManager.module("MedicineApp.Show", function (Show) {
 
             //show loading view while the information is loaded
             showLayout.regionManager.each(function (region) {
-                var loadingView = new Show.Loader();
+                var loadingView = new Show.Loader({width:20});
                 region.show(loadingView);
             });
 
