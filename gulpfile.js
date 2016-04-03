@@ -21,6 +21,7 @@ var BUILD_HTML_FOLDER = BUILD_FOLDER;
 
 var gulp = require('gulp'),
     flatten = require('gulp-flatten'),
+    uglify = require('gulp-uglify'),
     minifyCss = require('gulp-cssnano'),
     cache = require('gulp-cached'),
     concat = require('gulp-concat'),
@@ -35,6 +36,7 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     source = require('vinyl-source-stream'),
     del = require('del'),
+    buffer = require('vinyl-buffer'),
     underscorify = require('node-underscorify').transform({
         extensions: ['tpl']
     });
@@ -104,6 +106,8 @@ gulp.task('vendor', function () {
 
     stream.bundle()
         .pipe(source('vendor.js'))
+        .pipe(buffer())
+        .pipe(uglify())
         .pipe(gulp.dest(BUILD_JS_FOLDER));
 
     return stream;
@@ -128,7 +132,9 @@ gulp.task('app', function () {
             .transform(underscorify)
             .bundle()
             .pipe(source(CLIENT_JS_FOLDER + '/main.js'))
+            .pipe(buffer())
             .pipe(flatten())
+            .pipe(uglify())
             .pipe(gulp.dest(BUILD_JS_FOLDER));
     }
 });
