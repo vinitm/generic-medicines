@@ -51,7 +51,8 @@ var vendors = ['jquery',
                'chart.js',
                'datatables.net',
                'datatables.net-responsive',
-               'typeahead.js-browserify'];
+               'typeahead.js-browserify',
+               'spin.js'];
 
 gulp.task('browserSync', ['nodemon'], function () {
     console.log('browserSync called');

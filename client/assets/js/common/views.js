@@ -4,6 +4,7 @@ var Marionette = require('backbone.marionette');
 var _ = require('underscore');
 var Chart = require('chart.js');
 var typeahead = require("typeahead.js-browserify");
+var Spinner=require('spin.js');
 var Bloodhound = typeahead.Bloodhound;
 typeahead.loadjQueryPlugin();
 
