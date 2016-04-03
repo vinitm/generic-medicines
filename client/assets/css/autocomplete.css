@@ -8,9 +8,8 @@
 .tt-hint {
     width: 100%;
     height: 50px;
-    padding: 8px 12px;
+    padding: 0px 12px;
     font-size: 18px;
-    line-height: 50px;
     border: none;
     outline: none;
 }
@@ -38,7 +37,6 @@
 .tt-suggestion {
     padding: 3px 20px;
     font-size: 18px;
-    line-height: 24px;
 }
 
 .tt-suggestion:hover {
