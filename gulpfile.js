@@ -37,6 +37,7 @@ var gulp = require('gulp'),
     source = require('vinyl-source-stream'),
     del = require('del'),
     buffer = require('vinyl-buffer'),
+    inlinesource = require('gulp-inline-source'),
     underscorify = require('node-underscorify').transform({
         extensions: ['tpl']
     });
@@ -152,6 +153,8 @@ gulp.task('html', function () {
     console.log('html called');
     return gulp.src(CLIENT_HTML)
         .pipe(cache()) //only pass changed files
+        .pipe(gulp.dest(BUILD_HTML_FOLDER))
+        .pipe(inlinesource())
         .pipe(gulp.dest(BUILD_HTML_FOLDER));
 });
 
