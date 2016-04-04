@@ -51,6 +51,7 @@ var vendors = ['jquery',
                'chart.js',
                'datatables.net',
                'datatables.net-responsive',
+               'datatables.net-bs',
                'typeahead.js-browserify',
                'spin.js'];
 

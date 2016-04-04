@@ -16,6 +16,7 @@
     "bootstrap": "^3.3.6",
     "chart.js": "^1.0.2",
     "datatables.net": "^1.10.11",
+    "datatables.net-bs": "^1.10.11",
     "datatables.net-responsive": "^2.0.2",
     "express": "^4.13.3",
     "jquery": "^2.2.1",

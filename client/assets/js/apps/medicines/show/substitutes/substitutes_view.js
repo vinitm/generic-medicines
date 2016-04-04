@@ -5,6 +5,7 @@ var _ = require('underscore');
 var $ = require('jquery');
 require('bootstrap');
 require('datatables.net-responsive')();
+require('datatables.net-bs')(window, $);
 MedicineManager.module("MedicineApp.Show", function (Show) {
     Show.Table = Marionette.ItemView.extend({
         template: false,
