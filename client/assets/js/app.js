@@ -24,10 +24,6 @@
             Backbone.history.start();
         }
 
-        //set background image
-        $.get('/bing_background', function (url) {
-            $('html').css('background', 'url(' + url + ') no-repeat center center fixed');
-        });
     });
 
     $(function () {

@@ -11,6 +11,7 @@ var CLIENT_CSS = CLIENT_FOLDER + '/assets/css/**/*.css';
 var CLIENT_JS_FOLDER = CLIENT_FOLDER + '/assets/js';
 var CLIENT_JS = CLIENT_JS_FOLDER + '/**/*.js';
 var CLIENT_HTML = CLIENT_FOLDER + '/*.html';
+var CLIENT_IMAGE = CLIENT_FOLDER + '/assets/images/*.*';
 
 
 //build
@@ -18,6 +19,7 @@ var BUILD_FOLDER = './public';
 var BUILD_CSS_FOLDER = BUILD_FOLDER;
 var BUILD_JS_FOLDER = BUILD_FOLDER;
 var BUILD_HTML_FOLDER = BUILD_FOLDER;
+var BUILD_IMAGE_FOLDER = BUILD_FOLDER;
 
 var gulp = require('gulp'),
     flatten = require('gulp-flatten'),
@@ -38,6 +40,7 @@ var gulp = require('gulp'),
     del = require('del'),
     buffer = require('vinyl-buffer'),
     inlinesource = require('gulp-inline-source'),
+    imagemin = require('gulp-imagemin'),
     underscorify = require('node-underscorify').transform({
         extensions: ['tpl']
     });
@@ -66,7 +69,6 @@ gulp.task('browserSync', ['nodemon'], function () {
 });
 
 gulp.task('nodemon', function (cb) {
-    console.log('nodemon called');
     var started = false;
 
     return nodemon({
@@ -83,7 +85,6 @@ gulp.task('nodemon', function (cb) {
 
 
 gulp.task('css', function () {
-    console.log('css called');
     var fileOrder = [
         "dataTables.bootstrap.min.css",
         "loader.css",
@@ -146,20 +147,25 @@ gulp.task('browserify', ['vendor', 'app']);
 
 
 gulp.task('js', ['browserify'], function () {
-    console.log('js called');
+});
+
+gulp.task('image', function () {
+    gulp.src(CLIENT_IMAGE)
+        .pipe(imagemin())
+        .pipe(gulp.dest(BUILD_IMAGE_FOLDER));
 });
 
 gulp.task('html', function () {
-    console.log('html called');
     return gulp.src(CLIENT_HTML)
         .pipe(cache()) //only pass changed files
         .pipe(gulp.dest(BUILD_HTML_FOLDER))
         .pipe(inlinesource())
+     .pipe(print())
         .pipe(gulp.dest(BUILD_HTML_FOLDER));
 });
 
 
-gulp.task('build', ['clean', 'css', 'js', 'html'], function () {
+gulp.task('build', ['clean', 'image', 'css', 'js', 'html'], function () {
     reload();
 });
 
