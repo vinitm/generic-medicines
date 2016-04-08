@@ -59,15 +59,6 @@ var vendors = ['jquery',
                'typeahead.js-browserify',
                'spin.js'];
 
-gulp.task('browserSync', ['nodemon'], function () {
-    console.log('browserSync called');
-    browserSync.init({
-        proxy: 'http://localhost:8000',
-        browser: 'google chrome',
-        port: 9000
-    });
-});
-
 gulp.task('nodemon', function (cb) {
     var started = false;
 
@@ -77,11 +68,20 @@ gulp.task('nodemon', function (cb) {
     }).on('start', function () {
         //to avoid nodemon being started multiple times
         if (!started) {
-            cb();
             started = true;
         }
+        cb();
     }).on('restart', reload);
 });
+
+
+gulp.task('browserSync', gulp.series('nodemon', function (cb) {
+    return browserSync.init({
+        proxy: 'http://localhost:8000',
+        browser: 'google chrome',
+        port: 9000
+    }, cb);
+}));
 
 
 gulp.task('css', function () {
@@ -108,13 +108,11 @@ gulp.task('vendor', function () {
         require: vendors
     });
 
-    stream.bundle()
+    return stream.bundle()
         .pipe(source('vendor.js'))
         .pipe(buffer())
         .pipe(uglify())
         .pipe(gulp.dest(BUILD_JS_FOLDER));
-
-    return stream;
 });
 
 gulp.task('app', function () {
@@ -125,14 +123,16 @@ gulp.task('app', function () {
         packageCache: {},
         plugin: [watchify]
     });
-    stream.on('update', bundle);
-    bundle();
+    stream.on('update', function () {
+        bundle();
+    });
+
 
     function bundle() {
         vendors.forEach(function (vendor) {
             stream.external(vendor);
         });
-        stream
+        return stream
             .transform(underscorify)
             .bundle()
             .pipe(source(CLIENT_JS_FOLDER + '/main.js'))
@@ -141,44 +141,55 @@ gulp.task('app', function () {
             .pipe(uglify())
             .pipe(gulp.dest(BUILD_JS_FOLDER));
     }
+
+    return bundle();
 });
 
-gulp.task('browserify', ['vendor', 'app']);
+gulp.task('browserify', gulp.series('vendor', 'app', function (done) {
+    done();
+}));
 
 
-gulp.task('js', ['browserify'], function () {
-});
+gulp.task('js', gulp.series('browserify', function (done) {
+    done();
+}));
 
 gulp.task('image', function () {
-    gulp.src(CLIENT_IMAGE)
+    return gulp.src(CLIENT_IMAGE)
         .pipe(imagemin())
         .pipe(gulp.dest(BUILD_IMAGE_FOLDER));
 });
 
 gulp.task('html', function () {
     return gulp.src(CLIENT_HTML)
-        .pipe(cache()) //only pass changed files
         .pipe(gulp.dest(BUILD_HTML_FOLDER))
         .pipe(inlinesource())
-     .pipe(print())
         .pipe(gulp.dest(BUILD_HTML_FOLDER));
 });
 
 
-gulp.task('build', ['clean', 'image', 'css', 'js', 'html'], function () {
-    reload();
-});
 
-
-gulp.task('clean', function () {
+gulp.task('clean', function (done) {
     if (!/^win/.test(process.platform)) {
         return del(['public/**/*.*']); //doesn't work on windows
     }
+    done();
 });
 
 
-gulp.task('watch', function () {
-    gulp.watch([CLIENT_CSS, CLIENT_JS, CLIENT_HTML], ['build']);
+gulp.task('build', gulp.series('clean', 'image', 'css', 'js', 'html', function (done) {
+    reload();
+    done();
+}));
+
+gulp.task('watch', function (done) {
+    gulp.watch([CLIENT_CSS, CLIENT_HTML], gulp.series('build'));
+    gulp.watch([BUILD_JS_FOLDER + '/*.js'], gulp.series('html', function () {
+        reload();
+    }));
+    done();
 });
 
-gulp.task('default', ['build', 'browserSync', 'watch']);
+gulp.task('default', gulp.series('build', 'browserSync', 'watch', function (done) {
+    done();
+}));

@@ -11,5 +11,5 @@ MedicineManager.module("MedicineApp.Search", function (Search) {
         showMedicine: function (suggestion) {
             MedicineManager.trigger("medicine:show", suggestion.get("suggestion"));
         }
-    }
+    };
 });

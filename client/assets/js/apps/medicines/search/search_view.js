@@ -18,7 +18,6 @@ MedicineManager.module("MedicineApp.Search", function (Search) {
             this.trigger("suggestion:select", model);
         },
         onShow: function () {
-            console.log('search onshow');
             var search = new MedicineManager.Common.Views.Typeahead();
             this.inputRegion.show(search);
             

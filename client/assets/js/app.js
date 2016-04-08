@@ -23,7 +23,6 @@
         if (Backbone.history) {
             Backbone.history.start();
         }
-
     });
 
     $(function () {
