@@ -95,8 +95,12 @@ html {
 #header-region .searchInput,
 #header-region .tt-query,
 #header-region .tt-hint {
-    height: 30px;
+    height: 40px;
     font-size: 15px;
+}
+
+#header-region .twitter-typeahead{
+    width: 100%;
 }
 
 #main {
