@@ -41,6 +41,7 @@ var gulp = require('gulp'),
     buffer = require('vinyl-buffer'),
     inlinesource = require('gulp-inline-source'),
     imagemin = require('gulp-imagemin'),
+    path = require('path'),
     underscorify = require('node-underscorify').transform({
         extensions: ['tpl']
     });
@@ -84,6 +85,13 @@ gulp.task('browserSync', gulp.series('nodemon', function (cb) {
 }));
 
 
+
+gulp.task('reload', function (done) {
+    reload();
+    done();
+});
+
+
 gulp.task('css', function () {
     var fileOrder = [
         "dataTables.bootstrap.min.css",
@@ -93,7 +101,6 @@ gulp.task('css', function () {
     ];
     return gulp.src(CLIENT_CSS)
         .pipe(order(fileOrder))
-        //.pipe(cache()) //only pass changed files
         .pipe(print())
         .pipe(minifyCss())
         .pipe(concat('main.css'))
@@ -162,8 +169,9 @@ gulp.task('image', function () {
 
 gulp.task('html', function () {
     return gulp.src(CLIENT_HTML)
-        .pipe(gulp.dest(BUILD_HTML_FOLDER))
-        .pipe(inlinesource())
+        .pipe(inlinesource({
+            rootpath: path.resolve(BUILD_FOLDER)
+        }))
         .pipe(gulp.dest(BUILD_HTML_FOLDER));
 });
 
@@ -177,18 +185,17 @@ gulp.task('clean', function (done) {
 });
 
 
-gulp.task('build', gulp.series('clean', 'image', 'css', 'js', 'html', function (done) {
-    reload();
-    done();
-}));
+gulp.task('build', gulp.series('clean', 'image', 'css', 'js', 'html', 'reload'));
 
 gulp.task('watch', function (done) {
-    gulp.watch([CLIENT_CSS, CLIENT_HTML], gulp.series('build'));
-    gulp.watch([BUILD_JS_FOLDER + '/*.js'], gulp.series('html', function () {
-        reload();
-    }));
+    gulp.watch([CLIENT_HTML], gulp.series('html'));
+    gulp.watch([CLIENT_CSS], gulp.series('css'));
+    gulp.watch([BUILD_JS_FOLDER + '/*.js'], gulp.series('html', 'reload'));
+    gulp.watch([BUILD_CSS_FOLDER + '/*.css'], gulp.series('html', 'reload'));
+    gulp.watch([BUILD_HTML_FOLDER + '/*.html'], gulp.series('reload'));
     done();
 });
+
 
 gulp.task('default', gulp.series('build', 'browserSync', 'watch', function (done) {
     done();
