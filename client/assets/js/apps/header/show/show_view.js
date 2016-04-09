@@ -24,7 +24,9 @@ MedicineManager.module("HeaderApp.Show", function (Show) {
             this.trigger("brand:clicked");
         },
         onShow: function () {
-            var search = new MedicineManager.Common.Views.Typeahead({scale:0.1});
+            var search = new MedicineManager.Common.Views.Typeahead({
+                scale: 0.1
+            });
             this.inputRegion.show(search);
         }
     });
