@@ -95,7 +95,6 @@ gulp.task('reload', function (done) {
 gulp.task('css', function () {
     var fileOrder = [
         "dataTables.bootstrap.min.css",
-        "loader.css",
         "autocomplete.css",
         "application.css"
     ];
@@ -190,8 +189,8 @@ gulp.task('build', gulp.series('clean', 'image', 'css', 'js', 'html', 'reload'))
 gulp.task('watch', function (done) {
     gulp.watch([CLIENT_HTML], gulp.series('html'));
     gulp.watch([CLIENT_CSS], gulp.series('css'));
-    gulp.watch([BUILD_JS_FOLDER + '/*.js'], gulp.series('html', 'reload'));
-    gulp.watch([BUILD_CSS_FOLDER + '/*.css'], gulp.series('html', 'reload'));
+    gulp.watch([BUILD_JS_FOLDER + '/*.js'], gulp.series('html'));
+    gulp.watch([BUILD_CSS_FOLDER + '/*.css'], gulp.series('html'));
     gulp.watch([BUILD_HTML_FOLDER + '/*.html'], gulp.series('reload'));
     done();
 });
