@@ -1,5 +1,5 @@
-body{
-    background:url("background.jpg") no-repeat center center fixed;
+body {
+    background: url("background.jpg") no-repeat center center fixed;
 }
 
 body,
@@ -92,6 +92,15 @@ html {
     border: none;
 }
 
+.navbar {
+    min-height: 60px;
+}
+
+.navbar-brand {
+    height: 60px;
+    line-height: 30px;
+}
+
 #header-region .searchInput,
 #header-region .tt-query,
 #header-region .tt-hint {
@@ -99,7 +108,7 @@ html {
     font-size: 15px;
 }
 
-#header-region .twitter-typeahead{
+#header-region .twitter-typeahead {
     width: 100%;
 }
 

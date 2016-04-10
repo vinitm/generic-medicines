@@ -14,17 +14,14 @@ MedicineManager.module("HeaderApp.Show", function (Show) {
             MedicineManager.headerRegion.show(headers);
         },
         showMedicine: function (suggestion) {
-                MedicineManager.trigger("medicine:show", suggestion.get("suggestion"));
-            }
-            /*,
-
-                    setActiveHeader: function (headerUrl) {
-                        var links = ContactManager.request("header:entities");
-                        var headerToSelect = links.find(function (header) {
-                            return header.get("url") === headerUrl;
-                        });
-                        headerToSelect.select();
-                        links.trigger("reset");
-                    }*/
+            MedicineManager.trigger("medicine:show", suggestion.get("suggestion"));
+        },
+        setSearchVisibility: function (visible) {
+            var searchBar = MedicineManager.headerRegion.currentView.inputRegion.$el;
+            if (visible === 'hide')
+                searchBar.hide();
+            else if (visible === 'show')
+                searchBar.show();
+        }
     };
 });

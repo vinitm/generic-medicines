@@ -10,8 +10,8 @@ MedicineManager.module("HeaderApp", function (Header) {
         }
     };
 
-    MedicineManager.commands.setHandler("set:active:header", function (name) {
-        //MedicineManager.HeaderApp.List.Controller.setActiveHeader(name);
+    MedicineManager.commands.setHandler("set:search:visiblity", function (visible) {
+        MedicineManager.HeaderApp.Show.Controller.setSearchVisibility(visible);
     });
 
     Header.on("start", function () {

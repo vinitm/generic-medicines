@@ -2,7 +2,7 @@ var MedicineManager = require('MedicineManager');
 var Backbone = require('backbone');
 var Marionette = require('backbone.marionette');
 MedicineManager.module("MedicineApp", function (MedicineApp) {
-   MedicineApp.Router = Marionette.AppRouter.extend({
+    MedicineApp.Router = Marionette.AppRouter.extend({
         appRoutes: {
             "": "showSearchOption",
             "show/*id": "showMedicine"
@@ -11,9 +11,11 @@ MedicineManager.module("MedicineApp", function (MedicineApp) {
 
     var API = {
         showSearchOption: function () {
+            MedicineManager.execute("set:search:visiblity", 'hide');
             MedicineApp.Search.Controller.showSearchOption();
         },
         showMedicine: function (id) {
+            MedicineManager.execute("set:search:visiblity", 'show');
             MedicineManager.execute("add:recentlyViewed", id);
             MedicineApp.Show.Controller.showMedicine(id);
         }
@@ -21,7 +23,6 @@ MedicineManager.module("MedicineApp", function (MedicineApp) {
 
 
     MedicineManager.on("medicine:search", function () {
-        console.log('search');
         MedicineManager.navigate("");
         API.showSearchOption();
     });
