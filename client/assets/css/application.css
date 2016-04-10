@@ -229,7 +229,7 @@ html {
 .mcard {
     background: #fff;
     display: block;
-    transition: all 0.2s ease-in-out;
+    box-shadow: 0 1px 1px 1px rgba(153, 153, 153, 0.3);
 }
 
 .material-list {
