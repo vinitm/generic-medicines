@@ -22,6 +22,7 @@ var BUILD_HTML_FOLDER = BUILD_FOLDER;
 var BUILD_IMAGE_FOLDER = BUILD_FOLDER;
 
 var gulp = require('gulp'),
+    gutil = require('gulp-util'),
     flatten = require('gulp-flatten'),
     uglify = require('gulp-uglify'),
     minifyCss = require('gulp-cssnano'),
@@ -42,6 +43,7 @@ var gulp = require('gulp'),
     inlinesource = require('gulp-inline-source'),
     imagemin = require('gulp-imagemin'),
     path = require('path'),
+    plumber = require('gulp-plumber'),
     underscorify = require('node-underscorify').transform({
         extensions: ['tpl']
     });
@@ -141,6 +143,8 @@ gulp.task('app', function () {
         return stream
             .transform(underscorify)
             .bundle()
+            .on('error', gutil.log)
+            .pipe(plumber())
             .pipe(source(CLIENT_JS_FOLDER + '/main.js'))
             .pipe(buffer())
             .pipe(flatten())
@@ -163,6 +167,8 @@ gulp.task('js', gulp.series('browserify', function (done) {
 gulp.task('image', function () {
     return gulp.src(CLIENT_IMAGE)
         .pipe(imagemin())
+        .on('error', gutil.log)
+        .pipe(plumber())
         .pipe(gulp.dest(BUILD_IMAGE_FOLDER));
 });
 
@@ -189,6 +195,7 @@ gulp.task('build', gulp.series('clean', 'image', 'css', 'js', 'html', 'reload'))
 gulp.task('watch', function (done) {
     gulp.watch([CLIENT_HTML], gulp.series('html'));
     gulp.watch([CLIENT_CSS], gulp.series('css'));
+    gulp.watch([CLIENT_FOLDER + '/**/*.tpl'], gulp.series('app'));
     gulp.watch([BUILD_JS_FOLDER + '/*.js'], gulp.series('html'));
     gulp.watch([BUILD_CSS_FOLDER + '/*.css'], gulp.series('html'));
     gulp.watch([BUILD_HTML_FOLDER + '/*.html'], gulp.series('reload'));
