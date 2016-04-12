@@ -11,7 +11,7 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="navbar-collapse-1">
-        <form class="navbar-form navbar-left" role="search">
+        <form class="navbar-form navbar-right" role="search">
             <div class="form-group">
                 <div id="inputRegion">
                 </div>
