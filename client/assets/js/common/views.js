@@ -4,7 +4,7 @@ var Marionette = require('backbone.marionette');
 var _ = require('underscore');
 var Chart = require('chart.js');
 var typeahead = require("typeahead.js-browserify");
-var Spinner=require('spin.js');
+var Spinner = require('spin.js');
 var Bloodhound = typeahead.Bloodhound;
 typeahead.loadjQueryPlugin();
 
@@ -89,7 +89,10 @@ MedicineManager.module("Common.Views", function (Views) {
                     limit: "50",
                     displayKey: 'suggestion',
                     name: 'suggestions',
-                    source: engine
+                    source: engine,
+                    templates: {
+                        empty: require('./empty_typeahead.tpl')
+                    }
                 })
                 .on('typeahead:asyncrequest', function () {
                     self.$el.parent().find('.Typeahead-spinner').show();
