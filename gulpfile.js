@@ -79,11 +79,17 @@ gulp.task('nodemon', function (cb) {
 
 
 gulp.task('browserSync', gulp.series('nodemon', function (cb) {
-    return browserSync.init({
+var config={
         proxy: 'http://localhost:8000',
-        browser: 'google chrome',
         port: 9000
-    }, cb);
+    };
+if (/^win/.test(process.platform)) {
+        config.browser= 'google chrome'
+    }
+else{
+	config.browser= 'firefox'
+}
+    return browserSync.init(config, cb);
 }));
 
 
