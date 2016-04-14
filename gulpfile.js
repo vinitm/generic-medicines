@@ -79,16 +79,15 @@ gulp.task('nodemon', function (cb) {
 
 
 gulp.task('browserSync', gulp.series('nodemon', function (cb) {
-var config={
+    var config = {
         proxy: 'http://localhost:8000',
         port: 9000
     };
-if (/^win/.test(process.platform)) {
-        config.browser= 'google chrome'
+    if (/^win/.test(process.platform)) {
+        config.browser = 'google chrome'
+    } else {
+        config.browser = 'firefox'
     }
-else{
-	config.browser= 'firefox'
-}
     return browserSync.init(config, cb);
 }));
 
@@ -134,10 +133,13 @@ gulp.task('app', function () {
     var stream = browserify({
         entries: [CLIENT_JS_FOLDER + '/main.js'],
         cache: {},
-        packageCache: {},
-        plugin: [watchify]
+        packageCache: {}
+    });
+    stream.plugin(watchify, {
+        ignoreWatch: ['**/**/*.tpl']
     });
     stream.on('update', function () {
+        console.log('update');
         bundle();
     });
 
