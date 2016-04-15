@@ -15,7 +15,7 @@ var CLIENT_IMAGE = CLIENT_FOLDER + '/assets/images/*.*';
 
 
 //build
-var BUILD_FOLDER = './public';
+var BUILD_FOLDER = './dist';
 var BUILD_CSS_FOLDER = BUILD_FOLDER;
 var BUILD_JS_FOLDER = BUILD_FOLDER;
 var BUILD_HTML_FOLDER = BUILD_FOLDER;
@@ -192,7 +192,7 @@ gulp.task('html', function () {
 
 gulp.task('clean', function (done) {
     if (!/^win/.test(process.platform)) {
-        return del(['public/**/*.*']); //doesn't work on windows
+        return del([BUILD_FOLDER + '/**/*.*']); //doesn't work on windows
     }
     done();
 });
