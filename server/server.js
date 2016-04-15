@@ -10,7 +10,7 @@ var root = __dirname + "/../";
 
 
 app.use(compress()); 
-app.use(express.static(root + '/public'));
+app.use(express.static(root + '/dist'));
 
 app.get('/medicine_suggestions', function (req, res) {
     suggestions(req.query.id).then(function (data) {
