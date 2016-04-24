@@ -1,21 +1,17 @@
-var request = require('request');
-var url = require('./url.js');
-var pathname = '/api/medicine_details/';
+var alternatives = require('./endpoints/alternatives.js');
+var details = require('./endpoints/details.js');
 
-var parse = function(jsonStr) {
-    var jsonObj = JSON.parse(jsonStr);
-    return jsonObj.response;
+var parse = function (obj) {
+    return {
+        details: JSON.parse(obj[0]).response,
+        alternatives: JSON.parse(obj[1]).response.medicine_alternatives
+    };
 };
 
-module.exports = function(keyword) {
-    return new Promise(function(resolve, reject) {
-        var urlStr = url({ pathname: pathname, query: keyword });
-        request(urlStr, function(error, response, body) {
-            if (!error && response.statusCode == 200) {
-                resolve(parse(body));
-            } else {
-                reject(error);
-            }
-        });
+module.exports = function (query) {
+    var alternativesPromise = alternatives(query);
+    var detailsPromise = details(query);
+    return Promise.all([detailsPromise, alternativesPromise]).then(function (res) {
+        return parse(res);
     });
-}
+};

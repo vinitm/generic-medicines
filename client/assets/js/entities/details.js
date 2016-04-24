@@ -2,12 +2,7 @@ var MedicineManager=require('MedicineManager');
 var Backbone = require('backbone');
 var Marionette = require('backbone.marionette');
 MedicineManager.module("Entities", function (Entities) {
-    Entities.Detail = Backbone.Model.extend({
-        default: {
-            medicine: {},
-            constituents:{}
-        }
-    });
+    Entities.Detail = Backbone.Model;
 
     var API = {
         getDetail: function (medicine) {

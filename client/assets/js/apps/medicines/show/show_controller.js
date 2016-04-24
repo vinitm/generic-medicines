@@ -9,7 +9,6 @@ MedicineManager.module("MedicineApp.Show", function (Show) {
             MedicineManager.mainRegion.show(showLayout);
 
             var detailsFetched = MedicineManager.request("details:entities", medicine);
-            var substitutesFetched = MedicineManager.request("substitute:entities", medicine);
             var recentlyViewed = MedicineManager.request("recentlyViewed:entities");
 
             //show loading view while the information is loaded
@@ -18,12 +17,14 @@ MedicineManager.module("MedicineApp.Show", function (Show) {
                 region.show(loadingView);
             });
 
-            $.when(detailsFetched, substitutesFetched).then(function (details, substitutes) {
+            detailsFetched.then(function (details) {
                 if (!$.contains(document, showLayout.$el[0])) {
                     //if layout is detached
                     return;
                 }
 
+                var medicineDetails=new Backbone.Model(details.get('details'));
+                var medicineSubstitutes=new MedicineManager.Entities.SubtituteCollection(details.get('alternatives'));
                 //recently viewed
                 var recentlyViewedView = new Show.RecentlyViewedLayout({
                     collection: recentlyViewed
@@ -33,18 +34,18 @@ MedicineManager.module("MedicineApp.Show", function (Show) {
 
                 //medicine name in title
                 var titleView = new Show.Title({
-                    model: details
+                    model: medicineDetails
                 });
                 showLayout.titleRegion.show(titleView);
 
                 //view showing details of medicine
                 var detailsView = new Show.Details({
-                    model: details
+                    model: medicineDetails
                 });
                 showLayout.detailsRegion.show(detailsView);
 
 
-                if (substitutes.length === 0) {
+                if (medicineSubstitutes.length === 0) {
                     showLayout.substitutesRegion.show(new MedicineManager.Common.Views.EmptyView({
                         message: "No substitutes found"
                     }));
@@ -54,8 +55,8 @@ MedicineManager.module("MedicineApp.Show", function (Show) {
                 } else {
                     //medicine substitutes
                     var substitutesView = new Show.Substitutes({
-                        collection: substitutes,
-                        referencePrice: details.get("medicine")["unit_price"]
+                        collection: medicineSubstitutes,
+                        referencePrice: medicineDetails.get("medicine")["unit_price"]
                     });
                     substitutesView.on("substitute:show", this.showSubstitute);
                     showLayout.substitutesRegion.show(substitutesView);
@@ -63,8 +64,8 @@ MedicineManager.module("MedicineApp.Show", function (Show) {
 
                     //cheapest substitutes    
                     var cheapestSubstitutesView = new Show.CheapestSubstitutes({
-                        substitutes: substitutes,
-                        medicine: details
+                        substitutes: medicineSubstitutes,
+                        medicine: medicineDetails
                     });
                     cheapestSubstitutesView.on("substitute:show", this.showSubstitute);
                     showLayout.cheapestSubstitutesRegion.show(cheapestSubstitutesView);

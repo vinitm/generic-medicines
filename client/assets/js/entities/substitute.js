@@ -29,7 +29,7 @@ MedicineManager.module("Entities", function (Entities) {
         model: Entities.Subtitute,
         getCheapestSubstitutes: function () {
             var cheapestSubstitutes = [];
-            if (this.length == 0)
+            if (this.length === 0)
                 return cheapestSubstitutes;
             var priceProperty = "unit_price";
             var cheapestSubstitutePrice = this.models[0].get(priceProperty);
