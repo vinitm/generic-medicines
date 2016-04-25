@@ -1,6 +1,10 @@
 var MedicineManager = require('MedicineManager');
-var Backbone = require('backbone');
 var Marionette = require('backbone.marionette');
+var headerChannel = require('backbone.radio').channel('header');
+var medicineChannel = require('backbone.radio').channel('medicine');
+
+var Search = require('./search');
+var Show = require('./show');
 MedicineManager.module("MedicineApp", function (MedicineApp) {
     MedicineApp.Router = Marionette.AppRouter.extend({
         appRoutes: {
@@ -11,13 +15,13 @@ MedicineManager.module("MedicineApp", function (MedicineApp) {
 
     var API = {
         showSearchOption: function () {
-            MedicineManager.execute("set:search:visiblity", 'hide');
-            MedicineApp.Search.Controller.showSearchOption();
+            headerChannel.request("set:search:visiblity", 'hide');
+            Search.showSearchOption();
         },
         showMedicine: function (id) {
-            MedicineManager.execute("set:search:visiblity", 'show');
-            MedicineManager.execute("add:recentlyViewed", id);
-            MedicineApp.Show.Controller.showMedicine(id);
+            headerChannel.request("set:search:visiblity", 'show');
+            medicineChannel.request("add:recentlyViewed", id);
+            Show.showMedicine(id);
         }
     };
 

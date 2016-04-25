@@ -1,7 +1,8 @@
 var MedicineManager = require('MedicineManager');
 var Backbone = require('backbone');
 var Mutators = require('Backbone.Mutators');
-var Marionette = require('backbone.marionette');
+var medicineChannel = require('backbone.radio').channel('medicine');
+
 Backbone.LocalStorage = require("backbone.localstorage");
 MedicineManager.module("Entities", function (Entities) {
     var RecentlyViewedItem = Backbone.Model.extend({
@@ -44,11 +45,11 @@ MedicineManager.module("Entities", function (Entities) {
         }
     };
 
-    MedicineManager.reqres.setHandler("recentlyViewed:entities", function () {
+    medicineChannel.reply("recentlyViewed", function () {
         return API.getRecentlyViewed();
     });
 
-    MedicineManager.commands.setHandler("add:recentlyViewed", function (medicine) {
+    medicineChannel.reply("add:recentlyViewed", function (medicine) {
         API.addItem(medicine);
     });
 

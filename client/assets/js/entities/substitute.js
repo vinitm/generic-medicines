@@ -1,7 +1,8 @@
 var MedicineManager = require('MedicineManager');
 var Backbone = require('backbone');
 var Mutators = require('Backbone.Mutators');
-var Marionette = require('backbone.marionette');
+var medicineChannel = require('backbone.radio').channel('medicine');
+
 MedicineManager.module("Entities", function (Entities) {
     Entities.Subtitute = Backbone.Model.extend({
         mutators: {
@@ -57,7 +58,7 @@ MedicineManager.module("Entities", function (Entities) {
         }
     };
 
-    MedicineManager.reqres.setHandler("substitute:entities", function (medicine) {
+    medicineChannel.reply("substitute", function (medicine) {
         return API.getSubtitutes(medicine);
     });
 

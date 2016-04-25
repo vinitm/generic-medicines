@@ -12,6 +12,7 @@
     "backbone": "1.0.0 - 1.2.3",
     "backbone.localstorage": "^1.1.16",
     "backbone.marionette": "^2.4.4",
+    "backbone.radio": "^1.0.4",
     "backbone.select": "^1.5.3",
     "bootstrap": "^3.3.6",
     "chart.js": "^1.0.2",
@@ -51,7 +52,8 @@
     "watchify": "^3.7.0"
   },
   "browser": {
-    "MedicineManager": "./client/assets/js/app.js"
+    "MedicineManager": "./client/assets/js/app.js",
+    "common": "./client/assets/js/common"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

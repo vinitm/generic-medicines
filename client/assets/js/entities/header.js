@@ -1,7 +1,7 @@
 var MedicineManager = require('MedicineManager');
 var Backbone = require('backbone');
 require('backbone.select');
-var Marionette = require('backbone.marionette');
+var headerChannel = require('backbone.radio').channel('header');
 MedicineManager.module("Entities", function (Entities) {
     Entities.Header = Backbone.Model.extend({
         initialize: function () {
@@ -35,7 +35,7 @@ MedicineManager.module("Entities", function (Entities) {
         }
     };
 
-    MedicineManager.reqres.setHandler("header:entities", function () {
+    headerChannel.reply("header", function () {
         return API.getHeaders();
     });
 });

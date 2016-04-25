@@ -1,14 +1,14 @@
 var MedicineManager = require('MedicineManager');
+var headerChannel = require('backbone.radio').channel('header');
+var Show = require('./show');
 MedicineManager.module("HeaderApp", function (Header) {
     var API = {
         showHeader: function () {
-            Header.Show.Controller.showHeader();
+            Show.showHeader();
         }
     };
 
-    MedicineManager.commands.setHandler("set:search:visiblity", function (visible) {
-        MedicineManager.HeaderApp.Show.Controller.setSearchVisibility(visible);
-    });
+    headerChannel.reply("set:search:visiblity", Show.setSearchVisibility);
 
     Header.on("start", function () {
         API.showHeader();
