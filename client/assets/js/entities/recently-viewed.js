@@ -8,7 +8,7 @@ MedicineManager.module("Entities", function (Entities) {
     var RecentlyViewedItem = Backbone.Model.extend({
         mutators: {
             url: function () {
-                return '#show/' + encodeURI(this.get('medicine'));
+                return '#medicines/show/' + encodeURI(this.get('medicine'));
             }
         },
         default: {

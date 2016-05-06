@@ -7,7 +7,7 @@ MedicineManager.module("Entities", function (Entities) {
     Entities.Subtitute = Backbone.Model.extend({
         mutators: {
             url: function () {
-                return '#show/'+encodeURI(this.get('brand'));
+                return '#medicines/show/'+encodeURI(this.get('brand'));
             }
         },
         default: {

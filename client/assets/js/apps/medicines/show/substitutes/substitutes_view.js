@@ -33,7 +33,7 @@ var Table = Marionette.ItemView.extend({
             columns: [{
                     data: "brand",
                     render: function (data, type, row) {
-                        return "<a class='show' href='show/" + encodeURI(data) + "'>" + data + "</a>";
+                        return "<a class='show' href='#medicines/show/" + encodeURI(data) + "'>" + data + "</a>";
                     },
                     title: "Brand"
                     }, {
