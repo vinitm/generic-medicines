@@ -52,6 +52,12 @@ var Typeahead = Marionette.ItemView.extend({
     onTypeheadSelect: function (event, suggest) {
         this.triggerMethod('suggestion:select', suggest);
     },
+    hide: function () {
+        this.$el.parent('.twitter-typeahead').hide();
+    },
+    show: function () {
+        this.$el.parent('.twitter-typeahead').show();
+    },
     _addPlaceholder: function () {
         this.$el.attr('placeholder', this.placeholder);
     },

@@ -1,7 +1,7 @@
 var $ = global.jQuery = require('jquery');
 var Backbone = require('backbone');
 var Marionette = require('backbone.marionette');
-
+var HeaderApp = require('./apps/header/header_app.js');
 
 var MedicineManager = new Marionette.Application();
 
@@ -26,6 +26,9 @@ MedicineManager.on("start", function () {
 });
 
 $(function () {
+    new HeaderApp({
+        region: MedicineManager.headerRegion
+    });
     MedicineManager.start();
 });
 

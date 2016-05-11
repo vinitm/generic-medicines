@@ -1,5 +1,5 @@
-var Marionette = require('backbone.marionette');
 var Backbone = require('backbone');
+var Marionette = require('backbone.marionette');
 var Views = require('common');
 
 module.exports = Marionette.LayoutView.extend({
@@ -27,5 +27,18 @@ module.exports = Marionette.LayoutView.extend({
             scale: 0.1
         });
         this.inputRegion.show(search);
+    },
+    hideSearchbar: function () {
+        this.inputRegion.currentView.hide();
+    },
+    showSearchbar: function () {
+        this.inputRegion.currentView.show();
     }
 });
+
+/*events:
+[
+    events:"brand:clicked",
+    onChildSuggestionSelect : "suggestion:select"
+]
+*/

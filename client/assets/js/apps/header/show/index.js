@@ -1,27 +1,35 @@
-var MedicineManager = require('MedicineManager');
+var Marionette = require('backbone.marionette');
 var headerChannel = require('backbone.radio').channel('header');
-var Header = require('./show_view');
-module.exports = {
-    showHeader: function () {
+var View = require('./show_view');
+module.exports = Marionette.Object.extend({
+    initialize: function (options) {
         var links = headerChannel.request("header:entities");
-        var headers = new Header({
+        this.view = new View({
             collection: links
         });
-
-        headers.on("brand:clicked", function () {
-            MedicineManager.trigger("medicine:search");
+        this.region = options.region;
+    },
+    show: function () {
+        var self = this;
+        this.view.on("brand:clicked", function () {
+            self.trigger("brand:clicked");
         });
-        headers.on("suggestion:select", this.showMedicine);
-        MedicineManager.headerRegion.show(headers);
+        this.view.on("suggestion:select", function (suggestion) {
+            self.trigger("suggestion:select", suggestion);
+        });
+        this.region.show(this.view);
     },
-    showMedicine: function (suggestion) {
-        MedicineManager.trigger("medicine:show", suggestion.get("suggestion"));
-    },
-    setSearchVisibility: function (visible) {
-        var searchBar = MedicineManager.headerRegion.currentView.inputRegion.$el;
-        if (visible === 'hide')
-            searchBar.hide();
-        else if (visible === 'show')
-            searchBar.show();
+    setSearchVisible: function (visible) {
+        if (visible)
+            this.view.showSearchbar();
+        else
+            this.view.hideSearchbar();
     }
-};
+});
+
+/*events:
+[
+    show:"brand:clicked",
+    show:"suggestion:select"
+]
+*/
