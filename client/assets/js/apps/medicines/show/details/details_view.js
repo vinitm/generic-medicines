@@ -3,4 +3,4 @@ module.exports = Marionette.ItemView.extend({
     template: require('./template.tpl'),
     tagName: "div",
     id: "details"
-});
+}); 

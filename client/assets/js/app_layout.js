@@ -1,7 +1,8 @@
 var Marionette = require('backbone.marionette');
 module.exports = Marionette.LayoutView.extend({
-    template: require('./layout.tpl'),
+    el: '#app',
     regions: {
-        mainRegion: "#medicine-main-region"
+        headerRegion: "#header-region",
+        mainRegion: "#main-region"
     }
 });

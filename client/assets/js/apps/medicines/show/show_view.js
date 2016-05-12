@@ -1,4 +1,3 @@
-var MedicineManager = require('MedicineManager');
 var Marionette = require('backbone.marionette');
 module.exports = Marionette.LayoutView.extend({
     template: require('./layout_template.tpl'),
@@ -19,3 +18,9 @@ module.exports = Marionette.LayoutView.extend({
         this.trigger("substitute:show", text);
     }
 });
+
+/*events:
+[
+    onChildSubstituteShow : "substitute:show"
+]
+*/

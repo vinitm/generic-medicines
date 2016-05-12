@@ -1,4 +1,3 @@
-var MedicineManager = require('MedicineManager');
 var Backbone = require('backbone');
 var Marionette = require('backbone.marionette');
 var Views=require('common');
@@ -24,3 +23,10 @@ module.exports = Marionette.LayoutView.extend({
         search.$el.parent().addClass('col-xs-12 col-md-offset-4 col-md-4');
     }
 });
+
+
+/*events:
+[
+    onChildSuggestionSelect : "suggestion:select"
+]
+*/

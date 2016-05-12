@@ -7,9 +7,6 @@ module.exports = Marionette.Object.extend({
         this.view = new View({
             collection: links
         });
-        this.region = options.region;
-    },
-    show: function () {
         var self = this;
         this.view.on("brand:clicked", function () {
             self.trigger("brand:clicked");
@@ -17,6 +14,9 @@ module.exports = Marionette.Object.extend({
         this.view.on("suggestion:select", function (suggestion) {
             self.trigger("suggestion:select", suggestion);
         });
+        this.region = options.region;
+    },
+    show: function () {
         this.region.show(this.view);
     },
     setSearchVisible: function (visible) {

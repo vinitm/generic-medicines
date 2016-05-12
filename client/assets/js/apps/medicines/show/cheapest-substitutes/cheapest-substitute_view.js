@@ -60,7 +60,7 @@ module.exports = Marionette.LayoutView.extend({
         'brand:clicked': 'onChildBrandClicked'
     },
     onChildBrandClicked: function (childView, brand) {
-        this.trigger("substitute:show", brand);
+        this.trigger("link:click", brand);
     },
     onShow: function () {
         var cheapestSubstitutePrice = this.cheapestSubstitutes[0].get("unit_price");

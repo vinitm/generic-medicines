@@ -75,10 +75,11 @@ module.exports = Marionette.LayoutView.extend({
         "link:click": "onChildLinkClick"
     },
     onChildLinkClick: function (view, text) {
-        this.triggerMethod("substitute:show", text);
+        this.trigger("link:click", text);
     },
     initialize: function (options) {
         this.referencePrice = options.referencePrice;
+        this.collection = options.collection;
     },
     onShow: function () {
         var tableView = new Table({
