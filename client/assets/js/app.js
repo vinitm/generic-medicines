@@ -3,38 +3,6 @@ var Backbone = require('backbone');
 var Marionette = require('backbone.marionette');
 var navChannel = require('backbone.radio').channel('nav');
 
-/*var MedicineManager = new Marionette.Application();
-
-MedicineManager.addRegions({
-    headerRegion: "#header-region",
-    mainRegion: "#main-region"
-});
-
-MedicineManager.navigate = function (route, options) {
-    options || (options = {});
-    Backbone.history.navigate(route, options);
-};
-
-navChannel.reply('navigate', function (route, options) {
-    MedicineManager.navigate(route, options);
-});
-
-MedicineManager.getCurrentRoute = function () {
-    return Backbone.history.fragment;
-};
-
-$(function () {
-    new HeaderApp({
-        region: MedicineManager.headerRegion
-    });
-    new MedicineApp({
-        region: MedicineManager.mainRegion
-    });
-    Backbone.history.start();
-});
-
-module.exports = MedicineManager;*/
-
 module.exports = Marionette.Application.extend({
     initialize: function () {
         var self = this;
@@ -53,6 +21,12 @@ module.exports = Marionette.Application.extend({
         }
         options || (options = {});
         Backbone.history.navigate(route, options);
+    },
+    getSubApp: function (name) {
+        return this._subApps[name];
+    },
+    getService: function (name) {
+        return this._services[name];
     },
     addService: function (name, options) {
         var serviceOptions = _.omit(options, 'serviceClass');

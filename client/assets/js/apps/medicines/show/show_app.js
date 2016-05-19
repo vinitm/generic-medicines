@@ -1,10 +1,8 @@
 var Marionette = require('backbone.marionette');
-var MedicineManager = require('MedicineManager');
 var Backbone = require('backbone');
 var $ = require('jquery');
 var radio = require('backbone.radio');
 var medicineChannel = radio.channel('medicine');
-var globalChannel = radio.channel('global');
 
 var LayoutView = require('./show_view');
 var Loader = require('./loader/loader_view');
@@ -90,6 +88,6 @@ module.exports = Marionette.Object.extend({
         }.bind(this));
     },
     showSubstitute: function (medicine) {
-        globalChannel.request("medicine:show", medicine);
+        this.trigger("suggestion:select",medicine);
     }
 });

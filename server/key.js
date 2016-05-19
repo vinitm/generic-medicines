@@ -1,1 +1,0 @@
-module.exports='yash6992';

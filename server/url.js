@@ -1,13 +1,15 @@
 var url = require('url');
-var key = require('./key');
+var config = require('./config');
 var urlObj = {
     protocol: 'http:',
     slashes: true,
     hostname: 'truemd.in',
-    query: { key: key }
+    query: {
+        key: config.key
+    }
 };
 
-module.exports = function(obj) {
+module.exports = function (obj) {
     //extract data from argument object to local variables
     var pathname = obj.pathname;
     var query = obj.query;

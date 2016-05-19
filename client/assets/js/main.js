@@ -1,5 +1,5 @@
 // main.js
-require('./bootstrap');
+var $ = global.jQuery = require('jquery');
 
 // Load up app...
 var App = require('./app');
@@ -34,6 +34,25 @@ app.addSubApp('headerApp', {
 app.addSubApp('medicineApp', {
     subAppClass: MedicineApp,
     region: layout.getRegion('mainRegion')
+});
+
+var headerApp = app.getSubApp('headerApp');
+var medicineApp = app.getSubApp('medicineApp');
+var recentlyViewedService = app.getService('recentlyViewedService');
+
+app.listenTo(headerApp, "brand:clicked", function () {
+    medicineApp.showSearchOption();
+});
+app.listenTo(headerApp, "suggestion:select", function (suggestion) {
+    medicineApp.showMedicine(suggestion);
+});
+
+app.listenTo(medicineApp, "search", function () {
+    headerApp.setSearchVisibility(false);
+});
+app.listenTo(medicineApp, "show", function (medicine) {
+    headerApp.setSearchVisibility(true);
+    recentlyViewedService.addItem(medicine);
 });
 
 Backbone.history.start();
