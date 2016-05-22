@@ -1,5 +1,4 @@
 var Marionette = require('backbone.marionette');
-var Backbone = require('backbone');
 var $ = require('jquery');
 var radio = require('backbone.radio');
 var medicineChannel = radio.channel('medicine');
@@ -37,11 +36,6 @@ module.exports = Marionette.Object.extend({
                 return;
             }
 
-            var medicineDetails = new Backbone.Model(details.get('details'));
-            var SubtituteCollection = medicineChannel.request('substitute');
-            var medicineSubstitutes = new SubtituteCollection(details.get('alternatives'));
-
-
             //recently viewed
             var recentlyViewedComponent = new RecentlyViewed({
                 region: this.view.recentlyViewedRegion,
@@ -53,14 +47,14 @@ module.exports = Marionette.Object.extend({
             //medicine name in title
             var titleComponent = new Title({
                 region: this.view.titleRegion,
-                model: medicineDetails
+                model: details
             });
             titleComponent.show();
 
             //view showing details of medicine
             var detailsComponent = new Details({
                 region: this.view.detailsRegion,
-                model: medicineDetails
+                model: details
             });
             detailsComponent.show();
 
@@ -68,8 +62,7 @@ module.exports = Marionette.Object.extend({
             //medicine substitutes
             var substitutesComponent = new Substitutes({
                 region: this.view.substitutesRegion,
-                collection: medicineSubstitutes,
-                referencePrice: medicineDetails.get("medicine")["unit_price"]
+                model:details
             });
             this.listenTo(substitutesComponent, "link:click", this.showSubstitute);
             substitutesComponent.show();
@@ -78,8 +71,7 @@ module.exports = Marionette.Object.extend({
             //cheapest substitutes
             var cheapestSubstitutesComponent = new CheapestSubstitutes({
                 region: this.view.cheapestSubstitutesRegion,
-                substitutes: medicineSubstitutes,
-                medicine: medicineDetails
+                model:details
             });
             this.listenTo(cheapestSubstitutesComponent, "link:click", this.showSubstitute);
             cheapestSubstitutesComponent.show();

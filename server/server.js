@@ -18,7 +18,11 @@ function send(res, data) {
 db.connect();
 
 app.use(compress());
-app.use(express.static(root + '/dist'));
+app.use(/*'/medicines/*',*/express.static(root + '/dist'));
+
+/*app.all('/*', function (req, res) {
+console.log(req.path);
+});*/
 
 app.get('/medicine_suggestions', function (req, res) {
     Suggestions.get(req.query.id).then(function (data) {

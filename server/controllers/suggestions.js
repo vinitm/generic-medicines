@@ -19,7 +19,7 @@ var Suggestions = function () {
             suggestion: {
                 $regex: query
             }
-        }, '-_id suggestion').limit(options.limit);
+        }, 'suggestion').limit(options.limit);
     };
 
 };

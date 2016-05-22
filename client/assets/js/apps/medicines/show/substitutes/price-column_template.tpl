@@ -1,1 +1,1 @@
-<i class="fa fa-inr"></i><span><%=price%></span>
+<i class="fa fa-inr"></i><span><%= price %></span>

@@ -1,67 +1,78 @@
-var request = require('request-promise');
-var url = require('../url.js');
-var detailsPathname = '/api/medicine_details/';
-var Alternatives = require('./alternatives');
+var Detail = require('../models/Detail');
+
 
 /*
 {
+    "_id": "574171e48fd1707811e531bc",
     "medicine": {
-        "brand": "10 PM (25 mg)",
-        "category": "Tablet",
+        "brand": "Crocin (15 ml)",
+        "category": "Drop",
         "d_class": "null",
-        "generic_id": 78080,
-        "id": 8,
-        "manufacturer": "Hallmark Formulations Pharmaceuticals",
-        "package_price": 79,
-        "package_qty": 4,
-        "package_type": "Tablet",
-        "unit_price": 19.75,
+        "generic_id": 93956,
+        "id": 23216,
+        "manufacturer": "Glaxo Smithkline Pharmaceuticals Ltd.",
+        "package_price": 26.5,
+        "package_qty": 15,
+        "package_type": "ml",
+        "unit_price": 1.77,
         "unit_qty": 1,
-        "unit_type": "Tablet"
+        "unit_type": "ml"
     },
-    "constituents": [{
-        "generic_id": "78080",
-        "id": 84612,
-        "name": "Sildenafil",
-        "qty": 1,
-        "strength": "25 mg\r"
-    }]
+    "__v": 0,
+    "alternatives": [
+        {
+            "_id": "57317517cfd8937011c1b9f7",
+            "medicine": {
+                "brand": "Dolopar (15 ml)",
+                "category": "Drop",
+                "d_class": "null",
+                "generic_id": 119409,
+                "id": 27708,
+                "manufacturer": "Micro Nova Pharmaceuticals Ltd.",
+                "package_price": 23.4,
+                "package_qty": 15,
+                "package_type": "ml",
+                "unit_price": 1.56,
+                "unit_qty": 1,
+                "unit_type": "ml"
+            }
+},
+        {
+            "_id": "5731754acfd8937011c1ba4c",
+            "medicine": {
+                "brand": "Domitex (15 ml)",
+                "category": "Drop",
+                "d_class": "null",
+                "generic_id": 115480,
+                "id": 27903,
+                "manufacturer": "Auriga Labs",
+                "package_price": 20,
+                "package_qty": 15,
+                "package_type": "ml",
+                "unit_price": 1.33,
+                "unit_qty": 1,
+                "unit_type": "ml"
+            }
+}
+],
+    "constituents": [
+        {
+            "generic_id": "93956",
+            "id": 127768,
+            "name": "Paracetamol",
+            "qty": 1,
+            "strength": "100 mg\r"
+}
+]
 }
 */
 
-
 var Details = function () {
-    var parse = function (obj) {
-        return {
-            details: JSON.parse(obj[0]).response,
-            alternatives: JSON.parse(obj[1]).response.medicine_alternatives
-        };
-    };
-
-    var _getDetail = function (keyword) {
-        var options = {};
-        var urlStr = url({
-            pathname: detailsPathname,
-            query: keyword
-        });
-        options.url = urlStr;
-        return request(options);
-    };
-
-    var _getAlternatives = function (keyword) {
-        return Alternatives.get(keyword);
-    };
-
     this.get = function (keyword) {
-        var alternativesPromise = _getAlternatives(keyword);
-        var detailsPromise = _getDetail(keyword);
-        return Promise.all([detailsPromise, alternativesPromise]).then(function (res) {
-            return parse(res);
-        });
+        return Detail.findOne({
+            'medicine.brand': keyword
+        }).populate('alternatives cheapestAlternatives', 'medicine _id').exec();
     };
 };
-
-
-
 
 module.exports = new Details();

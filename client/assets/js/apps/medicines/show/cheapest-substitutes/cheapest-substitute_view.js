@@ -4,6 +4,21 @@ var Views = require('common');
 var CheapestSubstitutesItem = Marionette.ItemView.extend({
     tagName: "li",
     template: require('./listItem_template.tpl'),
+    initialize: function (model) {
+        var Model = Backbone.Model.extend({
+            mutators: {
+                url: function () {
+                    return '#medicines/show/' + encodeURI(this.get('brand'));
+                }
+            },
+            parse: function (response) {
+                return response.model.get('medicine');
+            }
+        });
+        this.model = new Model(model, {
+            parse: true
+        });
+    },
     events: {
         'click a': 'linkClicked'
     },
@@ -28,21 +43,17 @@ var ChartLayout = Marionette.LayoutView.extend({
         "chartRegion": "#chart-region"
     },
     initialize: function (options) {
-        this.medicinePrice = options.medicinePrice;
-        this.cheapestSubstitutePrice = options.cheapestSubstitutePrice;
-        this.model = new Backbone.Model({
-            medicinePrice: this.medicinePrice,
-            cheapestSubstitutePrice: this.cheapestSubstitutePrice
-        });
+        this.model = options.model;
     },
     onShow: function () {
         var chartView = new Views.Chart({
-            set: this.medicinePrice,
-            subset: this.cheapestSubstitutePrice
+            set: this.model.get('medicine').unit_price,
+            subset: this.model.get('medicine').unit_price - this.model.get('cheapestAlternatives')[0].medicine.unit_price
         });
         this.chartRegion.show(chartView);
     }
 });
+
 module.exports = Marionette.LayoutView.extend({
     template: require('./layout_template.tpl'),
     tagName: "div",
@@ -52,9 +63,7 @@ module.exports = Marionette.LayoutView.extend({
         "listRegion": "#substitutes-list-region"
     },
     initialize: function (options) {
-        this.medicine = options.medicine;
-        this.substitutes = options.substitutes;
-        this.cheapestSubstitutes = this.substitutes.getCheapestSubstitutes();
+        this.model = options.model;
     },
     childEvents: {
         'brand:clicked': 'onChildBrandClicked'
@@ -63,17 +72,14 @@ module.exports = Marionette.LayoutView.extend({
         this.trigger("link:click", brand);
     },
     onShow: function () {
-        var cheapestSubstitutePrice = this.cheapestSubstitutes[0].get("unit_price");
-        var medicinePrice = this.medicine.get("medicine")["unit_price"];
 
         var chartView = new ChartLayout({
-            medicinePrice: medicinePrice,
-            cheapestSubstitutePrice: cheapestSubstitutePrice
+            model: this.model
         });
         this.chartRegion.show(chartView);
 
         var listView = new CheapestSubstitutesList({
-            collection: new Backbone.Collection(this.cheapestSubstitutes)
+            collection: new Backbone.Collection(this.model.get('cheapestAlternatives'))
         });
         this.listRegion.show(listView);
     }
