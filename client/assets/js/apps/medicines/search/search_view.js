@@ -5,7 +5,7 @@ module.exports = Marionette.LayoutView.extend({
     template: require('./search_template.tpl'),
     id: "searchContainer",
     regions: {
-        inputRegion: "#search"
+        inputRegion: "#inpuRegion"
     },
     childEvents: {
         "suggestion:select": "onChildSuggestionSelect"
