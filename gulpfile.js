@@ -182,9 +182,9 @@ gulp.task('image', function () {
 
 gulp.task('html', function () {
     return gulp.src(CLIENT_HTML)
-        .pipe(inlinesource({
+        /*.pipe(inlinesource({
             rootpath: path.resolve(BUILD_FOLDER)
-        }))
+        }))*/
         .pipe(gulp.dest(BUILD_HTML_FOLDER));
 });
 
