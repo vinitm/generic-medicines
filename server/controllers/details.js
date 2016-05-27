@@ -3,75 +3,79 @@ var Detail = require('../models/Detail');
 
 /*
 {
-    "_id": "574171e48fd1707811e531bc",
+    "_id": "57482f4e42bf15e00ea28e27",
     "medicine": {
-        "brand": "Crocin (15 ml)",
-        "category": "Drop",
+        "brand": "Diprox (250 mg)",
+        "category": "Tablet",
         "d_class": "null",
-        "generic_id": 93956,
-        "id": 23216,
-        "manufacturer": "Glaxo Smithkline Pharmaceuticals Ltd.",
-        "package_price": 26.5,
-        "package_qty": 15,
-        "package_type": "ml",
-        "unit_price": 1.77,
+        "generic_id": 110669,
+        "id": 27057,
+        "manufacturer": "Nexus Biotech",
+        "package_price": 62,
+        "package_qty": 10,
+        "package_type": "Tablet",
+        "unit_price": 6.2,
         "unit_qty": 1,
-        "unit_type": "ml"
+        "unit_type": "Tablet"
     },
     "__v": 0,
+    "cheapestAlternatives": [
+        {
+            "_id": "5730c4ce2bb45c040734793f",
+            "medicine": {
+                "brand": "Kayval (250 mg)",
+                "package_price": 24,
+                "package_qty": 10,
+                "unit_price": 2.4,
+                "unit_qty": 1
+            }
+}
+],
     "alternatives": [
         {
-            "_id": "57317517cfd8937011c1b9f7",
+            "_id": "5730b9bf2bb45c0407346077",
             "medicine": {
-                "brand": "Dolopar (15 ml)",
-                "category": "Drop",
-                "d_class": "null",
-                "generic_id": 119409,
-                "id": 27708,
-                "manufacturer": "Micro Nova Pharmaceuticals Ltd.",
-                "package_price": 23.4,
-                "package_qty": 15,
-                "package_type": "ml",
-                "unit_price": 1.56,
-                "unit_qty": 1,
-                "unit_type": "ml"
+                "brand": "Cylenc DS (250 mg)",
+                "package_price": 35,
+                "package_qty": 10,
+                "unit_price": 3.5,
+                "unit_qty": 1
             }
 },
         {
-            "_id": "5731754acfd8937011c1ba4c",
+            "_id": "5730ba042bb45c0407346107",
             "medicine": {
-                "brand": "Domitex (15 ml)",
-                "category": "Drop",
-                "d_class": "null",
-                "generic_id": 115480,
-                "id": 27903,
-                "manufacturer": "Auriga Labs",
-                "package_price": 20,
-                "package_qty": 15,
-                "package_type": "ml",
-                "unit_price": 1.33,
-                "unit_qty": 1,
-                "unit_type": "ml"
+                "brand": "D Val ER (250 mg)",
+                "package_price": 38,
+                "package_qty": 10,
+                "unit_price": 3.8,
+                "unit_qty": 1
             }
 }
 ],
     "constituents": [
         {
-            "generic_id": "93956",
-            "id": 127768,
-            "name": "Paracetamol",
+            "generic_id": "110669",
+            "id": 135059,
+            "name": "Divalproex Sodium",
             "qty": 1,
-            "strength": "100 mg\r"
+            "strength": "250 mg\r"
 }
 ]
 }
 */
 
 var Details = function () {
+    var requiredFields = ['medicine.brand',
+                        'medicine.package_price',
+                        'medicine.package_qty',
+                        'medicine.unit_price',
+                        'medicine.unit_qty',
+                        '_id'];
     this.get = function (keyword) {
         return Detail.findOne({
             'medicine.brand': keyword
-        }).populate('alternatives cheapestAlternatives', 'medicine _id').exec();
+        }).populate('alternatives cheapestAlternatives', requiredFields.join(' ')).exec();
     };
 };
 
