@@ -50,4 +50,4 @@ var AlternativeSchema = mongoose.Schema({
         }]
 });
  
-module.exports = mongoose.model('alternative123', AlternativeSchema);
+module.exports = mongoose.model('alternative1234', AlternativeSchema);
