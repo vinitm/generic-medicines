@@ -30,19 +30,19 @@ module.exports = Marionette.Object.extend({
             region.show(loadingView);
         });
 
+        //recently viewed
+        var recentlyViewedComponent = new RecentlyViewed({
+            region: this.view.recentlyViewedRegion,
+            collection: recentlyViewed
+        });
+        this.listenTo(recentlyViewedComponent, "link:click", this.showSubstitute);
+        recentlyViewedComponent.show();
+
         detailsFetched.then(function (details) {
             if (!$.contains(document, this.view.$el[0])) {
                 //if layout is detached
                 return;
             }
-
-            //recently viewed
-            var recentlyViewedComponent = new RecentlyViewed({
-                region: this.view.recentlyViewedRegion,
-                collection: recentlyViewed
-            });
-            this.listenTo(recentlyViewedComponent, "link:click", this.showSubstitute);
-            recentlyViewedComponent.show();
 
             //medicine name in title
             var titleComponent = new Title({
@@ -62,7 +62,7 @@ module.exports = Marionette.Object.extend({
             //medicine substitutes
             var substitutesComponent = new Substitutes({
                 region: this.view.substitutesRegion,
-                model:details
+                model: details
             });
             this.listenTo(substitutesComponent, "link:click", this.showSubstitute);
             substitutesComponent.show();
@@ -71,7 +71,7 @@ module.exports = Marionette.Object.extend({
             //cheapest substitutes
             var cheapestSubstitutesComponent = new CheapestSubstitutes({
                 region: this.view.cheapestSubstitutesRegion,
-                model:details
+                model: details
             });
             this.listenTo(cheapestSubstitutesComponent, "link:click", this.showSubstitute);
             cheapestSubstitutesComponent.show();
@@ -80,6 +80,6 @@ module.exports = Marionette.Object.extend({
         }.bind(this));
     },
     showSubstitute: function (medicine) {
-        this.trigger("suggestion:select",medicine);
+        this.trigger("suggestion:select", medicine);
     }
 });

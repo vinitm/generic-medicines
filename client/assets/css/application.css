@@ -10,6 +10,12 @@ html {
     width: 100%;
     margin: 0px;
     padding: 0px;
+    overflow: auto;
+}
+
+p {
+    padding: 0px;
+    margin: 0px;
 }
 
 #app {
@@ -30,13 +36,18 @@ html {
 }
 
 #main-region {
-    padding-top: 60px;
-    padding: 0px;
+    margin-top: 60px;
+    margin-bottom: 60px;
     position: absolute;
     top: 0;
-    bottom: 0;
     right: 0;
     left: 0;
+    min-height: 100%;
+}
+
+.container {
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 .row {
@@ -133,8 +144,7 @@ html {
 #searchContainer {
     width: 100%;
     position: relative;
-    min-height: 100%;
-    height: 1px;
+    top: 150px;
 }
 
 #search {
@@ -261,4 +271,11 @@ html {
     font-size: 2rem;
 }
 
-.material-list li a {}
+#footer-region {
+    font-size: 1.3rem;
+}
+
+#footer-region .container>* {
+    line-height: 60px;
+    color: dimgrey;
+}

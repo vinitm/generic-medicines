@@ -175,8 +175,9 @@ gulp.task('js', gulp.series('browserify', function (done) {
 gulp.task('image', function () {
     return gulp.src(CLIENT_IMAGE)
         .pipe(imagemin())
-        .on('error', gutil.log)
-        .pipe(plumber())
+        .pipe(plumber({
+            errorHandler: gutil.log
+        }))
         .pipe(gulp.dest(BUILD_IMAGE_FOLDER));
 });
 
