@@ -12,17 +12,21 @@ var RecentlyViewedItem = Backbone.Model.extend({
         }
     },
     default: {
-        medicine: null,
+        medicine: null
     }
 });
 
+
 var RecentlyViewed = Backbone.Collection.extend({
     model: RecentlyViewedItem,
-    localStorage: new Backbone.LocalStorage("RecentlyViewed")
+    localStorage: new Backbone.LocalStorage("RecentlyViewed"),
+    comparator: function (one, two) {
+        return one.get('time') <= two.get('time');
+    }
 });
 
 var capacity = 5;
-var data = new RecentlyViewed();
+var collection = new RecentlyViewed();
 
 module.exports = Marionette.Object.extend({
     initialize: function () {
@@ -35,21 +39,22 @@ module.exports = Marionette.Object.extend({
         });
     },
     getRecentlyViewed: function () {
-        return data;
+        return collection;
     },
     addItem: function (item) {
-        data.fetch();
-        var model = data.findWhere({
+        collection.fetch();
+        var model = collection.findWhere({
             medicine: item
         });
         if (model) {
             model.destroy();
-        } else if (data.length == capacity)
-            data.at(data.length - 1).destroy();
+        } else if (collection.length == capacity)
+            collection.at(collection.length - 1).destroy();
         model = new RecentlyViewedItem({
-            medicine: item
+            medicine: item,
+            time: new Date().getTime()
         });
-        data.unshift(model);
+        collection.unshift(model);
         model.save();
     }
 });
