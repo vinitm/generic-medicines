@@ -6,7 +6,7 @@ var Details = require('./controllers/details');
 var db = require('./db');
 var config = require('./config');
 
-
+var oneDay = 86400000;
 var root = __dirname + "/../";
 
 
@@ -18,7 +18,9 @@ function send(res, data) {
 db.connect();
 
 app.use(compress());
-app.use(/*'/medicines/*',*/express.static(root + '/dist'));
+app.use( /*'/medicines/*',*/ express.static(root + '/dist', {
+    maxAge: oneDay
+}));
 
 /*app.all('/*', function (req, res) {
 console.log(req.path);
