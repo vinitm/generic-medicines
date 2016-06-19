@@ -126,7 +126,9 @@ var Chart = Marionette.ItemView.extend({
             color: "#81C784",
             label: "Green"
             }];
-        this.chart = new Chartjs(ctx).Pie(data);
+        this.chart = new Chartjs(ctx).Pie(data, {
+            responsive: true
+        });
     },
     onDestroy: function () {
         this.chart.destroy();
