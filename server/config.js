@@ -1,4 +1,4 @@
 module.exports = {
     dbPath: "mongodb://localhost/medicine",
-    port: 8000
+    port: process.env.PORT || 8000
 };
