@@ -39,3 +39,4 @@ app.get('/medicine_details', function (req, res) {
 });
 
 app.listen(config.port);
+console.log('listening on ' + config.port);
