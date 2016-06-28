@@ -77,19 +77,15 @@ var Typeahead = Marionette.ItemView.extend({
             remote: {
                 url: '/medicine_suggestions/?id=%QUERY',
                 wildcard: '%QUERY'
-            },
-            transform: function (response) {
-                return response.suggestions;
             }
         });
 
         var self = this;
         this.$el.typeahead({
                 hint: true,
-                highlight: true,
-                minLength: 1
+                highlight: true
             }, {
-                limit: "50",
+                limit: Infinity,
                 displayKey: 'suggestion',
                 name: 'suggestions',
                 source: engine,
@@ -130,7 +126,9 @@ var Chart = Marionette.ItemView.extend({
             color: "#81C784",
             label: "Green"
             }];
-        this.chart = new Chartjs(ctx).Pie(data);
+        this.chart = new Chartjs(ctx).Pie(data, {
+            responsive: true
+        });
     },
     onDestroy: function () {
         this.chart.destroy();

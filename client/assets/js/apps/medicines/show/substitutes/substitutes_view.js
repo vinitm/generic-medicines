@@ -1,4 +1,3 @@
-var Backbone = require('backbone');
 var Marionette = require('backbone.marionette');
 var $ = require('jquery');
 require('bootstrap');
@@ -24,9 +23,6 @@ var Table = Marionette.ItemView.extend({
             width: "100%"
         };
     },
-    initialize: function (options) {
-        this.referencePrice = options.referencePrice;
-    },
     onShow: function () {
         this.$el.DataTable({
             responsive: true,
@@ -37,10 +33,12 @@ var Table = Marionette.ItemView.extend({
                         return "<a class='show' href='#medicines/show/" + encodeURI(data) + "'>" + data + "</a>";
                     },
                     title: "Brand"
-                    }, {
+                    },
+                {
                     data: "package_qty",
                     title: "Pack"
-                    }, {
+                    },
+                {
                     data: "package_price",
                     title: "Price",
                     render: function (data, type, row) {
@@ -49,15 +47,16 @@ var Table = Marionette.ItemView.extend({
                             price: data
                         });
                     }.bind(this)
-                    }, {
+                    },
+                {
+                    title: "Cheaper/Costlier",
+                    data: "cheaperOrCostlierPercentage",
                     render: function (data, type, row) {
-                        var difference = (row.unit_price * 100 / this.referencePrice).toFixed(1);
                         var template = require('./cheaper-costlier-column_template.tpl');
                         return template({
-                            difference: difference
+                            difference: data
                         });
-                    }.bind(this),
-                    title: "Cheaper/Costlier"
+                    }.bind(this)
 					}
                 ]
         });
@@ -78,13 +77,11 @@ module.exports = Marionette.LayoutView.extend({
         this.trigger("link:click", text);
     },
     initialize: function (options) {
-        this.referencePrice = options.referencePrice;
         this.collection = options.collection;
     },
     onShow: function () {
         var tableView = new Table({
-            collection: this.collection,
-            referencePrice: this.referencePrice
+            collection: this.collection
         });
         this.tableRegion.show(tableView);
     }

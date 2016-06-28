@@ -175,16 +175,17 @@ gulp.task('js', gulp.series('browserify', function (done) {
 gulp.task('image', function () {
     return gulp.src(CLIENT_IMAGE)
         .pipe(imagemin())
-        .on('error', gutil.log)
-        .pipe(plumber())
+        .pipe(plumber({
+            errorHandler: gutil.log
+        }))
         .pipe(gulp.dest(BUILD_IMAGE_FOLDER));
 });
 
 gulp.task('html', function () {
     return gulp.src(CLIENT_HTML)
-        .pipe(inlinesource({
+        /*.pipe(inlinesource({
             rootpath: path.resolve(BUILD_FOLDER)
-        }))
+        }))*/
         .pipe(gulp.dest(BUILD_HTML_FOLDER));
 });
 

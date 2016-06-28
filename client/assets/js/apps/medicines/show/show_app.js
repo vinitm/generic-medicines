@@ -1,10 +1,7 @@
 var Marionette = require('backbone.marionette');
-var MedicineManager = require('MedicineManager');
-var Backbone = require('backbone');
 var $ = require('jquery');
 var radio = require('backbone.radio');
 var medicineChannel = radio.channel('medicine');
-var globalChannel = radio.channel('global');
 
 var LayoutView = require('./show_view');
 var Loader = require('./loader/loader_view');
@@ -33,36 +30,31 @@ module.exports = Marionette.Object.extend({
             region.show(loadingView);
         });
 
+        //recently viewed
+        var recentlyViewedComponent = new RecentlyViewed({
+            region: this.view.recentlyViewedRegion,
+            collection: recentlyViewed
+        });
+        this.listenTo(recentlyViewedComponent, "link:click", this.showSubstitute);
+        recentlyViewedComponent.show();
+
         detailsFetched.then(function (details) {
             if (!$.contains(document, this.view.$el[0])) {
                 //if layout is detached
                 return;
             }
 
-            var medicineDetails = new Backbone.Model(details.get('details'));
-            var SubtituteCollection = medicineChannel.request('substitute');
-            var medicineSubstitutes = new SubtituteCollection(details.get('alternatives'));
-
-
-            //recently viewed
-            var recentlyViewedComponent = new RecentlyViewed({
-                region: this.view.recentlyViewedRegion,
-                collection: recentlyViewed
-            });
-            this.listenTo(recentlyViewedComponent, "link:click", this.showSubstitute);
-            recentlyViewedComponent.show();
-
             //medicine name in title
             var titleComponent = new Title({
                 region: this.view.titleRegion,
-                model: medicineDetails
+                model: details
             });
             titleComponent.show();
 
             //view showing details of medicine
             var detailsComponent = new Details({
                 region: this.view.detailsRegion,
-                model: medicineDetails
+                model: details
             });
             detailsComponent.show();
 
@@ -70,8 +62,7 @@ module.exports = Marionette.Object.extend({
             //medicine substitutes
             var substitutesComponent = new Substitutes({
                 region: this.view.substitutesRegion,
-                collection: medicineSubstitutes,
-                referencePrice: medicineDetails.get("medicine")["unit_price"]
+                model: details
             });
             this.listenTo(substitutesComponent, "link:click", this.showSubstitute);
             substitutesComponent.show();
@@ -80,8 +71,7 @@ module.exports = Marionette.Object.extend({
             //cheapest substitutes
             var cheapestSubstitutesComponent = new CheapestSubstitutes({
                 region: this.view.cheapestSubstitutesRegion,
-                substitutes: medicineSubstitutes,
-                medicine: medicineDetails
+                model: details
             });
             this.listenTo(cheapestSubstitutesComponent, "link:click", this.showSubstitute);
             cheapestSubstitutesComponent.show();
@@ -90,6 +80,6 @@ module.exports = Marionette.Object.extend({
         }.bind(this));
     },
     showSubstitute: function (medicine) {
-        globalChannel.request("medicine:show", medicine);
+        this.trigger("suggestion:select", medicine);
     }
 });

@@ -1,12 +1,8 @@
 var Marionette = require('backbone.marionette');
-var headerChannel = require('backbone.radio').channel('header');
 var View = require('./show_view');
 module.exports = Marionette.Object.extend({
     initialize: function (options) {
-        var links = headerChannel.request("header:entities");
-        this.view = new View({
-            collection: links
-        });
+        this.view = new View();
         var self = this;
         this.view.on("brand:clicked", function () {
             self.trigger("brand:clicked");
