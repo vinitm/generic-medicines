@@ -30,7 +30,7 @@
 }
 
 .tt-highlight {
-    color: #0097cf;
+    color: #009688;
 }
 
 .tt-menu {
@@ -50,7 +50,7 @@
 .tt-suggestion:hover {
     cursor: pointer;
     color: #fff;
-    background-color: #0097cf;
+    background-color: #009688;
 }
 
 .tt-suggestion:hover .tt-highlight {
@@ -59,7 +59,7 @@
 
 .tt-suggestion.tt-cursor {
     color: #fff;
-    background-color: #0097cf;
+    background-color: #009688;
 }
 
 .tt-suggestion p {

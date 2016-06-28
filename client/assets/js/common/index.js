@@ -123,12 +123,10 @@ var Chart = Marionette.ItemView.extend({
             label: "Grey"
             }, {
             value: this.subset,
-            color: "#81C784",
+            color: "#009688",
             label: "Green"
             }];
-        this.chart = new Chartjs(ctx).Pie(data, {
-            responsive: true
-        });
+        this.chart = new Chartjs(ctx).Pie(data);
     },
     onDestroy: function () {
         this.chart.destroy();
