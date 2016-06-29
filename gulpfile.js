@@ -7,7 +7,8 @@ var SERVER_FILES = SERVER_FOLDER + '/';
 
 //client
 var CLIENT_FOLDER = './client';
-var CLIENT_CSS = CLIENT_FOLDER + '/assets/css/**/*.css';
+var CLIENT_SCSS_FOLDER = CLIENT_FOLDER + '/assets/scss';
+var CLIENT_SCSS = CLIENT_SCSS_FOLDER + '/application.scss';
 var CLIENT_JS_FOLDER = CLIENT_FOLDER + '/assets/js';
 var CLIENT_JS = CLIENT_JS_FOLDER + '/**/*.js';
 var CLIENT_HTML = CLIENT_FOLDER + '/*.html';
@@ -39,6 +40,7 @@ var gulp = require('gulp'),
     buffer = require('vinyl-buffer'),
     imagemin = require('gulp-imagemin'),
     plumber = require('gulp-plumber'),
+    sass = require('gulp-sass'),
     underscorify = require('node-underscorify').transform({
         extensions: ['tpl']
     });
@@ -95,16 +97,11 @@ gulp.task('reload', function (done) {
 
 
 gulp.task('css', function () {
-    var fileOrder = [
-        "dataTables.bootstrap.min.css",
-        "autocomplete.css",
-        "application.css"
-    ];
-    return gulp.src(CLIENT_CSS)
-        .pipe(order(fileOrder))
+    return gulp.src(CLIENT_SCSS)
         .pipe(print())
-        .pipe(minifyCss())
-        .pipe(concat('main.css'))
+        .pipe(sass({
+            outputStyle: 'compressed'
+        }).on('error', sass.logError))
         .pipe(gulp.dest(BUILD_CSS_FOLDER));
 });
 
@@ -198,7 +195,7 @@ gulp.task('build', gulp.series('clean', 'image', 'css', 'js', 'html', 'reload'))
 
 gulp.task('watch', function (done) {
     gulp.watch([CLIENT_HTML], gulp.series('html'));
-    gulp.watch([CLIENT_CSS], gulp.series('css'));
+    gulp.watch([CLIENT_SCSS_FOLDER + '/**/*.scss'], gulp.series('css'));
     gulp.watch([CLIENT_FOLDER + '/**/*.tpl'], gulp.series('app'));
     gulp.watch([BUILD_JS_FOLDER + '/*.js'], gulp.series('html'));
     gulp.watch([BUILD_CSS_FOLDER + '/*.css'], gulp.series('html'));

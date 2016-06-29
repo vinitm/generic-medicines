@@ -1,3 +1,8 @@
+$theme-color:#009688;
+
+@import 'autocomplete';
+@import 'dataTables.bootstrap.min';
+
 body,
 html {
     height: 100%;
@@ -119,25 +124,26 @@ p {
     line-height: 30px;
 }
 
-.navbar-default
-{
-    background-color: #009688;
+.navbar-default {
+    background-color: $theme-color;
 }
 
-.navbar-default .navbar-brand
-{
-        color: #fff;
+.navbar-default .navbar-brand {
+    color: #fff;
 }
 
-.text-success
-{
-color: #009688;
+.text-success {
+    color: $theme-color;
 }
 
-.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover
-{
-    background-color: #009688;
-    border-color: #009688;
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover {
+    background-color: $theme-color;
+    border-color: $theme-color;
 }
 
 #header-region .searchInput,
@@ -227,7 +233,7 @@ color: #009688;
 
 .details-item .constituent {
     display: inline-block;
-    background: #009688;
+    background: $theme-color;
     padding: 5px 5px 5px 10px;
     border-radius: 4px;
     margin-right: 10px;
@@ -252,7 +258,7 @@ color: #009688;
 }
 
 .mcard-title {
-    background: #009688;
+    background: $theme-color;
     display: block;
     padding: 14px 10px;
     min-height: 52px;
