@@ -6,7 +6,10 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/">Medicinemanager</a>
+        <a class="navbar-brand" href="/">
+            <img alt="Brand" width="30" height="30" src="navbar_icon.png">
+            <span>MedAlt</span>
+        </a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->

@@ -1,8 +1,6 @@
 $theme-color:#009688;
-
 @import 'autocomplete';
 @import 'dataTables.bootstrap.min';
-
 body,
 html {
     height: 100%;
@@ -120,8 +118,34 @@ p {
 }
 
 .navbar-brand {
+    position: relative;
     height: 60px;
     line-height: 30px;
+}
+
+.navbar-brand>img {
+    display: inline;
+}
+
+.navbar-brand>span {
+    font-weight: bold;
+}
+
+.navbar-brand:hover:before {
+    content: " ";
+    height: 100%;
+    width: 100%;
+    background-color: $theme-color;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    display: block;
+    z-index: 2;
+    opacity: 0.3;
+}
+
+.navbar-default .navbar-brand:hover {
+    color: white;
 }
 
 .navbar-default {
