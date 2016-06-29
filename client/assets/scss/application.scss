@@ -144,8 +144,10 @@ p {
     opacity: 0.3;
 }
 
-.navbar-default .navbar-brand:hover {
-    color: white;
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:visited,
+.navbar-default .navbar-brand:active {
+    color: #fff;
 }
 
 .navbar-default {
