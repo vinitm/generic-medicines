@@ -184,9 +184,7 @@ gulp.task('html', function () {
 
 
 gulp.task('clean', function (done) {
-    if (!/^win/.test(process.platform)) {
-        return del([BUILD_FOLDER + '/**/*.*']); //doesn't work on windows
-    }
+    return del([BUILD_FOLDER]);
     done();
 });
 
