@@ -22,6 +22,14 @@ app.use( /*'/medicines/*',*/ express.static(root + '/dist', {
     maxAge: oneDay
 }));
 
+app.use('/bootstrap', express.static(root + '/node_modules/bootstrap/dist', {
+    maxAge: oneDay
+}));
+
+app.use('/font-awesome', express.static(root + '/node_modules/font-awesome', {
+    maxAge: oneDay
+}));
+
 /*app.all('/*', function (req, res) {
 console.log(req.path);
 });*/

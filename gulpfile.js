@@ -45,6 +45,8 @@ var gulp = require('gulp'),
         extensions: ['tpl']
     });
 
+var env = gutil.env.env || 'development';
+
 var vendors = ['jquery',
                'underscore',
                'backbone',
@@ -148,7 +150,7 @@ gulp.task('app', function () {
             .pipe(source(CLIENT_JS_FOLDER + '/main.js'))
             .pipe(buffer())
             .pipe(flatten())
-            .pipe(uglify())
+            //.pipe(uglify())
             .pipe(gulp.dest(BUILD_JS_FOLDER));
     }
 

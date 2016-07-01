@@ -1,4 +1,5 @@
 $theme-color:#009688;
+$navbar-height:60px;
 @import 'autocomplete';
 @import 'dataTables.bootstrap.min';
 body,
@@ -43,11 +44,6 @@ p {
     min-height: calc(100% - 61px);
     height: auto;
     position: relative;
-}
-
-.container {
-    padding-left: 0px;
-    padding-right: 0px;
 }
 
 .row {
@@ -105,21 +101,13 @@ p {
     padding: 0px;
 }
 
-.navbar-collapse.in {
-    overflow-y: visible;
-}
-
-.navbar-form {
-    border: none;
-}
-
 .navbar {
-    min-height: 60px;
+    min-height: $navbar-height;
 }
 
 .navbar-brand {
     position: relative;
-    height: 60px;
+    height: $navbar-height;
     line-height: 30px;
 }
 
@@ -152,6 +140,7 @@ p {
 
 .navbar-default {
     background-color: $theme-color;
+    color: #fff;
 }
 
 .navbar-default .navbar-brand {
@@ -162,6 +151,15 @@ p {
     color: $theme-color;
 }
 
+.navbar .btn {
+    background-color: transparent;
+    height: $navbar-height;
+}
+
+.navbar .btn:focus{
+    outline: none;
+}
+
 .pagination>.active>a,
 .pagination>.active>a:focus,
 .pagination>.active>a:hover,
@@ -170,6 +168,10 @@ p {
 .pagination>.active>span:hover {
     background-color: $theme-color;
     border-color: $theme-color;
+}
+
+#header-region .twitter-typeahead {
+    color: #000;
 }
 
 #header-region .searchInput,
