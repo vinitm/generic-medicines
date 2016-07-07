@@ -1832,7 +1832,7 @@ IN THE SOFTWARE.*/
   // This is to produce an identical function in both tuneIn and tuneOut,
   // so that Backbone.Events unregisters it.
   function _partial(channelName) {
-    return _logs[channelName] || (_logs[channelName] = _.bind(Radio.log, Radio, channelName));
+    return _logs[channelName] || (_logs[channelName] = _.partial(Radio.log, channelName));
   }
 
   _.extend(Radio, {
@@ -1842,7 +1842,7 @@ IN THE SOFTWARE.*/
       if (typeof console === 'undefined') {
         return;
       }
-      var args = _.toArray(arguments).slice(2);
+      var args = _.drop(arguments, 2);
       console.log('[' + channelName + '] "' + eventName + '"', args);
     },
 
@@ -1883,7 +1883,7 @@ IN THE SOFTWARE.*/
 
     // Make a request
     request: function request(name) {
-      var args = _.toArray(arguments).slice(1);
+      var args = _.rest(arguments);
       var results = Radio._eventsApi(this, 'request', name, args);
       if (results) {
         return results;
@@ -2017,7 +2017,7 @@ IN THE SOFTWARE.*/
   _.each(systems, function (system) {
     _.each(system, function (method, methodName) {
       Radio[methodName] = function (channelName) {
-        args = _.toArray(arguments).slice(1);
+        args = _.rest(arguments);
         channel = this.channel(channelName);
         return channel[methodName].apply(channel, args);
       };
@@ -2026,9 +2026,7 @@ IN THE SOFTWARE.*/
 
   Radio.reset = function (channelName) {
     var channels = !channelName ? this._channels : [this._channels[channelName]];
-    _.each(channels, function (channel) {
-      channel.reset();
-    });
+    _.invoke(channels, 'reset');
   };
 
   return Radio;
