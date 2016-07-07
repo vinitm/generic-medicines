@@ -4,7 +4,7 @@ var Marionette = require('backbone.marionette');
 module.exports = Marionette.LayoutView.extend({
     template: require('./layout_template.tpl'),
     tagName: "div",
-    className: "input-group",
+    className: "row",
     regions: {
         "searchRegion": "#searchRegion"
     },

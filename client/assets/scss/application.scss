@@ -109,6 +109,7 @@ p {
     position: relative;
     height: $navbar-height;
     line-height: 30px;
+    z-index: 1;
 }
 
 .navbar-brand>img {
@@ -172,13 +173,14 @@ p {
 
 #header-region .twitter-typeahead {
     color: #000;
+    height: $navbar-height;
+    font-size: 2rem;
 }
 
 #header-region .searchInput,
 #header-region .tt-query,
 #header-region .tt-hint {
-    height: 40px;
-    font-size: 1.5rem;
+    height: $navbar-height;
 }
 
 #header-region .searchInput {
@@ -187,6 +189,16 @@ p {
 
 #header-region .twitter-typeahead {
     width: 100%;
+}
+
+#inputRegion{
+    position: absolute;
+    width: 100%;
+    left: 0;
+}
+
+#searchRegion{
+    z-index: 2;
 }
 
 #main {
