@@ -6,7 +6,7 @@ var Details = require('./controllers/details');
 var db = require('./db');
 var config = require('./config');
 
-var oneDay = 86400000;
+var oneYear = 86400000*365;
 var root = __dirname + "/../";
 
 
@@ -19,15 +19,15 @@ db.connect();
 
 app.use(compress());
 app.use( /*'/medicines/*',*/ express.static(root + '/dist', {
-    maxAge: oneDay
+    maxAge: oneYear
 }));
 
 app.use('/bootstrap', express.static(root + '/node_modules/bootstrap/dist', {
-    maxAge: oneDay
+    maxAge: oneYear
 }));
 
 app.use('/font-awesome', express.static(root + '/node_modules/font-awesome', {
-    maxAge: oneDay
+    maxAge: oneYear
 }));
 
 /*app.all('/*', function (req, res) {
