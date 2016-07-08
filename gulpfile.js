@@ -30,6 +30,7 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     order = require('gulp-order'),
     print = require('gulp-print'),
+    htmlmin = require('gulp-htmlmin'),
     browserSync = require('browser-sync').create(),
     reload = browserSync.reload,
     nodemon = require('gulp-nodemon'),
@@ -180,14 +181,16 @@ gulp.task('html', function () {
         /*.pipe(inlinesource({
             rootpath: path.resolve(BUILD_FOLDER)
         }))*/
+        .pipe(htmlmin({
+            collapseWhitespace: true
+        }))
         .pipe(gulp.dest(BUILD_HTML_FOLDER));
 });
 
 
 
-gulp.task('clean', function (done) {
+gulp.task('clean', function () {
     return del([BUILD_FOLDER]);
-    done();
 });
 
 
