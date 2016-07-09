@@ -39,6 +39,7 @@
     "gulp-flatten": "^0.2.0",
     "gulp-htmlmin": "^2.0.0",
     "gulp-imagemin": "^3.0.1",
+    "gulp-load-plugins": "^1.2.4",
     "gulp-nodemon": "^2.0.6",
     "gulp-order": "^1.1.1",
     "gulp-plumber": "^1.1.0",
