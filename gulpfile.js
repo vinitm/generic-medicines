@@ -33,7 +33,6 @@ function getTask(task) {
     return require('./gulp/tasks/' + task)(gulp, plugins);
 }
 
-
 gulp.task('nodemon', getTask('nodemon'));
 
 
@@ -58,7 +57,7 @@ gulp.task('image', getTask('image'));
 
 gulp.task('html', getTask('html'));
 
-gulp.task('build', gulp.series('clean', 'image', 'css', 'js', 'html', 'reload'));
+gulp.task('build', gulp.series('clean', 'image', 'css', 'js', 'html'));
 
 gulp.task('watch', getTask('watch'));
 
