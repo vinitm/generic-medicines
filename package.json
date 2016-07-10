@@ -60,7 +60,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "publish": "echo \"Don't publish me, bro!\" && exit 1",
         "serve": "node server/server.js",
-        "start": "gulp build --env=production && npm run serve"
+        "start": "gulp build --production && npm run serve"
     },
     "repository": {
         "type": "git",

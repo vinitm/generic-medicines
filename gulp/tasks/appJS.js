@@ -1,7 +1,7 @@
 var config = require('../config').appJS;
 module.exports = function (gulp, plugins) {
     return function () {
-        var env = plugins.gutil.env.env || 'development';
+        var production = plugins.gutil.env.production;
         var stream = plugins.browserify({
             entries: [config.src],
             cache: {},
@@ -9,7 +9,7 @@ module.exports = function (gulp, plugins) {
         });
 
 
-        if (env === 'development') {
+        if (!production) {
             stream.plugin(plugins.watchify, {
                 ignoreWatch: [config.ignoreWatch]
             });
