@@ -19,7 +19,8 @@ var gulp = require('gulp'),
             'gulp-imagemin': 'imagemin',
             'gulp-plumber': 'plumber',
             'gulp-sass': 'sass',
-            'node-underscorify': 'underscorify'
+            'node-underscorify': 'underscorify',
+            'gulp-autoprefixer':'autoprefixer'
         }
     });
 

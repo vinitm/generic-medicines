@@ -7,6 +7,8 @@ module.exports = function (gulp, plugins) {
             .pipe((production ? plugins.sass({
                 outputStyle: 'compressed'
             }) : plugins.sass()).on('error', plugins.sass.logError))
+
+            .pipe(production ? plugins.autoprefixer() : plugins.gutil.noop())
             .pipe(gulp.dest(config.dest));
     };
 };
