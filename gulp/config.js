@@ -27,61 +27,65 @@ var BUILD_HTML = BUILD_HTML_FOLDER + '/**/*.html';
 var BUILD_IMAGE_FOLDER = BUILD_FOLDER;
 
 var vendorFiles = ['jquery',
-               'underscore',
-               'backbone',
-               'backbone.localstorage',
-               'backbone.select',
-               'backbone.marionette',
-               'bootstrap',
-               'chart.js',
-               'datatables.net',
-               'datatables.net-responsive',
-               'datatables.net-bs',
-               'typeahead.js-browserify',
-               'spin.js'];
+	'underscore',
+	'backbone',
+	'backbone.localstorage',
+	'backbone.select',
+	'backbone.marionette',
+	'bootstrap',
+	'chart.js',
+	'datatables.net',
+	'datatables.net-responsive',
+	'datatables.net-bs',
+	'typeahead.js-browserify',
+	'spin.js'
+];
 
 module.exports = {
-    clean: {
-        src: BUILD_FOLDER
-    },
-    css: {
-        src: CLIENT_SCSS,
-        dest: BUILD_CSS_FOLDER
-    },
-    nodemon: {
-        src: SERVER_MAIN_FILE,
-        watch: [SERVER_FILES]
-    },
-    vendorJS: {
-        dest: BUILD_JS_FOLDER,
-        destFile: 'vendor.js',
-        vendors: vendorFiles
-    },
-    appJS: {
-        src: CLIENT_JS_FOLDER + '/main.js',
-        dest: BUILD_JS_FOLDER,
-        ignoreWatch: '**/**/*.tpl',
-        vendors: vendorFiles
-    },
-    browserSync: {
-        proxy: 'http://localhost:8000',
-        port: 9000,
-        browser: /^win/.test(process.platform) ? 'google chrome' : 'firefox'
-    },
-    image: {
-        src: CLIENT_IMAGE,
-        dest: BUILD_IMAGE_FOLDER
-    },
-    html: {
-        src: CLIENT_HTML,
-        dest: BUILD_HTML_FOLDER
-    },
-    watch: {
-        buildCssFiles: BUILD_CSS,
-        buildHtmlFiles: BUILD_HTML,
-        buildJsFiles: BUILD_JS,
-        clientHtmlFiles: CLIENT_HTML,
-        clientScssFiles: CLIENT_SCSS_FOLDER + '/**/*.scss',
-        clientTemplateFiles: CLIENT_FOLDER + '/**/*tpl'
-    }
+	lint: {
+		src: CLIENT_JS
+	},
+	clean: {
+		src: BUILD_FOLDER
+	},
+	css: {
+		src: CLIENT_SCSS,
+		dest: BUILD_CSS_FOLDER
+	},
+	nodemon: {
+		src: SERVER_MAIN_FILE,
+		watch: [SERVER_FILES]
+	},
+	vendorJS: {
+		dest: BUILD_JS_FOLDER,
+		destFile: 'vendor.js',
+		vendors: vendorFiles
+	},
+	appJS: {
+		src: CLIENT_JS_FOLDER + '/main.js',
+		dest: BUILD_JS_FOLDER,
+		ignoreWatch: '**/**/*.tpl',
+		vendors: vendorFiles
+	},
+	browserSync: {
+		proxy: 'http://localhost:8000',
+		port: 9000,
+		browser: /^win/.test(process.platform) ? 'google chrome' : 'firefox'
+	},
+	image: {
+		src: CLIENT_IMAGE,
+		dest: BUILD_IMAGE_FOLDER
+	},
+	html: {
+		src: CLIENT_HTML,
+		dest: BUILD_HTML_FOLDER
+	},
+	watch: {
+		buildCssFiles: BUILD_CSS,
+		buildHtmlFiles: BUILD_HTML,
+		buildJsFiles: BUILD_JS,
+		clientHtmlFiles: CLIENT_HTML,
+		clientScssFiles: CLIENT_SCSS_FOLDER + '/**/*.scss',
+		clientTemplateFiles: CLIENT_FOLDER + '/**/*tpl'
+	}
 };

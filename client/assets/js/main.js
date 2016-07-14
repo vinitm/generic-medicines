@@ -1,5 +1,5 @@
 // main.js
-var $ = global.jQuery = require('jquery');
+var $ = global.jQuery = require('jquery');// eslint-disable-line
 
 // Load up app...
 var App = require('./app');
@@ -18,30 +18,30 @@ var app = new App();
 var layout = new AppLayout();
 
 app.addService('detailsService', {
-    serviceClass: DetailsService
+	serviceClass: DetailsService
 });
 app.addService('recentlyViewedService', {
-    serviceClass: RecentlyViewedService
+	serviceClass: RecentlyViewedService
 });
 
 app.addSubApp('headerApp', {
-    subAppClass: HeaderApp,
-    region: layout.getRegion('headerRegion')
+	subAppClass: HeaderApp,
+	region: layout.getRegion('headerRegion')
 });
 
 app.addSubApp('footerApp', {
-    subAppClass: FooterApp,
-    region: layout.getRegion('footerRegion')
+	subAppClass: FooterApp,
+	region: layout.getRegion('footerRegion')
 });
 
 app.addSubApp('aboutApp', {
-    subAppClass: AboutApp,
-    region: layout.getRegion('mainRegion')
+	subAppClass: AboutApp,
+	region: layout.getRegion('mainRegion')
 });
 
 app.addSubApp('medicineApp', {
-    subAppClass: MedicineApp,
-    region: layout.getRegion('mainRegion')
+	subAppClass: MedicineApp,
+	region: layout.getRegion('mainRegion')
 });
 
 var headerApp = app.getSubApp('headerApp');
@@ -51,23 +51,23 @@ var aboutApp = app.getSubApp('aboutApp');
 
 var recentlyViewedService = app.getService('recentlyViewedService');
 
-app.listenTo(headerApp, "brand:clicked", function () {
-    medicineApp.showSearchOption();
+app.listenTo(headerApp, 'brand:clicked', function () {
+	medicineApp.showSearchOption();
 });
-app.listenTo(headerApp, "suggestion:select", function (suggestion) {
-    medicineApp.showMedicine(suggestion);
-});
-
-app.listenTo(footerApp, "show:about", function () {
-    aboutApp.show();
+app.listenTo(headerApp, 'suggestion:select', function (suggestion) {
+	medicineApp.showMedicine(suggestion);
 });
 
-app.listenTo(medicineApp, "search", function () {
-    headerApp.setSearchVisibility(false);
+app.listenTo(footerApp, 'show:about', function () {
+	aboutApp.show();
 });
-app.listenTo(medicineApp, "show", function (medicine) {
-    headerApp.setSearchVisibility(true);
-    recentlyViewedService.addItem(medicine);
+
+app.listenTo(medicineApp, 'search', function () {
+	headerApp.setSearchVisibility(false);
+});
+app.listenTo(medicineApp, 'show', function (medicine) {
+	headerApp.setSearchVisibility(true);
+	recentlyViewedService.addItem(medicine);
 });
 
 Backbone.history.start();
